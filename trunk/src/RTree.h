@@ -1,3 +1,30 @@
+/*
+
+From README file:
+
+
+TITLE
+
+	R-TREES: A DYNAMIC INDEX STRUCTURE FOR SPATIAL SEARCHING
+
+DESCRIPTION
+
+	A C++ templated version of the RTree algorithm.
+	For more information please read the comments in RTree.h
+
+AUTHORS
+
+	* 1983 Original algorithm and test code by Antonin Guttman and Michael Stonebraker, UC Berkely
+	* 1994 ANCI C ported from original test code by Melinda Green - melinda@superliminal.com
+	* 1995 Sphere volume fix for degeneracy problem submitted by Paul Brook
+	* 2004 Templated C++ port by Greg Douglas
+
+LICENSE:
+
+	Entirely free for all uses. Enjoy!
+
+*/
+
 #ifndef RTREE_H
 #define RTREE_H
 
