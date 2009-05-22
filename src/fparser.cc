@@ -9,6 +9,7 @@ using namespace FUNCTIONPARSERTYPES;
 
 #include <cstdlib>
 #include <cstring>
+#include <string.h>
 #include <cctype>
 #include <cmath>
 

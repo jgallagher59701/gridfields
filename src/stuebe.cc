@@ -11,6 +11,7 @@ extern "C" {
 #include "array.h"
 #include "tuple.h"
 #include "stuebe.h"
+#include <string.h>
 #include "implicit0cells.h"
 #include "arraywriter.h"
 

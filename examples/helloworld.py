@@ -3,7 +3,6 @@ require("gridfield>0.2")
 from gridfield import *
 
 import gridfield.core as gf
-import gridfield.gfvis as gfvis
 from gridfield.algebra import Apply, Restrict, Wrap
 
 # Usually we will read gridfields from various 
