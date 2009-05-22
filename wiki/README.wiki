@@ -1,12 +1,10 @@
-
 == GridFields ==
 
 For reference, see
 
 -- Bill Howe, David Maier, "Algebraic Manipulation of Scientific Datasets", VLDB Journal 2005
 
--- Bill Howe, Model-Driven Data Transformation in the Physical Sciences, Doctoral Dissertation, Po
-rtland State University, 2006
+-- Bill Howe, Model-Driven Data Transformation in the Physical Sciences, Doctoral Dissertation, Portland State University, 2006
 
 
 == Directory structure ==
