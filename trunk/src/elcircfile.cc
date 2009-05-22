@@ -10,6 +10,7 @@
 #include <sstream>
 #include "tuple.h"
 #include "elio.h"
+#include <string.c>
 #include <iostream>
 
 using namespace std;

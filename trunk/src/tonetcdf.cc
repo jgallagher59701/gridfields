@@ -10,6 +10,7 @@ extern "C" {
 #include <fstream>
 #include "array.h"
 #include "tuple.h"
+#include "string.h"
 #include "tonetcdf.h"
 #include "implicit0cells.h"
 #include "arraywriter.h"

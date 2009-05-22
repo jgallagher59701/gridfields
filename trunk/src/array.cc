@@ -4,6 +4,7 @@
 #include "util.h"
 #include "tuple.h"
 #include <string>
+#include <string.h>
 using namespace std;
 
 #define DEBUG 0
