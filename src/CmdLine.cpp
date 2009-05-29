@@ -34,6 +34,7 @@
 
 #include "CmdLine.h"
 #include "ctype.h"
+#include "string.h"
 
 /*------------------------------------------------------
   int CCmdLine::SplitLine(int argc, char **argv)
