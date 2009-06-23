@@ -29,7 +29,9 @@ date = '2004-06-22 00:15:00'
 # Compute the CMOP representation of time from the date
 # We use a web service here.
 
-resp = urllib.urlopen("http://data.stccmop.org/ws/util/modeltime?timestamp=%s" % (date,))
+url = "http://data.stccmop.org/ws/util/modeltime"
+qs = "?timestamp=%s" % (urllib.quote(date),)
+resp = urllib.urlopen(url + qs)
 data = resp.read()
 print data
 year, week, day, timestep = eval(data)
