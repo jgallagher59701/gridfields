@@ -57,6 +57,7 @@ string ElcircFile::getVarScheme() {
   const string &var = string(h.variable_nm);
   
   if (same(var,"salinity in psu")) return "salt:f";
+  if (same(var,"salt.63")) return "salt:f";
   if (same(var,"horizontal velocity")) return "u:f, v:f";
   if (same(var,"temperature in C")) return "temp:f";
   if (same(var,"vertical velocity")) return "w:f";
