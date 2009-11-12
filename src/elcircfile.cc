@@ -64,6 +64,7 @@ string ElcircFile::getVarScheme() {
   if (same(var,"diffusivity for transport")) return "tdiff:f";
   if (same(var,"air temperature")) return "airtemp:f";
   if (same(var,"z coordinates")) return "z:f";
+  if (same(var,"zcor.63")) return "z:f";
   if (same(var,"surface elevation")) return "elev:f";
   if (same(var,"fluxsu")) return "fluxsu:f";
   if (same(var,"fluxlu")) return "fluxlu:f";
