@@ -214,6 +214,16 @@ ginfo: ginfo.o
 #endif
 
 /*!
+ * @def __APPLE__
+ *
+ * Mac differences.
+ *
+ */
+#ifdef __APPLE__
+#define off_t long
+#endif
+
+/*!
  * Error codes, line numbers, not used right now.
  */
 int ElioErr = 0;

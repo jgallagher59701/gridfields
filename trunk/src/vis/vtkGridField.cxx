@@ -398,7 +398,7 @@ void vtkGridField::UpdateScalars(vtkUnstructuredGrid *ug,
   UnTypedPtr utp = a->getVals();
   vtkDataArray *sclrs = ug->GetPointData()->GetScalars();
   cout << attr << ", ";
-  sclrs->PrintSelf(cout, 5);
+  sclrs->PrintSelf(cout, vtkIndent(5));
   if (sclrs) {
     sclrs->SetVoidArray(utp, k, 1);
     sclrs->SetName(attr);
