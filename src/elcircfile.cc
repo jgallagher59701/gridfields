@@ -59,18 +59,29 @@ string ElcircFile::getVarScheme() {
   if (same(var,"salinity in psu")) return "salt:f";
   if (same(var,"salt.63")) return "salt:f";
   if (same(var,"horizontal velocity")) return "u:f, v:f";
+  if (same(var,"hvel.64")) return "u:f, v:f";
   if (same(var,"temperature in C")) return "temp:f";
+  if (same(var,"temp.63")) return "temp:f";
   if (same(var,"vertical velocity")) return "w:f";
+  if (same(var,"vert.63")) return "w:f";
   if (same(var,"diffusivity for transport")) return "tdiff:f";
+  if (same(var,"tdff.63")) return "tdiff:f";
   if (same(var,"air temperature")) return "airtemp:f";
+  if (same(var,"airt.61")) return "airtemp:f";
   if (same(var,"z coordinates")) return "z:f";
   if (same(var,"zcor.63")) return "z:f";
   if (same(var,"surface elevation")) return "elev:f";
+  if (same(var,"elev.61")) return "elev:f";
   if (same(var,"fluxsu")) return "fluxsu:f";
+  if (same(var,"flsu.61")) return "fluxsu:f";
   if (same(var,"fluxlu")) return "fluxlu:f";
+  if (same(var,"fllu.61")) return "fluxlu:f";
   if (same(var,"atmospheric pressure")) return "pressure:f";
+  if (same(var,"pres.61")) return "pressure:f";
   if (same(var,"hradd")) return "hradd:f";
+  if (same(var,"radd.61")) return "hradd:f";
   if (same(var,"hradu")) return "hradu:f";
+  if (same(var,"radu.61")) return "hradu:f";
   Fatal("No scheme found for variable %s.", var.c_str());
 }
 
