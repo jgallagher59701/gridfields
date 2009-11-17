@@ -12,6 +12,8 @@ import gridfield.algebra as algebra
 import gridfield.gfvis as vtkgridfield
 import gridfield.selfe as corie
 import os
+import os.path
+from struct import unpack
 
 name = 'GridFields'
 identifier = 'org.stccmop.gridfield'
@@ -154,6 +156,84 @@ class TimestepContext(Context):
 
     reg.add_input_port(cls, "SimulationContext", SimulationContext)
     reg.add_output_port(cls, "context", cls)
+
+class HeaderContext(Module):
+    def __init__(self):
+        Module.__init__(self)
+        self.dataformat = None
+        self.version = None
+        self.starttime = None
+        self.var = None
+        self.vardim = None
+        self.filename = None
+        self.steps = None
+        self.start = None
+        self.rank = None
+        self.skip = None
+        self.dim = None
+        self.f = None
+        
+    def compute(self):
+        context = self.getInputFromPort('Simulation Context')
+        catalog = corie.CORIECatalog()
+        self.filename = catalog.fileFromContext(dict(context))
+        if os.path.exists(self.filename):
+            self.readHeader()
+        else:
+            raise ModuleError(self, "Could not extract file from context")
+        
+        self.setResult("Data Format",self.dataformat)
+        self.setResult("Version",self.version)
+        self.setResult("Start Time", self.starttime.strip())
+        self.setResult("Variable", self.var)
+        self.setResult("Number of Steps", self.steps)
+        self.setResult("Start", self.start)
+        self.setResult("Skip", self.skip)
+        self.setResult("Rank", self.rank)
+        self.setResult("Dim", self.dim)
+        
+    def readHeader(self):
+        
+        self.f = file(self.filename)
+        
+        format = "48s48s48s48s48s"
+        (self.dataformat, \
+         self.version, \
+         self.starttime, \
+         self.var, \
+         self.vardim) = unpack(format,self.f.read(240))
+          
+        format = "ifiii"
+        (self.steps, \
+         self.start, \
+         self.skip, \
+         self.rank, \
+         self.dim) = unpack(format, self.f.read(20))
+        self.f.close()
+         
+    @classmethod
+    def RegisterMethods(cls, reg):
+        reg.add_module(cls)
+        reg.add_input_port(cls, "Simulation Context",
+                       (SimulationContext, 'The simulation context'))
+        reg.add_output_port(cls, "Data Format", 
+                            core.modules.basic_modules.String)
+        reg.add_output_port(cls, "Version",
+                            core.modules.basic_modules.String, optional=True)
+        reg.add_output_port(cls, "Start Time",
+                            core.modules.basic_modules.String)
+        reg.add_output_port(cls, "Variable",
+                            core.modules.basic_modules.String)
+        reg.add_output_port(cls, "Number of Steps",
+                            core.modules.basic_modules.Integer)
+        reg.add_output_port(cls, "Start",
+                            core.modules.basic_modules.Float)
+        reg.add_output_port(cls, "Skip",
+                            core.modules.basic_modules.Integer, optional=True)
+        reg.add_output_port(cls, "Rank", 
+                            core.modules.basic_modules.Integer, optional=True)
+        reg.add_output_port(cls, "Dim", 
+                            core.modules.basic_modules.Integer, optional=True)
 
 class Scan(ZeroaryGridFieldOperator):
     "An operator to read a gridfield from the catalog"
@@ -469,7 +549,7 @@ def initialize(*args, **keywords):
                Scan, Bind,
                Apply, Restrict,
                Cross, Merge, Regrid, Accumulate,
-               Fetch, GridFieldToVTK
+               Fetch, GridFieldToVTK, HeaderContext
               ]
 
     for cls in moduleclasses:
