@@ -1,6 +1,7 @@
 #ifndef _TYPE_H
 #define _TYPE_H
 #include <string>
+#include <stdio.h>
 
 enum e_Tag {VAR=1, VAL};
 typedef enum e_Tag Tag;
