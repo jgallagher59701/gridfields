@@ -4,6 +4,7 @@
 #include <ext/hash_map>
 #include <vector>
 #include <string>
+#include <stdio.h>
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)<(b)?(a):(b))
