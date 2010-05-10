@@ -41,7 +41,9 @@ class GridFieldOperator(Module):
                         (GridFieldExpression, 'The resulting gridfield expression'))
     def GetDimensionParam(self, name):
       if self.hasInputFromPort(name):
-        dim = self.getInputFromPort(name)
+        #this is a hack. We probably should change the Dimension Param to be int
+        # gridfields expects it to be of type dim_t which is not a float
+        dim = int(self.getInputFromPort(name))
       else: 
         dim = 0
       return dim
@@ -277,12 +279,12 @@ class Apply(UnaryGridFieldOperator):
     op = algebra.Apply(expr, dim, gf)
     self.setResult('Result', op) 
 
-class SiftOp(UnaryGridFieldOperator):
+class Sift(UnaryGridFieldOperator):
   "Remove all cells not required by the given dimension.  For example, use Sift to remove all the edges to conserve memory."
     
   @classmethod
   def RegisterMethods(cls, reg):
-    i = core.modules.basic_modules.Integer
+    f = core.modules.basic_modules.Float
     reg.add_module(cls)
     reg.add_input_port(cls, 'Dimension', (f, "The dimension ('rank') of the cells you want to keep."))
 
@@ -378,8 +380,11 @@ See Howe, Maier 2004; Howe, 2006.'''
   def RegisterMethods(cls, reg):
     reg.add_module(cls)
     s = core.modules.basic_modules.String
+    f = core.modules.basic_modules.Float
     reg.add_input_port(cls, 'Assignment Function', (s, "The name of a function to assign each cell in the target Gridfield to a set of cells in the source gridfield"))
     reg.add_input_port(cls, 'Aggregation Function', (s, "The name of a function that will aggregate a set of tuples into a single tuple."))
+    reg.add_input_port(cls, 'Left Dimension', (f, "The dimension ('rank') of the left GridField"))
+    reg.add_input_port(cls, 'Right Dimension', (f, "The dimension ('rank') of the right GridField"))
 
   def compute(self):
     left = self.getInputFromPort('Left GridField')
@@ -478,7 +483,7 @@ class GridFieldToVTK(UnaryGridFieldOperator):
       f = core.modules.basic_modules.Float
       reg.add_output_port(GridFieldToVTK, "range", [f,f])
 
-    def compute(self):      
+    def compute(self):
       gfop = self.getInputFromPort('GridField')
 
       # executes the recipe if necessary -- potentially big step
@@ -547,7 +552,7 @@ def initialize(*args, **keywords):
                Context, SimulationContext, TimestepContext,
                HindcastContext, ForecastContext, FileContext, MPIContext,
                Scan, Bind,
-               Apply, Restrict,
+               Apply, Restrict, Sift,
                Cross, Merge, Regrid, Accumulate,
                Fetch, GridFieldToVTK, HeaderContext
               ]
