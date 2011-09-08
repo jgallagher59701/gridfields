@@ -353,13 +353,13 @@ class DataProductRenderer:
     except:
       ops = [op]
 
-    as = [actor.Actor(o, scalar, vector) for o in ops]
+    ast = [actor.Actor(o, scalar, vector) for o in ops]
 
-    if len(as) == 0: raise "No gridfields to draw."
+    if len(ast) == 0: raise "No gridfields to draw."
       
-    self.PrepareSceneGrid(as[:1], 1,1)
+    self.PrepareSceneGrid(ast[:1], 1,1)
     p = self.GetScene()
-    for a in as[1:]: p.AddActor(a)
+    for a in ast[1:]: p.AddActor(a)
 
     #p.AmbientLightOn()
     if axes: 
