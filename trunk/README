@@ -16,23 +16,122 @@ For reference, see
 /vistrails_package is a package for the VisTrails workflow system
 
 == Requirements ==
-Python 2.4+
+Python 2.4+  (build requires headers, too: install python-dev package)
 swig 1.3+
 netcdf 3+ (with headers)
 VTK 4.2+ (optional, if vtk not detected through python, visualization components will not be built)
 
-== Installation of the gridfield python package ==
+== Installation of VTK ==
+(Optional, but it's useful to be able to look at your gridfields)
 
-Note: VTK headers are frequently installed in strange places.  
-If you plan to use VTK, edit the setup.py file and change the value of vtkincl 
+VTK is available through most package managers
+
+On ubuntu, you can probably do this:
+$ sudo apt-get install vtk
+$ sudo apt-get install libvtk5-dev
+
+Headers may be installed in 
+/usr/include/vtk
+or 
+/usr/include/vtk-5.4
+or similar
+
+You'll need to tell the setup.py file where they are 
+(I could not find a nice way to automate this.)
+
+IMPORTANT: If you see this when you try to create a vtk window:
+ 
+   ERROR: In /build/buildd/vtk-5.4.2/Rendering/vtkXOpenGLRenderWindow.cxx, line 399
+   vtkXOpenGLRenderWindow (0xa615028): Could not find a decent visual
+
+Try this:
+
+$ export LIBGL_ALWAYS_INDIRECT=y
+
+and run it again.
+
+Reference:
+http://ubuntuforums.org/showthread.php?t=1098568
+
+== Installation of the gridfield python package ==
 
 $ python setup.py build
 $ python setup.py install
 
+Note: VTK headers are frequently installed in strange places.  
+If you plan to use VTK, edit the setup.py file and change the value of vtkincl 
+
+
+== Testing ===
+
+$ cd examples
+$ python hellowworld.py
+
+You should see this:
+Warning: Changing array type from 2 to 1
+GridField:
+  <GRID> 
+  name: points
+  dim: 0
+  0-cells: 0x92870a0
+    <CELLARRAY>: 
+    size: 10
+nodecount: 10
+    cells: 
+(implicit)
+    dataset: 
+        3, 3: <root=0x929f458->14.1421, x=0x92870d8->10, y=0x928de90->20>
+        3, 3: <root=0x929f45c->15.1987, x=0x92870dc->11, y=0x928de94->21>
+        3, 3: <root=0x929f460->16.2481, x=0x92870e0->12, y=0x928de98->22>
+        3, 3: <root=0x929f464->17.2916, x=0x92870e4->13, y=0x928de9c->23>
+        3, 3: <root=0x929f468->18.3303, x=0x92870e8->14, y=0x928dea0->24>
+        3, 3: <root=0x929f46c->19.3649, x=0x92870ec->15, y=0x928dea4->25>
+        3, 3: <root=0x929f470->20.3961, x=0x92870f0->16, y=0x928dea8->26>
+        3, 3: <root=0x929f474->21.4243, x=0x92870f4->17, y=0x928deac->27>
+        3, 3: <root=0x929f478->22.4499, x=0x92870f8->18, y=0x928deb0->28>
+        3, 3: <root=0x929f47c->23.4734, x=0x92870fc->19, y=0x928deb4->29>
+address: 0x929e330
+name: root
+_size: 5
+type: 2
+data: 
+ 14.1421 15.1987 16.2481 17.2916 18.3303
+
+
+You may get a segfault.  This has to do with an ownership issue between python and C++.  It's a bug, but it should only manifest when python is trying to clean everything up.  Ignoring it is not unreasonable.  It will get fixed eventually.
+
+== More Testing ==
+
+If helloworld works, try 
+$ python simple2D.py
+
+This will try to download some sample data, parse it, 
+perform a simple operation, and render it to vtk (if vtk is installed)
+
+You should see:
+fetching sample data....
+Vertices:  20736
+Elements:  39133
+Attributes of vertices:  x:f, y:f, h:f, b:i, 
+address: 0x9974260
+name: x
+_size: 20736
+type: 2
+data: 
+ 57118.2 75204.4 63834.4 85568.8 67705 93403.8 118023 104216 96062 75888.9 83433.6 111231 101057 118553 91239.3 121952 132010 136275 152961 146071 154364 162768 138055 128530 145449 153239 162439 135930 60579.9 80287.2 98363.4 67766.8 80284.4 64919.2 88131.2 106104 116159 96130.5 108580 126136 143679 124020 133917 161185 151609 169234 170513 141906 189195 171737 173631 191898 203676 205677 171275 180031 196827 206320 188284 215703 213245 217802 228182 222749 227443 233606 220297 233036 238571 212224 227163 179580 197053 204810 178637 187830 196064 205084 216641 217828 238533 228386 230333 240156 212351 220568 229751 226535 233656 186866 237299 205511 84530.9 69677.2 103653 114038 62044.3 82820.3 75244.4 92657.8...
+Apply condition (326000<x) & (x<345000) & (287000<y) & (y<302000)
+Number of vertices after restriction:  2238
+Number of vertices after restriction:  4152
+
+
+================================
+== Esoteric Tasks below
+================================
 
 ==== Installation of VisTrails Package ====
+If you don't know what VisTrails is, then you don't need to do this.
 
-== Instructions ==
+= Instructions =
 
 cp -LR vistrails_package/gridfield ~/.vistrails/userpackages
 cp vistrails_package/examples/gridfieldexample.xml $VISTRAILS/examples
@@ -41,7 +140,7 @@ Enable the package in VisTrails:
 Menu Edit > Preferences 
 (Mac: Menu VisTrails > Preferences)
 
-== Examples == 
+= Examples = 
 
 A version tree showing how to use gridfields to 
 access CORIE data is at vistrails_package/gridfieldexample.xml

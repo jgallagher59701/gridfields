@@ -157,10 +157,12 @@ def Surface(context, bounds, vars, scale=1000):
   #addr = gf.Apply("addr=hpos*%s+vpos" % (V.getResult().Card(0),), 0, Hv)
 
 
+
 def main():
+
   context = {
    "mode"      : "rundir",
-   "rundir"    : "/home/workspace/ccalmr/hindcasts/2004-25-14/run/",
+   "rundir"    : "~/db7/escience_datasets/ocean_model/2006-25-14/run/",
    "runid"     : "2004-26-14",
    "runday"    : "5",
    "tstep"     : "0",
