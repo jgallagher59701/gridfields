@@ -1,5 +1,4 @@
 import gridfield.core as gf
-import gridfield.gfvis as gfvis
 from gridfield.algebra import Apply, Restrict, Aggregate, Wrap, Sift
 
 # This script uses a fairly low-level NetCDFAdaptor interface
@@ -23,7 +22,7 @@ from gridfield.algebra import Apply, Restrict, Aggregate, Wrap, Sift
 # == Read a GridField from NetCDF ==
 
 # Open the netcdf file
-nc = gf.NetCDFAdaptor("test.nc")
+nc = gf.NetCDFAdaptor("corie_sample_06222004.nc")
 nc.Open()
 
 # Construct an empty "grid" named "test"

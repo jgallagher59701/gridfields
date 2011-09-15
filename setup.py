@@ -22,7 +22,7 @@ elio = Extension('elio',
 
 # Ugh, does distutils provide an easy wa yto derive this 
 # location from the environment a la configure?
-vtkincl = '/usr/include/vtk'
+vtkincl = '/usr/include/vtk-5.4'
 vb = op.abspath(op.join('.','src/vis'))
 
 swig_opts = ['-c++', '-I%s' % b, '-I%s' % vb, '-I%s' % vtkincl, '-classic']
