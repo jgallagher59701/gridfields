@@ -8,15 +8,15 @@ VTKLIBS = -lvtkFiltering -lvtkCommon -lvtkRendering -lvtkIO
 #VTKINCPATH = /usr/local/include/vtk
 
 #/opt/intel_cc_80/bin/icc 
-CFLAGS = -g -m64 -fPIC
+CFLAGS = -g -fPIC
 LIBS = #-lvmon
 INCL = -I. -I/opt/boost-1.30.2/ 
 COMP = $(CPPC) $(CFLAGS) -c $< $(INCL) -isystem phony_sysinclude
 LINK = $(CPPC) -static $(CFLAGS) -o $@ $^ $(LIBS)
 COMPLINK = $(CPPC) $(CFLAGS) -o $@ $^ $(LIBS) $@.cc
 
-NETCDFINCL = /usr/local/netcdf/include/
-NETCDFLIBDIR = /usr/local/netcdf/lib/
+NETCDFINCL = /usr/include/
+NETCDFLIBDIR = /usr/lib/
 
 VTKLIBPATH = /usr/lib64/ 
 VTKINCPATH = /usr/include/vtk/
@@ -58,7 +58,7 @@ DISPLAYOBJS = vtkGridField.o visualize.o
 CSWITCHES = -O -DLINUX -I/usr/X11R6/include -L/usr/X11R6/lib
 TRILIBDEFS = -DTRILIBRARY
 
-all: $(OBJS)
+all: $(GRIDFIELDOBJS) $(OPERATOROBJS)
 
 clean:
 	rm *.o
@@ -469,46 +469,46 @@ constarray.o : constarray.cc constarray.h array.h tuple.h expr.h
 testgridfield : $(GRIDFIELDOBJS) testgridfield.o
 	$(LINK)
 
-testgridfield.o : testgridfield.cc 
+testgridfield.o : tests/testgridfield.cc 
 	$(COMP)
 
 testsift : $(GRIDFIELDOBJS) testsift.o sift.o
 	$(LINK)
 
-testsift.o : testsift.cc
+testsift.o : tests/testsift.cc
 	$(COMP)
 
 testdataset : $(DATAOBJS) testdataset.o
 	$(LINK)
 
-testdataset.o : testdataset.cc testdataset.h testarray.h
+testdataset.o : tests/testdataset.cc testdataset.h testarray.h
 	$(COMP)
 
 testgrid : grid.o cellarray.o testgrid.o timing.o cell.o util.o implicit0cells.o
 	$(LINK)
 
-testgrid.o : testgrid.cc 
+testgrid.o : tests/testgrid.cc 
 	$(COMP)
 
 testcellarray : $(CELLOBJS) testcellarray.o timing.o util.o
 	$(LINK)
 
-testcellarray.o : testcellarray.cc cellarray.h abstractcellarray.h implicit0cells.h
+testcellarray.o : tests/testcellarray.cc cellarray.h abstractcellarray.h implicit0cells.h
 	$(COMP)
 
 testtuple : testtuple.o tuple.o expr.o type.o util.o fparser.o fparser.hh fptypes.hh fpconfig.hh util.h expr.h type.h
 	$(LINK)
 
-testtuple.o : testtuple.cc tuple.h
+testtuple.o : tests/testtuple.cc tuple.h
 	$(COMP)
 
-testarray.o : testarray.cc array.h util.h tuple.h expr.h type.h
+testarray.o : tests/testarray.cc array.h util.h tuple.h expr.h type.h
 	$(COMP)
 
 testarray : array.o constarray.o testarray.o ${TUPLEOBJS}
 	$(LINK) 
 
-testexpr : testexpr.cc expr.o tuple.o fparser.o type.o
+testexpr : tests/testexpr.cc expr.o tuple.o fparser.o type.o
 	g++ -g testexpr.cc expr.o tuple.o -lwayne fparser.o -o testexpr
 
 netcdfadaptor.o : netcdfadaptor.cc netcdfadaptor.h gridfield.h cell.h
@@ -519,6 +519,8 @@ testnetcdfadaptor.o : tests/testnetcdfadaptor.cc gridfield.h netcdfadaptor.h
 
 testnetcdfadaptor : testnetcdfadaptor.o netcdfadaptor.o $(GRIDFIELDOBJS) $(SIMPLEOPS) util.o
 	$(LINK) -L$(NETCDFLIBDIR) -lnetcdf_c++ -lnetcdf
+
+tests : testnetcdfadaptor testexpr testarray testtuple testgrid testdataset testcellarray testgridfield testsift
 
 # utilities
 
