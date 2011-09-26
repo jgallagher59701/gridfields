@@ -7,7 +7,7 @@
 #include <string.h>
 using namespace std;
 
-#define DEBUG 0
+//#define DEBUG 0
 /*
 Array::Array(string nm, Scheme *sch, int sz) {
   if (sch->size() == 1) {
