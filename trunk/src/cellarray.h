@@ -77,9 +77,11 @@ class CellArray : public AbstractCellArray {
 
   vector<Cell> *getCellVector() { return &cells; }
   
-  bool cleanup_node_array;
  private:
   vector<Cell> cells;
+ public:
+  bool cleanup_node_array;
+ private:
   unsigned int nodecount;
   Node *node_array;
   //hash_map<Cell, int, CellHash, eqCell>  hashed_cells;

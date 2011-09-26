@@ -11,7 +11,6 @@ extern "C" {
 #include <iomanip>
 #include <fstream>
 #include "gridfield.h"
-#include "array.h"
 #include "onegrid.h"
 #include "scanhgrid.h"
 

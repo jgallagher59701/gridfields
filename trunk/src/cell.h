@@ -57,7 +57,7 @@ class Cell {
   void setsize(int sz) { size = sz; }
   void setnodes(Node *p);
   
-  int getsize() const {return size; };
+  unsigned int getsize() const {return size; };
   Node *getnodes() const { return nodes; };
   Node getnode(unsigned int i) const { return nodes[i]; };
  
@@ -71,7 +71,7 @@ class Cell {
 struct eqCell {
     bool operator()(const Cell &c1, const Cell &c2) const {
       if (c1.getsize() != c2.getsize()) return false;
-      for (int i=0; i<c1.getsize(); i++)
+      for (unsigned int i=0; i<c1.getsize(); i++)
 	if (c1.getnodes()[i] != c2.getnodes()[i]) return false;
       
       return true;

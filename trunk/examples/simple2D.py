@@ -60,8 +60,8 @@ rH = gf.Restrict(condition, 0, HH)
 
 # Important: Nothing has actually happend yet. 
 # GridField expressions are evaluated lazily 
-# the longer we wait, the better than chance we can 
-# find an optimization
+# the longer we wait, the better the chance we can 
+# do something smart
 
 # But here we'll ask for the result, which evaluates the expression
 answer = rH.getResult()
@@ -83,7 +83,10 @@ import gridfield.vis as vis
 
 # Show the gridfield, making whatever assumptions necessary
 # color by the "h" attribute
-vis.ToVTK(rH, "h", show=True)
+if os.fork():
+  vis.ToVTK(H, "h", show=True)
+else:
+  vis.ToVTK(rH, "h", show=True)
 
 # To save the image to a file and not interact with it, do this:
 # vis.ToVTK(rH, "h", capture=True, fname="depth.png")
