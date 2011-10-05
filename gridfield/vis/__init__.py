@@ -32,12 +32,20 @@ def ToVTK(op, scalar, vector=[], show=False, save=False, capture=False, fname="v
   if vector:
     convert.SetVectorAttributes(vector[0], vector[1], vector[2])
 
+
   convert.SetGridField(gH)
   convert.Update()
+  j=convert.visdim
 
   vtkGridField = convert.GetOutput()
-  PvtkGridField = vtkgridfield.vtkPythonObject(vtkGridField)
-  pd = PvtkGridField.GetPointData()
+  
+  if (j==0):
+   PvtkGridField = vtkgridfield.vtkPythonObject(vtkGridField)
+   pd = PvtkGridField.GetPointData()
+
+  else:
+   PvtkGridField = vtkgridfield.vtkPythonObject(vtkGridField)
+   pd = PvtkGridField.GetCellData()
 
   sclrs = pd.GetScalars()
   rng = sclrs.GetRange()

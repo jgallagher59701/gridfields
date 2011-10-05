@@ -22,7 +22,9 @@ class vtkGridField : public vtkUnstructuredGridSource {
   //void PrintSelf(ostream& os, vtkIndent indent);
 
   void Update();
-
+  void SetVisualizationDimension(Dim_t);
+  int GuessVisualizationDimension(GridField *gfpts);
+  int visdim;
   /************************/
   //  static vtkUnstructuredGrid *Convert(GridField *);
   void Convert(vtkUnstructuredGrid *vtkgrid);
@@ -65,7 +67,7 @@ class vtkGridField : public vtkUnstructuredGridSource {
   
   int guessType(Cell *c, int dim);
   void repairCell(Cell *c, int type);
-
+  void AttachAttributes(GridField *gfpts, Dim_t k, vtkDataSetAttributes *arrays);
  protected:
   
   void Execute();
@@ -91,5 +93,6 @@ class vtkGridField : public vtkUnstructuredGridSource {
 
   vtkDataArray *CopyDataArray(GridField *gf, Dim_t k, string attr);
 };
+
 
 #endif

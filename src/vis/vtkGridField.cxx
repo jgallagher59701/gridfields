@@ -14,18 +14,23 @@
 vtkGridField *vtkGridField::New() {
   vtkObject* ret = vtkObjectFactory::CreateInstance("vtkGridField");
   if(ret) {
-    return (vtkGridField*) ret;
+   vtkGridField* recast = (vtkGridField*) ret;
+   recast->visdim=-1;
+   return recast;
   }
-  return new vtkGridField();    
+  vtkGridField* recast = new vtkGridField();
+  recast->visdim=-1;
+  return recast;
 };
 
 
-void vtkGridField::Update() {
+void vtkGridField::Update() {  
   if ( this->GetOutput() ) {
     this->GetOutput()->Update();
   } else {
     this->Execute();
   }
+
 };
 
 void vtkGridField::Execute() { 
@@ -92,6 +97,49 @@ void vtkGridField::ValidateForConversion() {
       assert(sch.getType(sch.getAttribute(i)) == FLOAT);
     }
   }
+
+}
+
+int vtkGridField::GuessVisualizationDimension(GridField *gfpts)
+  {
+  Grid *G = gfpts->GetGrid();
+  int Dim=G->getdim();   
+  {if(gfpts->Arity(Dim)>0){visdim=Dim;}
+   else {visdim=0;}
+  }
+
+
+  return visdim;
+  }
+
+void vtkGridField::AttachAttributes(GridField *gfpts, Dim_t k, vtkDataSetAttributes *arrays)
+  {vtkDataArray *dat;
+   
+    float v;
+  for (int i=0; i<gfpts->Arity(k); i++) {
+  Scheme sch = gfpts->GetScheme(k);
+
+  string attr = sch.getAttribute(i);
+  vtkDataArray *  dat = MakeDataArray(gfpts,k, attr);
+    arrays->AddArray(dat);
+    dat->Delete();
+  }
+
+  arrays->SetActiveScalars(this->activeAttribute.c_str());
+
+  if (this->vectorAttribute1 != "" && this->vectorAttribute2 != "") {
+
+      vtkDataArray *vectors 
+              = this->MakeVectorArray(gfpts, k,
+			             this->vectorAttribute1, 
+			             this->vectorAttribute2,
+				     this->vectorAttribute3);
+    
+    
+    arrays->AddArray(vectors);
+    arrays->SetActiveVectors(vectors->GetName());
+  }
+
 }
 
 vtkUnstructuredGrid *vtkGridField::MakeGrid() {
@@ -104,10 +152,14 @@ vtkUnstructuredGrid *vtkGridField::MakeGrid() {
  * Assumes that the ValidForConversion method has been called.
  */
 
+void vtkGridField::SetVisualizationDimension(Dim_t k)
+{
+ this->visdim = k;
+}
+
 void vtkGridField::Convert(vtkUnstructuredGrid *vtkgrid) {
   GridField *gfpts = gf;
   ValidateForConversion();
-  
   Grid *G = gfpts->GetGrid();
   Scheme sch = gfpts->GetScheme(0);
   int card = gfpts->Size(0);
@@ -117,13 +169,13 @@ void vtkGridField::Convert(vtkUnstructuredGrid *vtkgrid) {
   AbstractCellArray *zerocells = G->getKCells(0);
   vtkpts->SetNumberOfPoints(card);
 
-  if (!gfpts->IsAttribute(0, this->activeAttribute)) {
-    stringstream ss;
-    ss << "vtkGridField::Convert : '" << this->activeAttribute;
-    ss << "' is not an attribute of this gridfield. \n";
-    gfpts->GetScheme(0).PrintTo(ss, 0);
-    Fatal(ss.str().c_str()); 
-  }
+//  if (!gfpts->IsAttribute(0, this->activeAttribute)) {
+//    stringstream ss;
+//    ss << "vtkGridField::Convert : '" << this->activeAttribute;
+//    ss << "' is not an attribute of this gridfield. \n";
+//    gfpts->GetScheme(0).PrintTo(ss, 0);
+//    Fatal(ss.str().c_str()); 
+//  }
   
   string x_attr, y_attr, z_attr;
   if (NamedPerspective()) {
@@ -221,41 +273,23 @@ void vtkGridField::Convert(vtkUnstructuredGrid *vtkgrid) {
   string attr;
   float v;
 
-  vtkDataSetAttributes *arrays;
+  vtkDataSetAttributes* arrays;
 
-  //if (gfpts->k == 0) {
+  if (visdim==-1)
+  {visdim=GuessVisualizationDimension(gfpts);}
+  if (visdim == 0) {cout<<"ahoy"<<endl;
     arrays = vtkgrid->GetPointData();
-  //} else if (gfpts->k == G->getdim()) {
-  //  arrays = vtkgrid->GetCellData();
-  //} else {
-  //  Fatal("VTK can only display gridfields with rank 0 or dim(G).");
-  //}
-
-  //AttachAttributes(gfpts, 0, arrays);
-  //AttachAttributes(gfpts, G->getdim(), arrays);
-  vtkDataArray *dat;
-  
-  for (int i=0; i<gfpts->Arity(0); i++) {
-    attr = sch.getAttribute(i);
-    dat = MakeDataArray(gfpts,0, attr);
-    arrays->AddArray(dat);
-    dat->Delete();
+    AttachAttributes(gfpts, 0, arrays);
+    } else if (visdim == G->getdim()) {
+    arrays =  (vtkDataSetAttributes *) vtkgrid->GetCellData();
+     AttachAttributes(gfpts, G->getdim(), arrays);
+    } else {
+    Fatal("VTK can only display gridfields with rank 0 or dim(G).");
   }
-  arrays->SetActiveScalars(this->activeAttribute.c_str());
-  
-  if (this->vectorAttribute1 != "" && this->vectorAttribute2 != "") {
 
-      vtkDataArray *vectors 
-              = this->MakeVectorArray(gfpts, 0,
-			             this->vectorAttribute1, 
-			             this->vectorAttribute2,
-				     this->vectorAttribute3);
-    
-    
-    arrays->AddArray(vectors);
-    arrays->SetActiveVectors(vectors->GetName());
-  }
-  
+ 
+
+
   //vtkgrid->PrintSelf(cout, 0);
 }
 
@@ -395,9 +429,9 @@ void vtkGridField::UpdateScalars(vtkUnstructuredGrid *ug,
                                         GridField *gf, Dim_t k, char *attr) {
   Array *a = gf->GetAttribute(k, attr);
   a->print();
-  UnTypedPtr utp = a->getVals();
+  UnTypedPtr utp = a->getVals();  cout << attr << ", ";
   vtkDataArray *sclrs = ug->GetPointData()->GetScalars();
-  cout << attr << ", ";
+  cout <<  "hi" << attr << ", ";
   sclrs->PrintSelf(cout, vtkIndent(5));
   if (sclrs) {
     sclrs->SetVoidArray(utp, k, 1);
@@ -467,7 +501,7 @@ vtkDataArray *vtkGridField::MakeDataArray(GridField *gfpts, Dim_t k, string attr
     }
 
     dat->SetName((char *)attr.c_str());
-    dat->SetVoidArray(gfpts->GetAttribute(0, attr)->getVals(), gfpts->Size(k), 1);
+    dat->SetVoidArray(gfpts->GetAttribute(k, attr)->getVals(), gfpts->Size(k), 1);
     //gfpts->getAttribute(attr.c_str())->print();
     return dat;
 }
