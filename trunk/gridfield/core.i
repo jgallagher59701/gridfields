@@ -92,6 +92,28 @@ namespace std {
   }
 }
 
+%typemap(in) Node * {
+  int i,sz;
+                                                                               
+  if (!PySequence_Check($input)) {
+    PyErr_SetString(PyExc_TypeError, "Expected a sequence");
+    return NULL;
+  }
+                                                                               
+  sz = PySequence_Size($input);
+  $1 = ($1_ltype) malloc(sz*sizeof($*1_ltype));
+  for (i = 0; i < sz; i++) {
+    PyObject *o = PySequence_GetItem($input, i);
+    if (!PyNumber_Check(o)) {
+      PyErr_SetString(PyExc_TypeError, "Sequence elements must be numbers");
+      return NULL;
+    }
+    $1[i] = ($*1_ltype) PyInt_AsLong(o);
+  }
+}
+
+
+
 %typemap(in) float * {
   int i,sz;
 

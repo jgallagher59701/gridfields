@@ -18,7 +18,6 @@ class GridField : public RankedDataset, public GridFieldOperator {
   GridField(Grid *G, Dim_t k, Array *arr);
   GridField(GridField *G);
   ~GridField();
-
   //void Bind(vector<Tuple *> &data);
 
   void setGrid(Grid *G); 
