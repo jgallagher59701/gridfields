@@ -112,7 +112,7 @@ class Nodes : public AssignmentFunction {
   Nodes() {};
   virtual void operator()(const CellId &cid, vector<CellId> &out) {
     Cell *c = T->getKCell(this->_i, cid);
-    for (int i=0; i<c->getsize(); i++) {
+    for (unsigned int i=0; i<c->getsize(); i++) {
       out.push_back(c->getnodes()[i]);
     }
   }
@@ -145,7 +145,7 @@ class adjacentNodes : public AssignmentFunction {
     this->kcells->getIncidentCells(m, ks);
     FOR(set<CellId>, kci, ks) {
       kc = this->kcells->getCell(*kci);
-      for (int i=0; i<kc->getsize(); i++) {
+      for (unsigned int i=0; i<kc->getsize(); i++) {
         Node n = kc->getnodes()[i];
         if (n != m) out.push_back(n);
       }
@@ -223,7 +223,7 @@ class neighbors : public AssignmentFunction {
     
     set<CellId> setOut;
     AbstractCellArray *dcells = S->GetGrid()->getKCells(this->_j);
-    for (int i=0; i<nc->getsize(); i++) {
+    for (unsigned int i=0; i<nc->getsize(); i++) {
       dcells->getIncidentCells(nc->getnodes()[i], setOut);
     }
 
@@ -785,7 +785,7 @@ class bypointer : public AssignmentFunction {
         p = *(int *)t.get(this->attr);
       }
     
-      if (p>=0 && p<S->Size(this->_j)) {
+      if (/* p>=0 && p is unsigned jhrg 10/5/11 */ p<S->Size(this->_j)) {
         out.push_back(p);
       }
     }

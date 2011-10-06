@@ -95,6 +95,11 @@ GridField *makeGridField(int size, string gridname, char *datname, int k) {
 
 int main(int argc, char **argv) {
   
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
   GridField *GF;
   GridField *GF2;
   GridField *rGF1;
@@ -105,34 +110,34 @@ int main(int argc, char **argv) {
   GF = makeGridField(12, "A", "x", 0);
   GF2 = makeGridField(12, "A", "x", 2);
 
-  GF2->PrintTo(cout, 5);
+  if (verbose) GF2->PrintTo(cout, 5);
   Assign::IncidentTo inci;
   Aggregate::Any mx("x", 4);
   GridField *R = AggregateOp::Aggregate(GF2, 0, inci, mx, GF2, 2);
-  R->PrintTo(cout, 5);
+  if (verbose) R->PrintTo(cout, 5);
   
-/*  
+#if 0
   //Assign::neighbors n;
   Assign::Nodes n;
   //Aggregate::_average<float> a("x");
   Aggregate::mkvector a("poly");
   //Aggregate::first a;
     
-//  GF->getAttribute("x")->print();
+  //  GF->getAttribute("x")->print();
   GridField *res = AggregateOp::Aggregate(GF2, 2, n, a, GF, 0); 
   //res->PrintTo(cout, 5);
-//  result->getAttribute("x")->print();
+  //  result->getAttribute("x")->print();
   vector<Tuple> *poly = *(vector<Tuple> **)res->GetAttributeValue(2,"poly",0);
-  cout << "main: ";
-  cout << poly << endl;
-  (*poly)[0].print();
+  if (verbose) cout << "main: ";
+  if (verbose) cout << poly << endl;
+  if (verbose) (*poly)[0].print();
   
   //cout << *(float *)(((*poly)[0])->get("x")) << endl;
   //cout << *(float *)((*poly)[0]).get("x") << endl; //", " << *(float *)((**poly)[1]).get("x") << ", " << *(float *)((**poly)[2]).get("x") << endl;
   
   
   //GF2->getScheme()->print();
- // result = ApplyOp::Apply(GF2, "result", "x<-5");
+  // result = ApplyOp::Apply(GF2, "result", "x<-5");
   //result->print();
   
   result = AccumulateOp::Accumulate(GF2, 2, "result", "result+1", "0", 0);
@@ -140,17 +145,18 @@ int main(int argc, char **argv) {
   result = AccumulateOp::Accumulate(GF2, 2, "z", "z+x", "x", 0);
   result->PrintTo(cout, 5);
   //
-//  result = ProjectOp::Project(GF2, vector<string>(1, string("x")));
-//  result->getScheme()->print();
+  //  result = ProjectOp::Project(GF2, vector<string>(1, string("x")));
+  //  result->getScheme()->print();
   //ProjectOp::Project(GF2, string("x"))->getScheme()->print();
- // result->getScheme()->print();
+  // result->getScheme()->print();
 
-//  ApplyOp *apply = new ApplyOp::ApplyOp(GF2, "aa", "x+2/x");
-//  apply->Execute();
-//  apply->getResult()->print();
+  //  ApplyOp *apply = new ApplyOp::ApplyOp(GF2, "aa", "x+2/x");
+  //  apply->Execute();
+  //  apply->getResult()->print();
   
-//  ApplyOp *apply = new ApplyOp::ApplyOp(GF2, "x=x+1");
-//  GridField *ans = apply->getResult();
-//  ans->print();
-*/
+  //  ApplyOp *apply = new ApplyOp::ApplyOp(GF2, "x=x+1");
+  //  GridField *ans = apply->getResult();
+  //  ans->print();
+#endif
 }
+

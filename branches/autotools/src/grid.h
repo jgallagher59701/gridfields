@@ -33,6 +33,7 @@ class Grid : public Object {
 
   Dim_t getdim();
   unsigned int Size(Dim_t k) {
+    cerr << "Grid::Size: k = " << k << endl;
     assert(k<cellsets.size()); 
     return cellsets[k]->getsize();
   };

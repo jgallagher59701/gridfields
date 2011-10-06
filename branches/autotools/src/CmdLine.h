@@ -120,13 +120,19 @@
 #define StringType string
 #endif
 
+#if 0
+// removed. jhrg 9/28/11
 // tell the compiler to shut up
 #pragma warning(disable:4786)
+#endif
 
 //#include <iostream> // you may need this
 #include <map>
 #include <string>
 #include <vector>
+
+#include "util.h"
+
 using namespace std ;
 
 // handy little container for our argument vector
@@ -206,7 +212,7 @@ public:
       cmdLine.GetArgument("-b", 1)     throws (int)0, returns an empty string
 
    ------------------------------------------------------*/
-   StringType  GetArgument(const char *pSwitch, int iIdx); 
+   StringType  GetArgument(const char *pSwitch, idx iIdx); 
 
    /*------------------------------------------------------
       int CCmdLine::GetArgumentCount(const char *pSwitch)

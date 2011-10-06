@@ -4,6 +4,11 @@
 
 int main(int argc, char **argv) {
 
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
   Scheme sch;
   sch.addAttribute("x", FLOAT);
   sch.addAttribute("y", FLOAT);
@@ -23,13 +28,13 @@ int main(int argc, char **argv) {
   tup.set("h", &h);
   tup.set("b", &b);
 
-  tup.print();
+  if (verbose) tup.print();
 
   TupleFunction tf;
   tf.Parse("z=x+b");
   Tuple tout(tf.ReturnType());
   char *block = tout.Allocate();
   tf.Eval(tup, tout);
-  tout.print();
+  if (verbose) tout.print();
 }
 

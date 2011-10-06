@@ -37,7 +37,7 @@ Grid *makeGrid(int scale, string name) {
   grid->setKCells(twocells, 2);
   //grid->print(0);
   //getchar();
-  printf("foo\n");
+  //printf("foo\n");
   return grid; 
 }
 
@@ -55,6 +55,11 @@ Array *makeIntArray(int size, char *name) {
 }
 
 int main(int argc, char **argv) {
+
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
   
   Grid *G;
   GridField *GF;
@@ -67,13 +72,13 @@ int main(int argc, char **argv) {
 
   GF = new GridField(G);
   GF->AddAttribute(k, data);
-  cout << GF->GetAttribute(k, "x")->getName() << endl;
-  printf("bound\n");
-  printf("Valid? %i\n", !GF->notValid());
- // GF->PrintTo(cout, 0);
+  if (verbose) cout << GF->GetAttribute(k, "x")->getName() << endl;
+  if (verbose) printf("bound\n");
+  if (verbose) printf("Valid? %i\n", !GF->notValid());
+  //GF->PrintTo(cout, 0);
   //GF->Prune(0);
   //GF->PrintTo(cout, 0);
   GF->Apply("y=x*4", 0);
-  GF->print();
+  if (verbose) GF->print();
 }
 

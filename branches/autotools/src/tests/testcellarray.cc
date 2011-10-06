@@ -5,6 +5,11 @@
 
 int main(int argc, char **argv) {
   
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
   CellArray *cells1 = new CellArray();
   CellArray *cells2 = new CellArray();
 	//cout << "allocated\n";
@@ -12,7 +17,6 @@ int main(int argc, char **argv) {
   Node nodes[3];
   int i;
 
-  
   nodes[0] = 0;
   nodes[1] = 1;
   nodes[2] = 2;
@@ -42,7 +46,7 @@ int main(int argc, char **argv) {
   nodes[2] = 6;
   cells1->addCellNodes(nodes, 3);
   
-  printf("loading...\n"); 
+  if (verbose) printf("loading...\n"); 
  
   for (i=0; i<10; i++) {
     nodes[0] = i;
@@ -50,15 +54,16 @@ int main(int argc, char **argv) {
     nodes[2] = i+2;
     cells2->addCellNodes(nodes, 3);
   }
-  /*
-  printf("loading another...\n");  
+
+#if 0
+  if (verbose) printf("loading another...\n");  
   for (i=0; i<10; i++) {
     nodes[0] = 2-i;
     nodes[1] = 3-i;
     nodes[2] = 4-i;
     cells2->addCellNodes(nodes, 3);
   }
-  */
+#endif
  
   cellsout = cells1->Intersection(cells2);
   Cell *c1 = cells1->getCell(0);
@@ -67,9 +72,9 @@ int main(int argc, char **argv) {
   set<CellId> cs;
   cells1->getIncidentCells(3, cs);
   set<CellId>::iterator p;
-  for (p=cs.begin(); p!=cs.end(); ++p) {
-    cout << (*p) << endl; 
-  }
+  if (verbose)
+    for (p=cs.begin(); p!=cs.end(); ++p)
+      cout << (*p) << endl; 
   
 //  c1->print();
 //  c2->print();
@@ -92,29 +97,29 @@ int main(int argc, char **argv) {
   rawcells[8] = 4;
 
   CellArray *newtest = new CellArray(rawcells, 2); 
-  newtest->print();  
+  if (verbose) newtest->print();  
 
   CellArray *bad = new CellArray(rawcells, 2, 3);
-  bad->print();
+  if (verbose) bad->print();
 
   Implicit0Cells x(5);
-  x.print();
+  if (verbose) x.print();
 
   Implicit0Cells y(3);
-  y.print();
+  if (verbose) y.print();
   
   Implicit0Cells *z = x.Intersection(&y);
-  z->print();
+  if (verbose) z->print();
 
   ImplicitCrossNodeMap h(&x,&y); 
   z = x.Cross(&y, h);
-  z->print();
+  if (verbose) z->print();
 
   ImplicitCrossNodeMap h2(&x, &x);
-  x.Cross(newtest, h2)->print();
+  if (verbose) x.Cross(newtest, h2)->print();
 
   Cell c(x.getCellCopy(2));
-  c.print();
+  if (verbose) c.print();
 
   z->unref();
 }

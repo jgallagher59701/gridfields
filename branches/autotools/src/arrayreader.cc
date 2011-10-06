@@ -333,7 +333,7 @@ void ArrayReader::ReadTuples(istream &f, int *positions, int size, Scheme *sch, 
    
   // NOT PORTABLE
   int valsize=0;
-  for (int j=0; j<sch->size(); j++) {
+  for (unsigned int j=0; j<sch->size(); j++) {
     valsize = valsize + typesize(sch->getType(j));
   }
   

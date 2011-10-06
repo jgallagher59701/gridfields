@@ -1,39 +1,46 @@
+#include <cstdlib>
 #include "grid.h"
 
 Grid *makeGrid(int start, int stop, char *name);
 int main(int argc, char **argv) {
+
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
   CellArray *zerocells;  
   Grid *grid;
   Node triangle[3];
   Node segment[2];
   Node node;
   int i;
-  
   bool wf;
 
-  cout << "making grid \n";
+  if (verbose) cout << "making grid \n";
   grid = makeGrid(7, 14, "triangles");
 
   //printGrid(grid, 0);
-  printf("grid well formed? "); 
+  if (verbose) printf("grid well formed? "); 
   wf = grid->checkWellFormed();
-  printf("%i\n", wf);
+  if (verbose) printf("%i\n", wf);
   //getchar(); 
- /* 
+
+#if 0
   zerocells = new CellArray();
   for (i=0; i<12; i++) {
     node = i;
     zerocells->addCellNodes(&node, 1);
   }
   
-  printf("set 0 cells again\n"); 
+  if (verbose) printf("set 0 cells again\n"); 
   grid->setKCells(zerocells, 0);
   
   grid->print();
-  printf("grid well formed? "); 
+  if (verbose) printf("grid well formed? "); 
   wf = grid->checkWellFormed();
-  printf("%i\n", wf); 
-  */
+  if (verbose) printf("%i\n", wf); 
+#endif
   //getchar(); 
   
   //grid->setImplicit0Cells(4);
@@ -45,12 +52,12 @@ int main(int argc, char **argv) {
   //getchar(); 
   
   Grid *grid2 = makeGrid(11, 17, "small");
-  grid2->print();
-  cout << "intersecting...\n";
+  if (verbose) grid2->print();
+  if (verbose) cout << "intersecting...\n";
   Grid *igrid = grid->Intersection(grid2);
   wf = igrid->checkWellFormed();
-  cout << "Intersection well formed? " << (int) wf << "\n";
-  igrid->print();
+  if (verbose) cout << "Intersection well formed? " << (int) wf << "\n";
+  if (verbose) igrid->print();
   
   delete grid;
 }

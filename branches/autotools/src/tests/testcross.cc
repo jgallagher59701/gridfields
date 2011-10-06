@@ -1,3 +1,6 @@
+
+#include <cstdio>
+
 #include "grid.h"
 #include "onegrid.h"
 #include "gridfield.h"
@@ -78,31 +81,47 @@ GridField *makeGridField(int size, char *gridname, char *datname, int k) {
 }
 
 int main(int argc, char **argv) {
-  
-  GridField *Aa;
-  GridField *Bb;
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
 
-  cout << "Test 1" << endl;
-  OneGrid *A = new OneGrid("A", 3);
-  Array *a = makeFloatArray(3, "a");
-//  GF = makeGridField(5, "A", "x", 0);
-  OneGrid *B = new OneGrid("B", 3);
-  Array *b = makeFloatArray(3, "b");
-  
-  Aa = new GridField(A, 0, a);
-  //Aa->print(3);
-  Bb = new GridField(B, 0, b);
-//  GF2 = makeGridField(12, "A", "x", 2);
-  
-  GridField *Result = CrossOp::Cross(Aa,Bb);
-  
-  Result->print();
+  try {
+    GridField *Aa;
+    GridField *Bb;
 
-  FileArrayReader *ar = new FileArrayReader("dat");
-  Array *arr = new Array("io", FLOAT, 3*3);
-  ar->Read(Result, 0, arr);
+    if (verbose) cout << "Test 1" << endl;
+    OneGrid *A = new OneGrid("A", 3);
+    Array *a = makeFloatArray(3, "a");
+    //  GF = makeGridField(5, "A", "x", 0);
+    OneGrid *B = new OneGrid("B", 3);
+    Array *b = makeFloatArray(3, "b");
+  
+    Aa = new GridField(A, 0, a);
+    //Aa->print(3);
+    Bb = new GridField(B, 0, b);
+    //  GF2 = makeGridField(12, "A", "x", 2);
+  
+    GridField *Result = CrossOp::Cross(Aa,Bb);
+  
+    if (verbose) Result->print();
+
+    FileArrayReader *ar = new FileArrayReader("dat");
+    Array *arr = new Array("io", FLOAT, 3*3);
+    ar->Read(Result, 0, arr);
  
-  arr->print();
+    if (verbose) arr->print();
   
-//  cout << "Test 2: Indirect Execution" << endl;
+    //  cout << "Test 2: Indirect Execution" << endl;
+
+    return EXIT_SUCCESS;
+  }
+  catch (std::string &e) {
+    cerr << "Error: " << e << endl;
+    return EXIT_FAILURE;
+  }
+  catch (...) {
+    cerr << "Unknown error." << endl;
+    return EXIT_FAILURE;
+  }
 }
