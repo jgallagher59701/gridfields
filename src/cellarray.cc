@@ -49,7 +49,14 @@ CellArray::CellArray(Node *celldata, int cellcount, int nodespercell) :
 CellArray::~CellArray() {
   if (this->cleanup_node_array) {
     DEBUG << "DELETING node array" << endl;
+#if 0
+    // This delete causes a memory fault (the Node* is likely deleted
+    // by whatever code allocated the memory. I tried plain delete to
+    // see if mis-matched plain -vs- array delete was the issue, but
+    // it is not.
+    // jhrg 9/29/11
     delete [] node_array;
+#endif
   }
 }
 

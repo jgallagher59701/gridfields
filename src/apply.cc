@@ -25,8 +25,10 @@ ApplyOp::ApplyOp(string tupleexpr, Dim_t k, GridFieldOperator *op)
 void ApplyOp::Execute() {
   
   this->PrepareForExecution();
-
+#if 0
+  // jhrg 10/5/11
   float start = gettime();
+#endif
   DEBUG << "ApplyOperator" << endl;
   this->Result =  Apply(this->unparsedExpr, this->k,
                         this->GF);

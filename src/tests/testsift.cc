@@ -77,11 +77,17 @@ GridField *makeGridField(int size, char *gridname, char *datname, int k) {
 }
 
 int main(int argc, char **argv) {
+
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
   GridField *GF;
 
   GF = makeGridField(12, "A", "x", 0);
-  GF->PrintTo(cout, 4);
+  if (verbose) GF->PrintTo(cout, 4);
   GridField *GF2 = SiftOp::Sift(0, GF);
-  GF2->PrintTo(cout, 5);
+  if (verbose) GF2->PrintTo(cout, 5);
 }
 

@@ -1,33 +1,61 @@
+
+#include <cstdio>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 #include "array.h"
 #include "grid.h"
 #include "elcircfile.h"
 #include "arrayreader.h"
 #include "gridfield.h"
 
+// Was originally used explicitly in the code
+// "/home/workspace/ccalmr/forecasts/2003-25-RWKoo/run/1_hvel.64"
+#define TEST_DATA "data/1_hvel.64"
+
 using namespace std;
 
 Grid *makeGrid(int scale, string name);
 
 int main(int argc, char **argv) {
-  ElcircFile ef("/home/workspace/ccalmr/forecasts/2003-25-RWKoo/run/1_hvel.64");
-  cout << ef.h.variable_nm << "|" << endl;
-  string nm(ef.h.variable_nm);
-  string nm2(ef.h.variable_nm);
-  cout << nm << endl;
-  cout << (nm == "horizontal velocity") << endl;
-  cout << (nm == string("horizontal velocity")) << endl;
-  cout << (nm == nm2) << endl;
+
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
+  try {
+    ElcircFile ef(TEST_DATA);
+    if (verbose) cout << ef.h.variable_nm << "|" << endl;
+    string nm(ef.h.variable_nm);
+    string nm2(ef.h.variable_nm);
+    if (verbose) {
+      cout << nm << endl;
+      cout << (nm == "horizontal velocity") << endl;
+      cout << (nm == string("horizontal velocity")) << endl;
+      cout << (nm == nm2) << endl;
   
-  cout << "offset: " << ef.getVariableOffset(0, 0, 0) << endl;
-  cout << "offset: " << ef.getVariableOffset(3, 0, 0) << endl;
-  string s("u:f, v:f");
-  Scheme sch(s);
-  sch.print();
-  ProjectArrayReader pa("/home/workspace/ccalmr/forecasts/2003-25-RWKoo/run/1_hvel.64", 1204616, "foo", s, "u");
-  pa.GetScheme().print();
+      cout << "offset: " << ef.getVariableOffset(0, 0, 0) << endl;
+      cout << "offset: " << ef.getVariableOffset(3, 0, 0) << endl;
+    }
+    string s("u:f, v:f");
+    Scheme sch(s);
+    if (verbose) sch.print();
+    ProjectArrayReader pa(TEST_DATA, 1204616, "foo", s, "u");
+    if (verbose) pa.GetScheme().print();
+
+    return EXIT_SUCCESS;
+  }
+  catch (std::string &e) {
+    cerr << "Error: " << e << endl;
+    return EXIT_FAILURE;
+  }
+  catch (...) {
+    cerr << "Unknown Error." << endl;
+    return EXIT_FAILURE;
+  }
 }
 
 Grid *makeGrid(int scale, string name) {

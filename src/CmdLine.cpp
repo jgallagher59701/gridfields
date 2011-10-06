@@ -221,25 +221,22 @@ StringType CCmdLine::GetSafeArgument(const char *pSwitch, int iIdx, const char *
 
 ------------------------------------------------------*/
 
-StringType CCmdLine::GetArgument(const char *pSwitch, int iIdx)
+StringType CCmdLine::GetArgument(const char *pSwitch, idx iIdx)
 {
-   if (HasSwitch(pSwitch))
-   {
-	   CCmdLine::iterator theIterator;
+    if (HasSwitch(pSwitch)) {
+	CCmdLine::iterator theIterator;
 
-      theIterator = find(pSwitch);
-	   if (theIterator!=end())
-      {
-         if ((*theIterator).second.m_strings.size() > iIdx)
-         {
-            return (*theIterator).second.m_strings[iIdx];
-         }
-      }
-   }
+	theIterator = find(pSwitch);
+	if (theIterator!=end()) {
+	    if ((*theIterator).second.m_strings.size() > iIdx) {
+		return (*theIterator).second.m_strings[iIdx];
+	    }
+	}
+    }
 
-   throw (int)0;
+    throw (int)0;
 
-   return "";
+    return "";
 }
 
 /*------------------------------------------------------

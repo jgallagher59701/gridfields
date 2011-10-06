@@ -78,31 +78,37 @@ GridField *makeGridField(int size, char *gridname, char *datname, int k) {
 }
 
 int main(int argc, char **argv) {
+
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
   GridField *GF;
   GridField *rGF1;
   GridField *rGF2;
   GridField *mGF;
 
-  cout << "Test 1: indirect execution" << endl;
+  if (verbose) cout << "Test 1: indirect execution" << endl;
 
   GF = makeGridField(12, "A", "x", 0);
 
-  GF->PrintTo(cout, 4);
+  if (verbose) GF->PrintTo(cout, 4);
   string p = "x<6";
   string q = "x>-2";
-  printf("restricting...\n");
+  if (verbose) printf("restricting...\n");
   rGF1 = RestrictOp::Restrict(p, 0, GF);
   //rGF1->print(0);
   rGF2 = RestrictOp::Restrict(q, 0, GF);
   //rGF2->print(0);
   //getchar();
-  printf("merging...");
+  if (verbose) printf("merging...");
   mGF = MergeOp::Merge(rGF1, rGF2); 
-  mGF->PrintTo(cout, 5);
-  printf("merged...\n");
-  /*  
+  if (verbose) mGF->PrintTo(cout, 5);
+  if (verbose) printf("merged...\n");
 
-  cout << "Test 2: indirect execution" << endl;
+#if 0
+  if (verbose) cout << "Test 2: indirect execution" << endl;
 
   GridFieldOperator *r1 = new RestrictOp(p, 0, GF);
   GridFieldOperator *r2 = new RestrictOp(q, 0, GF);
@@ -110,9 +116,9 @@ int main(int argc, char **argv) {
 
   m1->Execute();
 
-  r1->getResult()->PrintTo(cout, 4);
-  r2->getResult()->PrintTo(cout, 4);
-  m1->getResult()->PrintTo(cout, 4);
-  */
+  if (verbose) r1->getResult()->PrintTo(cout, 4);
+  if (verbose) r2->getResult()->PrintTo(cout, 4);
+  if (verbose) m1->getResult()->PrintTo(cout, 4);
+#endif
 }
 

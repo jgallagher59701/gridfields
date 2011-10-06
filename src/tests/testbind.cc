@@ -1,3 +1,6 @@
+
+#include <cstdio>
+
 #include "grid.h"
 #include "gridfield.h"
 #include "bind.h"
@@ -76,26 +79,43 @@ GridField *makeGridField(int size, string gridname, char *datname, int k) {
 }
 
 int main(int argc, char **argv) {
-  GridField *GF;
-  GridField *Result;
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
 
-  GF = makeGridField(12, "A", "x", 0);
-  Array *arr = new Array("io", FLOAT, 12);
-  GF->Bind(0, arr);
+  try {
+    GridField *GF;
+    GridField *Result;
 
-  GridField *aGF = AccumulateOp::Accumulate(GF, 0, "result", "result+1", "0", 0);
+    GF = makeGridField(12, "A", "x", 0);
+    Array *arr = new Array("io", FLOAT, 12);
+    GF->Bind(0, arr);
 
-  aGF->print(9);
-  printf("restricting...\n");
-  Result = RefRestrictOp::Restrict("x<4",0,GF);
-  Result->print(0);
-  Result = RefRestrictOp::Restrict("x>-4",0,Result);
-  Result->print(10);
+    GridField *aGF = AccumulateOp::Accumulate(GF, 0, "result", "result+1", "0", 0);
 
-  FileArrayReader *ar = new FileArrayReader("dat", 0);
-  ar->setPatternAttribute("result");
-  GridField *G = BindOp::Bind("io", FLOAT, ar, 0, Result);
+    if (verbose) aGF->print(9);
+    printf("restricting...\n");
+    Result = RefRestrictOp::Restrict("x<4",0,GF);
+    if (verbose) Result->print(0);
+    Result = RefRestrictOp::Restrict("x>-4",0,Result);
+    if (verbose) Result->print(10);
+
+    FileArrayReader *ar = new FileArrayReader("dat", 0);
+    ar->setPatternAttribute("result");
+    GridField *G = BindOp::Bind("io", FLOAT, ar, 0, Result);
  
-  G->print();
+    if (verbose) G->print();
+
+    return EXIT_SUCCESS;
+  }
+  catch (std::string &e) {
+    cerr << "Error: " << e << endl;
+    return EXIT_FAILURE;
+  }
+  catch (...) {
+    cerr << "Unknown Error." << endl;
+    return EXIT_FAILURE;
+  }
 }
 

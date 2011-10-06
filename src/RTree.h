@@ -1576,7 +1576,11 @@ bool RTREE_QUAL::Search(Node* a_node, Rect* a_rect, int& a_foundCount, bool a_re
         DATATYPE& id = a_node->m_branch[i].m_data;
         
         // NOTE: There are different ways to return results.  Here's where to modify
-        if(&a_resultCallback)
+	// TODO
+        // I think the address-of operator below might be an error -
+        // this is always true. However, maybe the intent is to test
+        // if the callback was set or is null? jhrg 10/5/11
+	if(&a_resultCallback)
         {
           ++a_foundCount;
           if(!a_resultCallback(id, a_context))

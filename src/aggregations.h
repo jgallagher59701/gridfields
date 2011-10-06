@@ -172,10 +172,12 @@ class Any : public AggregationFunction {
         }
       }
       *valptr = 0;
+#if 0
       cout << "none" << endl;
+#endif
       return;
     }
-    Scheme *getOutScheme(Scheme *insch) {
+    Scheme *getOutScheme(Scheme * /*insch unused jhrg 10/5/11*/) {
       outsch.clear();
       outsch.addAttribute(setattr, INT);
       return &outsch;
@@ -688,7 +690,7 @@ class Count : public AggregationFunction {
     *valptr = tupset.size();
   }
   
-  Scheme *getOutScheme(Scheme *insch) {
+  Scheme *getOutScheme(Scheme */*insch*/) {
     outsch.clear();
     outsch.addAttribute("count", INT);
     return &outsch;
@@ -745,7 +747,7 @@ class area : public AggregationFunction {
       *area =*area/2;
     }
      
-    Scheme *getOutScheme(Scheme *insch) {
+    Scheme *getOutScheme(Scheme */*insch*/) {
       outsch.clear();
       outsch.addAttribute(attr, FLOAT);
       return &outsch;
@@ -784,7 +786,7 @@ class mkvector : public AggregationFunction {
       //cout << "tuple: " << *(float *) (((*val)[0]).get("x")) << endl;
     }
   
-  Scheme *getOutScheme(Scheme *insch) {
+    Scheme *getOutScheme(Scheme */*insch*/) {
     outsch.clear();
     outsch.addAttribute(attr, OBJ);
     return &outsch;
@@ -904,7 +906,7 @@ class interpolate3D : public AggregationFunction {
     
   void operator()(vector<Tuple> &tupset, Tuple &out);
   
-  Scheme *getOutScheme(Scheme *insch) {
+  Scheme *getOutScheme(Scheme */*insch*/) {
     outsch.clear();
     for (unsigned int j=0; j<attrs.size(); j++) {
       outsch.addAttribute(attrs[j], FLOAT);
@@ -957,7 +959,7 @@ class interpolate2D : public AggregationFunction {
     //cout << "val: " << *(float*)out.get(attr) << endl;
   }
   
-  Scheme *getOutScheme(Scheme *insch) {
+  Scheme *getOutScheme(Scheme */*insch*/) {
     Scheme *outsch = new Scheme();
     outsch->addAttribute(attr, FLOAT);
     return outsch;
@@ -1133,7 +1135,7 @@ class statistics : public AggregationFunction {
     out.set("cnt"+attr, new int(cnt));
   }
   
-  Scheme *getOutScheme(Scheme *insch) {
+  Scheme *getOutScheme(Scheme */*insch*/) {
     Scheme *sch = new Scheme();
     sch->addAttribute("max"+attr, FLOAT);
     sch->addAttribute("min"+attr, FLOAT);

@@ -76,51 +76,57 @@ GridField *makeGridField(int size, char *gridname, char *datname, int k) {
 }
 
 int main(int argc, char **argv) {
+
+  bool verbose = false;
+  // replace this with getopt? jhrg 9/30/11
+  if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
+    verbose = true;
+
   GridField *GF;
   GridField *Result;
 
   GF = makeGridField(12, "A", "x", 0);
   
-  cout << "TEST 1" << endl;
+  if (verbose) cout << "TEST 1" << endl;
   string p = "x<4";
   string q = "x>4";
   
-  GF->PrintTo(cout, 9);
+  if (verbose) GF->PrintTo(cout, 9);
   Result = RestrictOp::Restrict("x<-100", 0, GF);
-  Result->PrintTo(cout, 9);
-  /*
-  printf("restricting...\n");
+  if (verbose) Result->PrintTo(cout, 9);
+
+#if 0
+  if (verbose) printf("restricting...\n");
   Result = RefRestrictOp::Restrict(p, 0, GF);
   //Result->PrintTo(cout, 0);
   Result = RefRestrictOp::Restrict(q, 0, Result);
-  Result->PrintTo(cout, 10);
+  if (verbose) Result->PrintTo(cout, 10);
 
   ArrayReader *ar = new FileArrayReader("dat", 0);
   Array *arr = new Array("io", FLOAT);
   ar->Read(Result, 0, arr);
  
-  arr->print();
+  if (verbose) arr->print();
  
-  cout << "TEST 1: Indirect execution." << endl;
-  */
+  if (verbose) cout << "TEST 1: Indirect execution." << endl;
+#endif
 
   GF = makeGridField(12, "A", "x", 0);
   GridFieldOperator *op1 = new RestrictOp(p, 0, GF);
-  cout << "Got op" << endl;
+  if (verbose) cout << "Got op" << endl;
   Result = op1->getResult();
-  Result->PrintTo(cout, 10);
+  if (verbose) Result->PrintTo(cout, 10);
   GridFieldOperator *op2 = new RestrictOp(q, 0, op1);
-  cout << "Got op2" << endl;
+  if (verbose) cout << "Got op2" << endl;
   
   GridFieldOperator *op3 = new ApplyOp("a=x*2", 0, op2);
-  cout << "Got op3" << endl;
+  if (verbose) cout << "Got op3" << endl;
   GridFieldOperator *op4 = new RestrictOp("a>-2", 0, op3);
-  cout << "Got op4" << endl;
+  if (verbose) cout << "Got op4" << endl;
   op4->Execute();
-  cout << "Executed" << endl;
+  if (verbose) cout << "Executed" << endl;
  
   Result = op4->getResult();
-  Result->PrintTo(cout, 10);
-  
+  if (verbose) Result->PrintTo(cout, 10);
 }
 
