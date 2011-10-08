@@ -55,7 +55,9 @@ extern "C" {
 %include typemaps.i
 %include std_string.i
 %include "std_vector.i"
+%include "cpointer.i"
 
+%pointer_cast(AbstractCellArray * , CellArray *, castToCellArray)
 namespace std {
    %template(vectori) vector<int>;
    %template(vectord) vector<double>;
