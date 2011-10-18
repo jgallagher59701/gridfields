@@ -61,7 +61,10 @@ class CrossOrdMap : public OrdMap {
 	
       }
     }
-  };
+
+  Fatal("Base Ordinal not found for position %i", pos);
+return -1;
+};
   
  private:
   // G = A x B
@@ -69,6 +72,7 @@ class CrossOrdMap : public OrdMap {
   Grid *B;
   Grid *G;
   GridField *GF;
+
 };
 
 #endif /* _CROSSORDMAP_H */

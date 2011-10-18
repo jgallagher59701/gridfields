@@ -199,6 +199,8 @@ ginfo: ginfo.o
 #include <math.h>
 #include <time.h>
 #include "elio.h"
+#include <string.h>
+
 
 /*!
  * @def WIN32
@@ -2492,8 +2494,8 @@ int ElioReadGrid(char *gname, ElioGrid * g)
     if ((fp = fopen(gname, "rb")) == NULL) {
 	return ELIO_ERR;
     }
-    fgets(buf, 255, fp);
-    fgets(buf, 255, fp);
+    char* creturn=fgets(buf, 255, fp);
+    creturn=fgets(buf, 255, fp);
     sscanf(buf, "%d %d", &g->ne, &g->np);
     g->x = (double *) malloc(g->np * sizeof(double));
     g->y = (double *) malloc(g->np * sizeof(double));
@@ -2503,11 +2505,11 @@ int ElioReadGrid(char *gname, ElioGrid * g)
 	g->icon[i] = (int *) malloc(g->ne * sizeof(int));
     }
     for (i = 0; i < g->np; i++) {
-	fgets(buf, 255, fp);
+	creturn=fgets(buf, 255, fp);
 	sscanf(buf, "%*d %lf %lf %lf", &g->x[i], &g->y[i], &g->d[i]);
     }
     for (i = 0; i < g->ne; i++) {
-	fgets(buf, 255, fp);
+	creturn=fgets(buf, 255, fp);
 	sscanf(buf, "%*d %d %d %d %d %d", &g->etype[i], &g->icon[0][i], &g->icon[1][i], &g->icon[2][i], &g->icon[3][i]);
 	g->icon[0][i]--;
 	g->icon[1][i]--;

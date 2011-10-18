@@ -51,8 +51,8 @@ class Dataset {
 
 //  void flattenAttr(string attr);
   
-  void FastBindTuple(int idx, Tuple &t) const;
-  void BindTuple(int idx, Tuple &t) const;
+  void FastBindTuple(unsigned int idx, Tuple &t) const;
+  void BindTuple(unsigned int idx, Tuple &t) const;
   //void BindTuples(vector<CellId> &cs, vector<Tuple> &ts);
 
   size_t Size() const;

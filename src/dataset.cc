@@ -37,7 +37,7 @@ void Dataset::recordOrdinals(string ordname) {
   int *ords;
   arr->getData(ords);
   idx n=this->Size();
-  for (int i=0; i<n; i++) ords[i] = i;
+  for (unsigned int i=0; i<n; i++) ords[i] = i;
   this->AddAttribute(arr);
 }
 
@@ -49,55 +49,71 @@ void Dataset::Clear() {
   this->attributes.clear();
 }
 
-Dataset::IntIterator Dataset::BeginInt(const string &attr) {
+Dataset::IntIterator Dataset::BeginInt(const string &attr) {IntIterator nty;
   // iterator starting at the first element of the attribute.
   Array *a = this->GetAttribute(attr);
   int *ii;
   
   if (a->type != INT) {
     Fatal("Type mismatch: IntIterator requested for attribute of type %s.", typeformat(a->type));
+    exit(1);
+    ii = (int *) a->getValPtr(0);
+    nty= IntIterator(ii);
   } else {
     ii = (int *) a->getValPtr(0);
-    return IntIterator(ii);
+    nty= IntIterator(ii);
   }
+return nty;
 }
 
-Dataset::IntIterator Dataset::EndInt(const string &attr) {
+Dataset::IntIterator Dataset::EndInt(const string &attr) {IntIterator nty;
   // iterator just past the end of the attribute.
   Array *a = this->GetAttribute(attr);
   int *ii;
   
   if (a->type != INT) {
     Fatal("Type mismatch: IntIterator requested for attribute of type %s.", typeformat(a->type));
+    exit(1);
+    ii = (int *) a->getValPtr(0);
+    nty= IntIterator(ii + a->size());
   } else {
     ii = (int *) a->getValPtr(0);
-    return IntIterator(ii + a->size());
+    nty= IntIterator(ii + a->size());
   }
+return nty;
 }
 
-Dataset::FloatIterator Dataset::BeginFloat(const string &attr) {
+Dataset::FloatIterator Dataset::BeginFloat(const string &attr) {FloatIterator nty;
   Array *a = this->GetAttribute(attr);
   float *fi;
 
   if (a->type != FLOAT) {
     Fatal("Type mismatch: FloatIterator requested for attribute of type %s.", typeformat(a->type));
+    exit(1);
+    fi = (float *) a->getValPtr(0);
+    nty= FloatIterator(fi);
   } else {
     fi = (float *) a->getValPtr(0);
-    return FloatIterator(fi);
+    nty= FloatIterator(fi);
   }
+return nty;
 }
 
-Dataset::FloatIterator Dataset::EndFloat(const string &attr) { 
+Dataset::FloatIterator Dataset::EndFloat(const string &attr) { FloatIterator nty;
   // iterator just past the end of the attribute.
   Array *a = this->GetAttribute(attr);
   float *fi;
 
   if (a->type != FLOAT) {
     Fatal("Type mismatch: FloatIterator requested for attribute of type %s.", typeformat(a->type));
+    exit(1);
+    fi = (float *) a->getValPtr(0);
+    nty= FloatIterator(fi + a->size());
   } else {
     fi = (float *) a->getValPtr(0);
-    return FloatIterator(fi + a->size());
+    nty= FloatIterator(fi + a->size());
   }
+return nty;
 } 
 
 UnTypedPtr Dataset::GetAttributeVal(const string &attr, idx i) const { 
@@ -110,7 +126,7 @@ void Dataset::AddAttribute(Array *arr) {
     Fatal("AddAttribute: array is NULL");
   }
 
-  if (arr->size() != this->Size() && !this->IsEmpty()) {
+  if (arr->size() != (signed)this->Size() && !this->IsEmpty()) {
     Fatal("Cardinality of array (%i) does not match cardinality of dataset (%i)", arr->size(), this->Size());
   }
   
@@ -129,7 +145,7 @@ void Dataset::AddAttribute(Array *arr) {
   arr->ref();
 }
 
-void Dataset::print(int indent) const { PrintTo(cout, 5); };
+void Dataset::print(int ) const { PrintTo(cout, 5); };
  
 void Dataset::Zip(const Dataset &d) {
   vector<Array *>::const_iterator p;
@@ -145,7 +161,7 @@ UnTypedPtr Dataset::GetVoidPointer(const string &attr) const {
 
 Array *Dataset::GetAttribute(const string &attr) const {
   int i;
-  if (i = IsAttribute(attr)) {
+  if ((i = IsAttribute(attr))) {
     return attributes[i-1];
   } else {
     Fatal("%s is not an attribute of this gridfield", attr.c_str());
@@ -161,7 +177,7 @@ void Dataset::CoerceScheme(Scheme sch, unsigned int sz) {
    
   // put the input attributes in front
   unsigned int n = sz == 0 ? this->Size() : sz;
-  for (int i=0; i<sch.size(); i++) {
+  for (unsigned int i=0; i<sch.size(); i++) {
     string a = sch.getAttribute(i);
     Type t = sch.getType(i);
     if (this->IsAttribute(a)) {
@@ -241,7 +257,7 @@ void Dataset::Apply(const string &unparsedExpr) {
 
   float bt=0;
   float et=0;
-  float t;
+  float t; (void)n;(void)bt;(void)et;(void)t;
   Gg->BindTuple(0, tup);
 
   vector<pair<Array*, UnTypedPtr*> > fast_loop;
@@ -253,7 +269,7 @@ void Dataset::Apply(const string &unparsedExpr) {
     fast_loop.push_back(make_pair(arr, &tup.tupledata[i]));
   }
 
-  for (int i=0; i<Gg->Size(); i++) {
+  for (unsigned int i=0; i<Gg->Size(); i++) {
     vector<pair<Array*, UnTypedPtr*> >::iterator p;
     tf.Eval(tup, tup);
     for (p=fast_loop.begin(); p!=fast_loop.end(); p++) {
@@ -292,15 +308,15 @@ Scheme Dataset::GetScheme() const {
   return s;
 }
 
-void Dataset::FastBindTuple(int idx, Tuple &t) const {
+void Dataset::FastBindTuple(unsigned int idx, Tuple &t) const {
   /* random access to all attributes of a dataset
      assumes the scheme of the tuple matches the 
      scheme of the dataset
   */
-  Array *arr;
-  UnTypedPtr ptr;
+  Array *arr;(void)arr;
+  UnTypedPtr ptr;(void)ptr;
   assert(idx < this->Size());
-  for (int i=0; i<t.size(); i++) {
+  for (unsigned int i=0; (unsigned)i<(unsigned)t.size(); i++) {
     //this->attributes[i]->print();
     //cout << this->attributes[i]->getValPtr(idx) << endl;
     t.set(i, this->attributes[i]->getValPtr(idx));
@@ -308,18 +324,18 @@ void Dataset::FastBindTuple(int idx, Tuple &t) const {
 }
 
 
-void Dataset::BindTuple(int idx, Tuple &t) const {
+void Dataset::BindTuple(unsigned int idx, Tuple &t) const {
   /* random access to all attributes of a dataset
   */
 /* if the tuple has attributes that do not appear in the gridfield,
  * they will be NULL (as in NULL pointers, not pointers to NULL)
  */
   string arr;
-  UnTypedPtr ptr;
+  UnTypedPtr ptr;(void)ptr;
 
   //cout << idx << ", " << this->Size() << endl;
   assert(idx < this->Size());
-  for (int i=0; i<t.size(); i++) {
+  for (unsigned int i=0; (unsigned)i<(unsigned)t.size(); i++) {
     if (int j = this->IsAttribute(t.getAttribute(i))) {
       Array *arr = this->attributes[j-1];
       t.set(i, arr->getValPtr(idx));
@@ -341,7 +357,7 @@ size_t Dataset::Size() const {
 }
 
 void Dataset::PrintTo(ostream &os, int indent, int limit) const { 
-  int i;
+  unsigned int i;
   Scheme s = this->GetScheme();
   Tuple t(&s);
   os << tab(indent) << "dataset: " << endl;
@@ -349,7 +365,7 @@ void Dataset::PrintTo(ostream &os, int indent, int limit) const {
   for (i=0; i<this->Size(); i++) {
     this->BindTuple(i, t);
     t.PrintTo(os, indent+4);
-    if (limit>0 && i>=limit) break;
+    if (limit>0 && (signed)i>=limit) break;
   }
 }
 
@@ -396,6 +412,15 @@ void Dataset::lookupFloat(const string &attr, float p, vector<idx> &out) {
       break;
     case OBJ:
       Fatal("Array is not of type float.");
+      exit(1);
+      break;
+    case TUPLE:
+      Fatal("Array is not of type float.");
+      exit(1);
+      break;
+    case GRIDFIELD:
+      Fatal("Array is not of type float.");
+      exit(1);
       break;
   }
 }
@@ -428,6 +453,10 @@ void Dataset::lookupInt(const string &attr, int p, vector<idx> &out) {
          out.push_back(i);
         }
       }
+    case TUPLE:
+      exit(1);
+    case GRIDFIELD:
+      exit(1);
   }
 }
 

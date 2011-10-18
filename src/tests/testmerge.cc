@@ -3,6 +3,7 @@
 #include "array.h"
 #include "restrict.h"
 #include "merge.h"
+#include<cstring>
 
 Grid *makeGrid(int scale, char *name) {
   CellArray *twocells;

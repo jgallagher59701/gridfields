@@ -41,7 +41,7 @@ class ConstArray : public Array {
   UnTypedPtr getVals();
   
   UnTypedPtr getValPtr(int i);
-  inline void next(UnTypedPtr *p) { };
+  inline void next(UnTypedPtr *) { };
 
   long getConst();
   void setConst(UnTypedPtr newconst);

@@ -18,16 +18,25 @@ bool Assign::TestCallback(long unsigned id, void *arg) {
   return true;
 }
 
-bool Assign::equal(Type t, UnTypedPtr p, UnTypedPtr q) {
+bool Assign::equal(Type t, UnTypedPtr p, UnTypedPtr q) {bool ret;
       switch (t) {
         case FLOAT:
-          return *(float *)p == *(float *)q;
+          ret= *(float *)p == *(float *)q;
           break;
         case INT:
-          return *(int *)p == *(int *)q;
+          ret= *(int *)p == *(int *)q;
           break;
         case OBJ:
-          return p == q;
+          ret= p == q;
+        case TUPLE:
+          ret= p == q;
+          exit(1);
+        case GRIDFIELD:
+          ret= p == q;
+          exit(1);
+        default:
+          ret= p==q;
+          exit(1);
       }
-}
+return ret;}
 

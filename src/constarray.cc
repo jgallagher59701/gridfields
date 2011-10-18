@@ -6,7 +6,6 @@
 
 using namespace std;
 
-#define DEBUG 0
 
 ConstArray::ConstArray(string nm, int sz, Type t, UnTypedPtr constval) 
   : Array(nm.c_str(), t) 
@@ -38,63 +37,64 @@ void ConstArray::setConst(UnTypedPtr constval) {
 }
 
 ConstArray::ConstArray(string nm, int sz, float constval) 
-  : float_constant(constval), int_constant(0), obj_constant(0),
-    Array(nm.c_str(), FLOAT) 
+  : Array(nm.c_str(), FLOAT),float_constant(constval), int_constant(0),
+    obj_constant(0)
+     
 {
   _size = sz;
 }
 
 ConstArray::ConstArray(string nm, int sz, int constval) 
-  : float_constant(0.0), int_constant(constval), obj_constant(0),
-    Array(nm.c_str(), INT) 
+  : Array(nm.c_str(), INT) ,float_constant(0.0), int_constant(constval), 
+    obj_constant(0)
 { 
   _size = sz;
 }
 
 ConstArray::ConstArray(string nm, int sz, UnTypedPtr constval) 
-  : float_constant(0.0), int_constant(0), obj_constant(constval),
-    Array(nm.c_str(), OBJ) 
+  : Array(nm.c_str(), OBJ), float_constant(0.0), int_constant(0), 
+    obj_constant(constval)
 {
   _size = sz;
 }
 
-void ConstArray::getData(void **&out) {
+void ConstArray::getData(void **&) {
   cout << "can't get data from a ConstArray." << endl;
 }
-void ConstArray::getData(float *&out) {
+void ConstArray::getData(float *&) {
   cout << "can't get data from a ConstArray." << endl;
 }
-void ConstArray::getData(int *&out) {
+void ConstArray::getData(int *&) {
   cout << "can't get data from a ConstArray." << endl;
 }
 
-void ConstArray::copyData(int *data, int s) {
+void ConstArray::copyData(int *, int ) {
   cout << "can't copy data into a ConstArray." << endl;
 }
 
-void ConstArray::shareData(int *data, int s) {
+void ConstArray::shareData(int *, int ) {
   cout << "can't share data with a ConstArray." << endl;
 }
 
-void ConstArray::copyData(float *data, int s) {
+void ConstArray::copyData(float *, int) {
   cout << "can't copy data into a ConstArray." << endl;
 }
 
-void ConstArray::shareData(float *data, int s) {
+void ConstArray::shareData(float *, int ) {
   cout << "can't share data with a ConstArray." << endl;
 }
 
-void ConstArray::copyData(UnTypedPtr *data, int s) {
+void ConstArray::copyData(UnTypedPtr *, int ) {
   cout << "can't copy data into a ConstArray." << endl;
 }
 
-void ConstArray::shareData(void **data, int size) {
+void ConstArray::shareData(void **, int) {
   cout << "can't share data with a ConstArray." << endl;
 }
 
 ConstArray *ConstArray::copy() { return resize(_size); }
 
-void ConstArray::setVals(UnTypedPtr vals, int size) {
+void ConstArray::setVals(UnTypedPtr , int ) {
   cout << "can't set Vals of a ConstArray." << endl;
 }
 
@@ -118,33 +118,38 @@ ConstArray *ConstArray::copyAndFilter(bool *filter) {
 
 };
 
-ConstArray *ConstArray::resize(int newsize) {
+ConstArray *ConstArray::resize(int newsize) {ConstArray *nty;
   switch (type) {
     case INT:
-      return new ConstArray(this->getName(), newsize, int_constant); 
+      nty= new ConstArray(this->getName(), newsize, int_constant); 
     case FLOAT:
-      return new ConstArray(this->getName(), newsize, float_constant);
+      nty= new ConstArray(this->getName(), newsize, float_constant);
     case OBJ:
-      return new ConstArray(this->getName(), newsize, obj_constant);
+      nty= new ConstArray(this->getName(), newsize, obj_constant);
     default:
       cout << "Unkown type" << endl;
+      exit(1);
+      nty= new ConstArray(this->getName(), newsize, obj_constant);
   }
+return nty;
 };
 
-long ConstArray::getConst() {
+long ConstArray::getConst() {long nty=int_constant;
   switch (type) {
     case INT:
-      return int_constant; 
+      nty= int_constant; 
       break;
     case FLOAT:
-      return long(float_constant);
+      nty= long(float_constant);
       break;
     case OBJ:
-      return long(obj_constant);
+      nty= long(obj_constant);
       break;
     default:
       cout << "Unkown type" << endl;
+      exit(1);
   }
+return nty;
 };
 
 ConstArray *ConstArray::repeat(int n)  { return resize(n*_size); }
@@ -222,7 +227,14 @@ UnTypedPtr ConstArray::getVals() {
       vals = new UnTypedPtr[this->_size];
       for (int i=0; i<_size; i++) {((float *)vals)[i] = *(float *)obj_constant;}
       break;
+    case TUPLE:
+      exit(1);
+    case GRIDFIELD:
+      exit(1);
+    default:
+      vals = (int *)new int[this->_size];
+      exit(1);      
   } 
-}
+return vals;}
 
 

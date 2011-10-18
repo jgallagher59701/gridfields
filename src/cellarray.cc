@@ -142,7 +142,7 @@ void CellArray::getAdjacentCells(CellId cid, vector<CellId> &out) {
   }
   else {
     */
-    for (int i=0; i<c.getsize(); i++) {
+    for (unsigned int i=0; i<c.getsize(); i++) {
       ca->getIncidentCells(c.getnodes()[i], cellset);
     }
     cellset.erase(cid);
@@ -163,7 +163,7 @@ void CellArray::getIncidentCells(const Cell &c, set<CellId> &out) {
   << *(incidence[c.getnodes()[0]].end())
   << endl;
 */
-  for (int i=0; i<c.getsize(); i++) {
+  for (unsigned int i=0; i<c.getsize(); i++) {
     out.insert(incidence[c.getnodes()[i]].begin(), incidence[c.getnodes()[i]].end());
   }
   FOR (set<CellId>, x, out) { 
@@ -186,7 +186,7 @@ void CellArray::buildIncidenceIndex(){
   incidence.resize(nodeset.size());
   int i = 0;
   for (p=cells.begin(); p!=cells.end(); ++p) {
-    for (int j=0; j<(*p).getsize(); j++) {
+    for (unsigned int j=0; j<(*p).getsize(); j++) {
       incidence[(*p).getnodes()[j]].insert(i);
     }
     i++;
@@ -233,17 +233,17 @@ size_t CellArray::getOrd(const Cell &c) {
 }
 
 Cell CellArray::getCellCopy(idx i) {
-  assert(0 <= i && i < this->cells.size());
+  assert(i < this->cells.size());
   return this->cells[i];
 }
 
 Cell *CellArray::getCell(idx i) {
-  assert(0 <= i && i < this->cells.size());
+  assert(i < this->cells.size());
   return &this->cells[i];
 }
 
 Node *CellArray::getCellNodes(idx i) {
-  assert(0 <= i && i < this->cells.size());
+  assert(i < this->cells.size());
   return this->cells[i].getnodes();
 }
 
@@ -478,7 +478,7 @@ void CellArray::toNodeSet(set<Node> &outset) {
   for (int i=0; i<n; i++) {
     c = getCell(i);  
     cn = getCellNodes(i);
-    for (int j=0; j<c->getsize(); j++)
+    for (unsigned int j=0; j<c->getsize(); j++)
       outset.insert(cn[j]);
   }
 }

@@ -18,7 +18,7 @@
 class Implicit0Cells : public AbstractCellArray {
  public:
   
-  Implicit0Cells(int s) : size(s), materializednodes(NULL) { this->ref(); }
+  Implicit0Cells(int s) :  materializednodes(NULL),size(s) { this->ref(); }
   ~Implicit0Cells() { 
      this->cleanup.clear(); 
      if (materializednodes != NULL) {
@@ -43,13 +43,13 @@ class Implicit0Cells : public AbstractCellArray {
 
   virtual int whoami() { return 0; };
 
-  bool contains(const Cell &c) { return (size > c.getnodes()[0] && c.getnodes()[0] >= 0); }; 
+  bool contains(const Cell &c) { return (size > c.getnodes()[0] && (signed)c.getnodes()[0] >= 0); }; 
   idx getOrd(const Cell &c) { Node &n = c.getnodes()[0]; return n < this->size ? n : -1; }
   idx getOrd(Node n) { return n < this->size ? n : -1; }
 
   void getIncidentCells(const Cell &c, set<CellId> &out); 
   void getIncidentCells(Node n, set<CellId> &out);
-  void getAdjacentCells(CellId n, vector<CellId> &out) { };
+  void getAdjacentCells(CellId n, vector<CellId> &out) {(void)n;(void)out; };
   unsigned int getNodeCount() { return size; };
 
   void mapNodes(NormNodeMap &h); 

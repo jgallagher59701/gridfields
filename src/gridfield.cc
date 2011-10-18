@@ -24,7 +24,7 @@ GridField::GridField(GridField *GF) {
 
 
 void GridField::PrepareForExecution() { };
-bool GridField::Updated(float sincetime) { return false; }
+bool GridField::Updated(float ) { return false; }
 void GridField::Execute() { this->Result = this; };
 
 
@@ -77,7 +77,7 @@ void GridField::RangeRestrict(Dim_t k, const GridField &G) {
 
   unsigned int ncells = this->Card(k);
   unsigned int ntups = ds.Size();
-  
+  (void)ntups;
   // make sure there are attributes to restrict
   if (s.size() == 0) return;
 
@@ -90,7 +90,7 @@ void GridField::RangeRestrict(Dim_t k, const GridField &G) {
 
   AbstractCellArray *kcells = grid->getKCells(k);
   AbstractCellArray *otherkcells = G.grid->getKCells(k);
-  for (int i=0; i<ncells; i++) {
+  for (unsigned int i=0; i<ncells; i++) {
     Cell *c = kcells->getCell(i);
     int j = otherkcells->getOrd(*c);
     if (i>= ds.Size()) cout << "error? " << i << ", " << ds.Size() << endl;
@@ -159,7 +159,7 @@ void GridField::NextTuple(Tuple &t) {
 
 int GridField::notValid() {
   GridField *GF = this;
-  int i, size;
+  int i, size;(void)i;(void)size;
   Grid *G;
   G = GF->grid;
 
@@ -183,7 +183,7 @@ void GridField::lookupInt(string attr, Dim_t k, int p, vector<CellId> &out) {
   arr->getData(data);
   
   size_t n = Size(k);
-  for (int i=0; i<n; i++) {
+  for (unsigned int i=0; i<n; i++) {
     if (data[i] == p) { 
       out.push_back(i);
     }
@@ -191,7 +191,7 @@ void GridField::lookupInt(string attr, Dim_t k, int p, vector<CellId> &out) {
 }
 
 template<class T>
-void nearestfunc(Array *arr, string attr, Dim_t k, UnTypedPtr p, vector<CellId> &out) {
+void nearestfunc(Array *arr, string, Dim_t, UnTypedPtr p, vector<CellId> &out) {
   typedef T valtype;
   valtype near, v;
   valtype pf = *(valtype *)p;
@@ -205,7 +205,6 @@ void nearestfunc(Array *arr, string attr, Dim_t k, UnTypedPtr p, vector<CellId> 
       near = v;
     }
   }
-
   out.push_back(nearest);
 }
 
@@ -232,7 +231,7 @@ void GridField::lookupFloat(string attr, Dim_t k, float p, vector<CellId> &out) 
   arr->getData(data);
   
   size_t n = Size(k);
-  for (int i=0; i<n; i++) {
+  for (unsigned int i=0; i<n; i++) {
     if (data[i] == p) { 
       out.push_back(i);
     }

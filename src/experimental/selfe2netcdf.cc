@@ -149,3 +149,7 @@ void selfe2netcdf( int argc, char *argv[] ) {
 int main( int argc, char *argv[] ) {
   selfe2netcdf( argc, argv );
 }
+
+int main()
+{}
+

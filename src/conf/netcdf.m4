@@ -56,7 +56,7 @@ AC_DEFUN([AC_CHECK_NETCDF],
   AC_PATH_PROG([NC_CONFIG], [nc-config], [no])
 	if test "$NC_CONFIG" != "no" ; then
 		nc_ready=yes
-		NC_LIBS="`$NC_CONFIG --libs`"
+		NC_LIBS="`$NC_CONFIG --libs` -lnetcdf_c++"
 		NC_CPPFLAGS="`$NC_CONFIG --cflags`"
 		NC_LDFLAGS="`$NC_CONFIG --cflags`"
 		NC_VERSION="`$NC_CONFIG --version`"
@@ -69,7 +69,7 @@ AC_DEFUN([AC_CHECK_NETCDF],
 
 if test "$nc_ready" = "no"; then
   ac_netcdf_ok='no'
-  NC_LIBS=
+  NC_LIBS="hi1"
   NC_LDFLAGS=
   ac_nc_save_LDFLAGS=$LDFLAGS
   ac_nc_save_LIBS=$LIBS
@@ -89,7 +89,7 @@ dnl libnetcdf, other libraries that implement the same api have other names
 dnl  AC_LINK_IFELSE([AC_LANG_CALL([],[$ac_check_func_checked])],
       AC_CHECK_LIB([netcdf],[$ac_check_nc_func_checked],
         [
-          NC_LIBS='-lnetcdf'
+          NC_LIBS='-lnetcdf_c++ -lnetcdf'
           ac_netcdf_ok='yes'
         ])
     ],
@@ -121,11 +121,11 @@ dnl  AC_LINK_IFELSE([AC_LANG_CALL([],[$ac_check_func_checked])],
             NC_LDFLAGS="-L$ac_netcdf_libdir"
           ])
         LDFLAGS="$LDFLAGS $NC_LDFLAGS"
-        LIBS="$LIBS -lnetcdf"
+        LIBS="$LIBS-lnetcdf_c++- lnetcdf"
 dnl we have to avoid the autoconf internal cache in that case
         AC_LINK_IFELSE([AC_LANG_CALL([],[$ac_check_nc_func_checked])],
           [
-            NC_LIBS='-lnetcdf'
+            NC_LIBS='-lnetcdf_c++- lnetcdf'
             ac_netcdf_ok='yes'
             AS_IF([test "z$ac_netcdf_libdir" != 'z'],[AC_MSG_RESULT([yes])])
           ],

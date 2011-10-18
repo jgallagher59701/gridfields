@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstring>
 #include "access.h"
 
 using namespace std;

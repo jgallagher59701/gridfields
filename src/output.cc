@@ -124,7 +124,7 @@ NcVar *OutputOp::putData(Array *a, NcFile *ncdf, long *counts, NcDim **d, int di
   return var;
 }
 */
-void OutputOp::Output(GridField *GF, string filename, long offset) {
+void OutputOp::Output(GridField *GF, string filename, long ) {
   /*
    * internal representation:
    *  magic : 'GFGRID'
@@ -145,7 +145,6 @@ void OutputOp::Output(GridField *GF, string filename, long offset) {
    *      nodes : size*(node : i)
    *    )
    */
-
    ofstream f(filename.c_str(), ios::binary | ios::out);
     
    char magic[7] = "GFGRID";
@@ -173,7 +172,7 @@ void OutputOp::writeGrid(Grid *G, ofstream &f) {
      
      AbstractCellArray *ca = G->getKCells(0);
      Node *ns;
-     for (int i=0; i<ca->getsize(); ++i) {
+     for (unsigned int i=0; i<ca->getsize(); ++i) {
        ns = ca->getCellNodes(i);
        //f.write((char *) &(c->size), sizeof(int));
        f.write((char *) ns, sizeof(int));

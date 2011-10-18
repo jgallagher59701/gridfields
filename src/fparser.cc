@@ -476,7 +476,7 @@ int FunctionParser::CheckSyntax(const char* Function)
         // Check for number
         if(isdigit(c) || (c=='.' && isdigit(Function[Ind+1])))
         {
-            strtod(&Function[Ind], &Ptr);
+         double creturn=   strtod(&Function[Ind], &Ptr);(void)creturn;
             Ind += int(Ptr-&Function[Ind]);
             sws(Function, Ind);
             c = Function[Ind];
