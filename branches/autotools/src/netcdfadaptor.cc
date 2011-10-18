@@ -3,26 +3,34 @@
 #include "cellarray.h"
 #include "array.h"
 
-Type NetCDFAdaptor::mapType(NcType t) {
+Type NetCDFAdaptor::mapType(NcType t) {Type nty=INT;
   switch (t) {
     case ncFloat:
-      return FLOAT;
+      nty= FLOAT;
     case ncInt:
-      return INT;
+      nty= INT;
     default:
       Fatal("Only ncFloat and ncInt are supported.");
+      break;
+      exit(1);
+      nty=INT;
   }
+return nty;
 }
 
-NcType NetCDFAdaptor::mapType(Type t) {
+NcType NetCDFAdaptor::mapType(Type t) {NcType nty=ncInt;
   switch (t) {
     case FLOAT:
-      return ncFloat;
+      nty= ncFloat;
     case INT:
-      return ncInt;
+      nty= ncInt;
     default:
       Fatal("Unknown Type encountered during netCDF emission");
+      break;
+      exit(1);
+      nty= ncInt;
   }
+return nty;
 }
 
 bool NetCDFAdaptor::HasVar(NcFile *ncdf, const string varname) {
@@ -67,7 +75,7 @@ bool NetCDFAdaptor::HasAttr(NcFile *ncdf, const string attr) {
 void NetCDFAdaptor::Open(string mode) {
   this->Close();
   const char *fn = filename.c_str();
-  NcFile::FileMode m;
+  NcFile::FileMode m=NcFile::Replace;
   if (mode == "r") {
     m = NcFile::ReadOnly;
   } else if (mode == "w+") {
@@ -76,6 +84,7 @@ void NetCDFAdaptor::Open(string mode) {
     m = NcFile::Replace;
   } else {
     Fatal("Unknown file mode %s", mode.c_str());
+    exit(1);
   }
   ncdf = new NcFile(fn, m);
   if (!ncdf->is_valid()) {
@@ -128,7 +137,7 @@ void NetCDFAdaptor::WellSupportedPolygonsFromVars(string cellnode, string celled
    Node *nodes = new Node[nnodes->size()+1];
    Node *edges = new Node[nnodes->size()];
    Cell edge(2);
-   for (unsigned int i=0; i<ncells->size(); i++) {
+   for (unsigned int i=0; i<(unsigned)ncells->size(); i++) {
      // add the cell
      nccellnode->get((int *) nodes, 1, nnodes->size());
 
@@ -140,7 +149,7 @@ void NetCDFAdaptor::WellSupportedPolygonsFromVars(string cellnode, string celled
 
      // gather the edges
      nccelledge->get((int *) edges, 1, nnodes->size());
-     for (unsigned int j=0; j<nnodes->size(); j++) {
+     for (unsigned int j=0; j<(unsigned)nnodes->size(); j++) {
        // set the nodes array of the placeholder edge
        edge.setnodes(nodes+j);
        // insert the edge into the map
@@ -153,7 +162,7 @@ void NetCDFAdaptor::WellSupportedPolygonsFromVars(string cellnode, string celled
    }
  
    // insert the edges in sorted order
-   for (int i=0; i<edgemap.size(); i++) {
+   for (unsigned int i=0; i<edgemap.size(); i++) {
      onecells->addCell(edgemap[i]);
    }
 
@@ -185,7 +194,7 @@ void NetCDFAdaptor::HomogeneousCellsFromVar(Dim_t d, string ncvar, Grid *G) {
   
    CellArray *cells = new CellArray();
    Node *nodes = new Node[d1->size()];
-   for (unsigned int i=0; i<d0->size(); i++) {
+   for (unsigned int i=0; i<(unsigned)d0->size(); i++) {
      ncv->get((int *) nodes, 1, d1->size());
      cells->addCellNodes(nodes, d1->size());
      ncv->set_cur(i+1,0);
@@ -220,7 +229,7 @@ void NetCDFAdaptor::DimFromDim(const string &name, GridField *gf, Dim_t d) {
 
 void NetCDFAdaptor::VarFromAttribute(const string &name, GridField *gf, Dim_t d, const vector<string> &dims) {
   const NcDim** ncdims = new const NcDim*[dims.size()];
-  for (int i=0; i<dims.size(); i++) {
+  for (unsigned int i=0; i<dims.size(); i++) {
     ncdims[i] = ncdf->get_dim(dims[i].c_str());
   }
   Array *arr = gf->GetAttribute(d, name);
@@ -233,6 +242,12 @@ void NetCDFAdaptor::VarFromAttribute(const string &name, GridField *gf, Dim_t d,
       var->put((float *) arr->getVals(),var->edges());
       break;
     case OBJ:
+      Fatal("Only floats and ints currently supported.");
+      break;
+    case TUPLE:
+      Fatal("Only floats and ints currently supported.");
+      break;
+    case GRIDFIELD:
       Fatal("Only floats and ints currently supported.");
       break;
   }
@@ -254,7 +269,7 @@ void NetCDFAdaptor::VarFromIncidence(const string &name, GridField *gf, Dim_t c,
   for (unsigned int i=0; i<gf->Card(c); i++) {
     //out = (OutputIterator<CellId>) &ids[i*col];
     G->IncidentTo(i, c, out, d);
-    for (int j=0; j<out.size(); j++) {
+    for (unsigned int j=0; j<out.size(); j++) {
       // Output CellIds not Cells.  "Automatic" normalization.
       ids[i*cols + j] = out[j];
     }

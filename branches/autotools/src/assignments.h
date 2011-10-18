@@ -128,7 +128,7 @@ class adjacentNodes : public AssignmentFunction {
                               GridField *s, Dim_t j) {
     this->T=t;
     this->S=s; 
-    assert(i==0 & j==0);
+    assert(((i==0) & (j==0)));
     this->_i = i;
     this->_j = j;
     this->kcells = S->GetGrid()->getKCells(this->k);
@@ -618,7 +618,7 @@ class fastcontainedby : public containedby {
       
       set<CellId> hits;
       
-      assert(tree.Search(coords, coords, TestCallback, &hits)==hits.size());
+      assert((unsigned)tree.Search(coords, coords, TestCallback, &hits)==hits.size());
       
       set<CellId>::iterator it;
       for (it=hits.begin(); it!=hits.end(); it++) {
@@ -848,7 +848,7 @@ class cross : public AssignmentFunction {
 */
 class unify : public AssignmentFunction {
   public:
-    virtual void operator()(const CellId &c, vector<CellId>&out) {
+    virtual void operator()(const CellId &, vector<CellId>&out) {
       //map all cells of S to the given CellId.
       //used by unify and as a shortcut to cross->aggregate
       int k = this->_j;

@@ -28,7 +28,7 @@ testelcirc testsubapply
 NETCDF_TESTS = testnetcdf selfe2netcdf testnetcdfadaptor testoutput 
 
 if NETCDF_FOUND
-TESTS += NETCDF_TESTS
+TESTS += $(NETCDF_TESTS) 
 endif
 
 noinst_HEADERS = test.h	testarray.h testdataset.h transect.h
@@ -63,15 +63,15 @@ testsubapply_SOURCES = testsubapply.o
 testsubapply_LDADD = testsubapply.cc -L$(VTKLIBPATH) $(VTKLIBS) ../libgridfields.la 
 
 testnetcdfadaptor_SOURCES = testnetcdfadaptor.o
-testnetcdfadaptor_LDADD = testnetcdfadaptor.cc -L$(NETCDFLIBDIR) \
+testnetcdfadaptor_LDADD = testnetcdfadaptor.cc \
 	-lnetcdf_c++ -lnetcdf ../libgridfields.la 
 
 testnetcdf_SOURCES = testnetcdf.o
-testnetcdf_LDADD = testnetcdf.cc -L$(NETCDFLIBDIR) -lnetcdf_c++ \
+testnetcdf_LDADD = testnetcdf.cc  \
 	-lnetcdf ../libgridfields.la 
 
-selfe2netcdf_SOURCES = selfe2netcdf.o
-elfe2netcdf_LDADD = selfe2netcdf.cc -L$(NETCDFLIBDIR) -lnetcdf_c++ \
+selfe2netcdf_SOURCES = selfe2netcdf.o 
+elfe2netcdf_LDADD = selfe2netcdf.cc  \
 	-lnetcdf ../libgridfields.la 
 
 testoutput_SOURCES = testoutput.cc

@@ -26,7 +26,7 @@ void DataDumpOp::Execute() {
 }
 
 
-void DataDumpOp::DataDump(GridField *GF, Dim_t k, string filename, long offset) {
+void DataDumpOp::DataDump(GridField *GF, Dim_t k, string filename, long ) {
 
    ofstream f(filename.c_str(), ios::binary | ios::out | ios::app);
     

@@ -1,6 +1,6 @@
 #ifndef _GRID_H
 #define _GRID_H
-
+#include<cstring>
 #include <vector>
 #include <set>
 #include <map>

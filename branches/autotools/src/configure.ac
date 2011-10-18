@@ -32,7 +32,7 @@ AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
 dnl echo "CC = $CC"
-if test "$CC" = "gcc"
+if test "$CC" = "g++"
 then
     AM_CONDITIONAL([COMPILER_IS_GCC],[true])
 else

@@ -75,7 +75,7 @@ GridField *ScanInternal::Scan(istream &str) {
    }
   
    Grid *G = readGrid(str);
-   int k;
+   int k;(void)k;
    //cout << k << endl;
    DEBUG << "ScanInternal: Grid refcount before reading gridfield:" << G->refcount << endl;
    GridField *GF = readGridField(G, str);
@@ -155,7 +155,7 @@ void ScanInternal::readDataset(GridField *GF, int k, istream &f) {
 CellArray *ScanInternal::readCellArray(istream &f) {
    int bytesize;
    int size;
-   int s;
+   int s;(void)s;
    
    f.read((char *) &size, sizeof(int));
    f.read((char *) &bytesize, sizeof(int)); 

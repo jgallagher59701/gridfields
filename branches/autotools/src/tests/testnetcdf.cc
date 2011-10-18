@@ -1,9 +1,9 @@
-#include "grid.h"
-#include "gridfield.h"
-#include "array.h"
-#include "arrayreader.h"
-#include "arraywriter.h"
-#include "tonetcdf.h"
+#include "../grid.h"
+#include "../gridfield.h"
+#include "../array.h"
+#include "../arrayreader.h"
+#include "../arraywriter.h"
+#include "../tonetcdf.h"
 
 Grid *makeGrid(int scale, char *name) {
   CellArray *twocells;

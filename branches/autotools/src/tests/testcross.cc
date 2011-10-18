@@ -1,6 +1,6 @@
 
 #include <cstdio>
-
+#include <cstring>
 #include "grid.h"
 #include "onegrid.h"
 #include "gridfield.h"

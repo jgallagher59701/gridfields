@@ -6,7 +6,7 @@ float gettime(){
   float ClockTicks;
   struct tms Time;
   float StarttimeSeconds;
-
+  (void)StarttimeSeconds;
   times(&Time);  
 
   ClockTicks = (double) sysconf(_SC_CLK_TCK);

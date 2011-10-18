@@ -84,7 +84,7 @@ void Array::fill(DatumIterator<float> &d) {
 Array::Array(Array *a, string nm) {
   // If 'a' is a tuple-valued array, this method copies 
   // the given attribute out of the tuples and creates a new array
-  Type t;
+  Type t=TUPLE;
   if (a->type == OBJ) {
     Scheme *sch = a->getScheme();
     if (sch->isAttribute(nm)) {

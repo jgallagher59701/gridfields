@@ -1,31 +1,39 @@
-
+#include <cstdlib>
 #include "type.h"
 #include "iostream"
 
 
 
-char typeformat(Type t) {
+char typeformat(Type t) {char nty='f';
   switch (t) {
     case FLOAT:
-      return 'f';
+      nty= 'f';
     case INT:
-      return 'i';
+      nty= 'i';
     case OBJ:
-      return 'p';
+      nty= 'p';
+    case TUPLE:
+      exit(1);
+      nty= 't';
+    case GRIDFIELD:
+      exit(1);
+      nty= 'g';
   }
+return nty;
 };
 
-Type typeval(std::string typestring) {
+Type typeval(std::string typestring) {Type nty=FLOAT;
   if (typestring == "f" || typestring == "F") {
-    return FLOAT;
+    nty=FLOAT;
   }
   if (typestring == "i" || typestring == "I") {
-    return INT;
+    nty= INT;
   }
   if (typestring == "p" || typestring == "P") {
-    return OBJ;
+    nty= OBJ;
   }
   if (typestring == "o" || typestring == "O") {
-    return OBJ;
+    nty= OBJ;
   }
+return nty;
 }
