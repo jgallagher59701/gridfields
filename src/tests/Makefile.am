@@ -2,9 +2,10 @@
 
 AUTOMAKE_OPTIONS = foreign
 
-# Arrange to build with the backward compatibility mode enabled.
+# I think that if there are things in scratch that we need they should
+# move back out to the src directory (or here)
 AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/experimental \
-	-I$(top_srcdir)/scratch
+-I$(top_srcdir)/scratch
 AM_CXXFLAGS =  
 
 # These are not used by automake but are often useful for certain types of
@@ -25,7 +26,8 @@ BROKEN_TESTS = testwrite63 testjoin testscan testgrid
 VTK_TESTS= testvtk wedgetest testtag testvis testsmallrestrict	\
 testelcirc testsubapply
 
-NETCDF_TESTS = testnetcdf selfe2netcdf testnetcdfadaptor testoutput 
+NETCDF_TESTS = testnetcdf testnetcdfadaptor testoutput 
+# selfe2netcdf 
 
 if NETCDF_FOUND
 TESTS += $(NETCDF_TESTS) 
@@ -55,30 +57,27 @@ collect-coverage-data:
 #############################
 
 if NETCDF_FOUND
-testsmallrestrict_SOURCES = testsmallrestrict.o
-testsmallrestrict_LDADD = testsmallrestrict.cc -L$(VTKLIBPATH) \
-	$(VTKLIBS) ../libgridfields.la 
+testnetcdfadaptor_SOURCES = testnetcdfadaptor.cc
+testnetcdfadaptor_LDADD = -lnetcdf_c++ -lnetcdf ../libgridfields.la 
 
-testsubapply_SOURCES = testsubapply.o
-testsubapply_LDADD = testsubapply.cc -L$(VTKLIBPATH) $(VTKLIBS) ../libgridfields.la 
+testnetcdf_SOURCES = testnetcdf.cc
+testnetcdf_LDADD = -lnetcdf ../libgridfields.la 
 
-testnetcdfadaptor_SOURCES = testnetcdfadaptor.o
-testnetcdfadaptor_LDADD = testnetcdfadaptor.cc \
-	-lnetcdf_c++ -lnetcdf ../libgridfields.la 
-
-testnetcdf_SOURCES = testnetcdf.o
-testnetcdf_LDADD = testnetcdf.cc  \
-	-lnetcdf ../libgridfields.la 
-
-selfe2netcdf_SOURCES = selfe2netcdf.o 
-elfe2netcdf_LDADD = selfe2netcdf.cc  \
-	-lnetcdf ../libgridfields.la 
+#selfe2netcdf_SOURCES = selfe2netcdf.cc
+#elfe2netcdf_LDADD = -lnetcdf ../libgridfields.la 
 
 testoutput_SOURCES = testoutput.cc
 testoutput_LDADD = ../libgridfields.la 
 endif
 
 if VTK_FOUND
+# testsmallrestrict_SOURCES = testsmallrestrict.cc
+# testsmallrestrict_LDADD = testsmallrestrict.cc -L$(VTKLIBPATH) \
+# 	$(VTKLIBS) ../libgridfields.la 
+
+# testsubapply_SOURCES = testsubapply.cc
+# testsubapply_LDADD = testsubapply.cc -L$(VTKLIBPATH) $(VTKLIBS) ../libgridfields.la 
+
 # testvtk_SOURCES = testvtk.cc
 # testvtk_LDADD = testvtk.o -L$(VTKLIBPATH) $(VTKLIBS) ../libgridfields.la 
 
