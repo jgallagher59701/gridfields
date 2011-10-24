@@ -22,8 +22,10 @@ NcType NetCDFAdaptor::mapType(Type t) {NcType nty=ncInt;
   switch (t) {
     case FLOAT:
       nty= ncFloat;
+      break;
     case INT:
       nty= ncInt;
+      break;
     default:
       Fatal("Unknown Type encountered during netCDF emission");
       break;

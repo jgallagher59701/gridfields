@@ -3,7 +3,7 @@
 #include "array.h"
 #include "sift.h"
 
-Grid *makeGrid(int scale, char *name) {
+Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
   CellArray *onecells;
   CellArray *zerocells;
@@ -46,7 +46,7 @@ Grid *makeGrid(int scale, char *name) {
   return grid; 
 }
 
-Array *makeIntArray(int size, char *name) {
+Array *makeIntArray(int size,const char *name) {
   Array *arr;
   int data[size];
   int i;
@@ -59,7 +59,7 @@ Array *makeIntArray(int size, char *name) {
   return arr;
 }
 
-GridField *makeGridField(int size, char *gridname, char *datname, int k) {
+GridField *makeGridField(int size,const char *gridname,const char *datname, int k) {
 
   Grid *G;
   GridField *GF;

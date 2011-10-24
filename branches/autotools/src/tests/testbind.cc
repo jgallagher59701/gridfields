@@ -49,7 +49,7 @@ Grid *makeGrid(int scale, string name) {
 }
 
 
-Array *makeFloatArray(int size, char *name) {
+Array *makeFloatArray(int size,const char *name) {
   Array *arr;
   arr = new Array(name, FLOAT, size);
   float *data;
@@ -61,7 +61,7 @@ Array *makeFloatArray(int size, char *name) {
   }
   return arr;  
 }
-GridField *makeGridField(int size, string gridname, char *datname, int k) {
+GridField *makeGridField(int size, string gridname,const char *datname, int k) {
 
   Grid *G;
   GridField *GF;

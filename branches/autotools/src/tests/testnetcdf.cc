@@ -5,7 +5,7 @@
 #include "../arraywriter.h"
 #include "../tonetcdf.h"
 
-Grid *makeGrid(int scale, char *name) {
+Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
   CellArray *onecells;
   CellArray *zerocells;
@@ -44,7 +44,7 @@ Grid *makeGrid(int scale, char *name) {
 }
 
 
-Array *makeFloatArray(int size, char *name) {
+Array *makeFloatArray(int size,const char *name) {
   Array *arr;
   arr = new Array(name, FLOAT, size);
   float *data;
@@ -56,7 +56,7 @@ Array *makeFloatArray(int size, char *name) {
   }
   return arr;  
 }
-GridField *makeGridField(unsigned int size, char *gridname, char *datname, int k) {
+GridField *makeGridField(unsigned int size,const char *gridname,const char *datname, int k) {
 
   Grid *G;
   GridField *GF;
@@ -95,7 +95,7 @@ int main(int argc, char **argv) {
   XYZ->AddAttribute(0, u);
   XYZ->AddAttribute(0, v);
 
-  XYZ->print();
+  //XYZ->print();
   
   NcFile *ncdf = new NcFile("data.nc", NcFile::Replace);
 

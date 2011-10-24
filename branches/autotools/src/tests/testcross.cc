@@ -51,7 +51,7 @@ Grid *makeGrid(int scale, char *name) {
   return grid; 
 }
 
-Array *makeFloatArray(int size, char *name) {
+Array *makeFloatArray(int size,const char *name) {
   Array *arr;
   arr = new Array(name, FLOAT, size);
   float *data;

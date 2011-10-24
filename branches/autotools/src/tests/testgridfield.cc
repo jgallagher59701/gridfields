@@ -41,7 +41,7 @@ Grid *makeGrid(int scale, string name) {
   return grid; 
 }
 
-Array *makeIntArray(int size, char *name) {
+Array *makeIntArray(int size,const char *name) {
   Array *arr;
   int data[size];
   int i;
