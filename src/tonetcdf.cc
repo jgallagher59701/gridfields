@@ -45,11 +45,12 @@ NcType mapType(Type t) {NcType nyt=ncInt;
   switch (t) {
     case FLOAT:
       nyt= ncFloat;
+      break;
     case INT:
       nyt= ncInt;
+      break;
     default:
       Fatal("Unknown Type encountered during netCDF emission");
-      break;
       exit(1);
   }
 return nyt;

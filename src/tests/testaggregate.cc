@@ -10,7 +10,7 @@
 #include "project.h"
 #include "assignments.h"
 
-Grid *makeGrid(int scale, string name) {
+Grid *makeGrid(int scale,const string name) {
   CellArray *twocells;
   CellArray *onecells;
   CellArray *zerocells;
@@ -62,7 +62,7 @@ Grid *makeGrid(int scale, string name) {
   return grid; 
 }
 
-Array *makeFloatArray(int size, char *name) {
+Array *makeFloatArray(int size,const char *name) {
   Array *arr;
   arr = new Array(name, FLOAT, size);
   float *data;
@@ -76,7 +76,7 @@ Array *makeFloatArray(int size, char *name) {
   return arr;  
 }
 
-GridField *makeGridField(int size, string gridname, char *datname, int k) {
+GridField *makeGridField(int size,const string gridname,const char *datname, int k) {
 
   Grid *G;
   GridField *GF;

@@ -5,7 +5,7 @@
 #include "merge.h"
 #include<cstring>
 
-Grid *makeGrid(int scale, char *name) {
+Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
   CellArray *onecells;
   CellArray *zerocells;
@@ -48,7 +48,7 @@ Grid *makeGrid(int scale, char *name) {
   return grid; 
 }
 
-Array *makeFloatArray(int size, char *name) {
+Array *makeFloatArray(int size,const char *name) {
   Array *arr;
   arr = new Array(name, FLOAT, size);
   float *data;
@@ -60,7 +60,7 @@ Array *makeFloatArray(int size, char *name) {
   }
   return arr;  
 }
-GridField *makeGridField(int size, char *gridname, char *datname, int k) {
+GridField *makeGridField(int size,const char *gridname,const char *datname, int k) {
 
   Grid *G;
   GridField *GF;
