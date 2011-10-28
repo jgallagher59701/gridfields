@@ -4,8 +4,8 @@ AUTOMAKE_OPTIONS = foreign
 
 # I think that if there are things in scratch that we need they should
 # move back out to the src directory (or here)
-AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/experimental \
--I$(top_srcdir)/scratch
+#AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/experimental \
+#-I$(top_srcdir)/scratch
 AM_CXXFLAGS =  
 
 # These are not used by automake but are often useful for certain types of
