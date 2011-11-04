@@ -17,7 +17,7 @@
 
 int main(int argc, char **argv) {
 
-  string filename("../../../data/1_salt.63");
+  string filename("data/1_flsu.61");
   string name("salt");
   int offset = 0;
   Type type = FLOAT;
