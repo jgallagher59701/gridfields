@@ -26,7 +26,7 @@ BROKEN_TESTS = testwrite63 testjoin testscan testgrid
 VTK_TESTS= testvtk wedgetest testtag testvis testsmallrestrict	\
 testelcirc testsubapply
 
-NETCDF_TESTS = testnetcdf testnetcdfadaptor testoutput 
+NETCDF_TESTS = testnetcdf testoutput #testnetcdfadaptor  
 # selfe2netcdf 
 
 if NETCDF_FOUND

@@ -82,9 +82,11 @@ GridField *makeGridField(int size, char *gridname, char *datname, int k) {
 
 int main(int argc, char **argv) {
   bool verbose = false;
+
   // replace this with getopt? jhrg 9/30/11
   if (argc == 2 && strncmp(argv[1], "-v", 2) == 0)
     verbose = true;
+
 
   try {
     GridField *Aa;
@@ -106,7 +108,7 @@ int main(int argc, char **argv) {
   
     if (verbose) Result->print();
 
-    FileArrayReader *ar = new FileArrayReader("dat");
+    FileArrayReader *ar = new FileArrayReader("dat");    cerr << "here: "<< endl;
     Array *arr = new Array("io", FLOAT, 3*3);
     ar->Read(Result, 0, arr);
  

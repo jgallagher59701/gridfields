@@ -13,7 +13,7 @@
 
 // Was originally used explicitly in the code
 // "/home/workspace/ccalmr/forecasts/2003-25-RWKoo/run/1_hvel.64"
-#define TEST_DATA "data/1_hvel.64"
+#define TEST_DATA "data/1_flsu.61"
 
 using namespace std;
 

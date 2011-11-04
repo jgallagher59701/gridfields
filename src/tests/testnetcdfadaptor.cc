@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
   
   Grid *g = new Grid("test");
 
-  ncf.NodesFromDim("corners", g);
+  ncf.NodesFromDim("nodes", g);
   cout << "got corners" << endl;
   ncf.WellSupportedPolygonsFromVars("cell_corners", "cell_edges", g);
   //ncf.HomogeneousCellsFromVar(2, "cell_corners", g);
