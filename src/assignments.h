@@ -112,7 +112,7 @@ class Nodes : public AssignmentFunction {
   Nodes() {};
   virtual void operator()(const CellId &cid, vector<CellId> &out) {
     Cell *c = T->getKCell(this->_i, cid);
-    for (int i=0; i<c->getsize(); i++) {
+    for (unsigned int i=0; i<c->getsize(); i++) {
       out.push_back(c->getnodes()[i]);
     }
   }
@@ -128,7 +128,7 @@ class adjacentNodes : public AssignmentFunction {
                               GridField *s, Dim_t j) {
     this->T=t;
     this->S=s; 
-    assert(i==0 & j==0);
+    assert(((i==0) & (j==0)));
     this->_i = i;
     this->_j = j;
     this->kcells = S->GetGrid()->getKCells(this->k);
@@ -145,7 +145,7 @@ class adjacentNodes : public AssignmentFunction {
     this->kcells->getIncidentCells(m, ks);
     FOR(set<CellId>, kci, ks) {
       kc = this->kcells->getCell(*kci);
-      for (int i=0; i<kc->getsize(); i++) {
+      for (unsigned int i=0; i<kc->getsize(); i++) {
         Node n = kc->getnodes()[i];
         if (n != m) out.push_back(n);
       }
@@ -223,7 +223,7 @@ class neighbors : public AssignmentFunction {
     
     set<CellId> setOut;
     AbstractCellArray *dcells = S->GetGrid()->getKCells(this->_j);
-    for (int i=0; i<nc->getsize(); i++) {
+    for (unsigned int i=0; i<nc->getsize(); i++) {
       dcells->getIncidentCells(nc->getnodes()[i], setOut);
     }
 
@@ -618,7 +618,7 @@ class fastcontainedby : public containedby {
       
       set<CellId> hits;
       
-      assert(tree.Search(coords, coords, TestCallback, &hits)==hits.size());
+      assert((unsigned)tree.Search(coords, coords, TestCallback, &hits)==hits.size());
       
       set<CellId>::iterator it;
       for (it=hits.begin(); it!=hits.end(); it++) {
@@ -785,7 +785,7 @@ class bypointer : public AssignmentFunction {
         p = *(int *)t.get(this->attr);
       }
     
-      if (p>=0 && p<S->Size(this->_j)) {
+      if (/* p>=0 && p is unsigned jhrg 10/5/11 */ p<S->Size(this->_j)) {
         out.push_back(p);
       }
     }
@@ -848,7 +848,7 @@ class cross : public AssignmentFunction {
 */
 class unify : public AssignmentFunction {
   public:
-    virtual void operator()(const CellId &c, vector<CellId>&out) {
+    virtual void operator()(const CellId &, vector<CellId>&out) {
       //map all cells of S to the given CellId.
       //used by unify and as a shortcut to cross->aggregate
       int k = this->_j;

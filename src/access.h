@@ -114,8 +114,10 @@ class MMapIterator : public DatumIterator<Byte> {
         exit(1);
       }
       
+#if 0
+      // 'end' is unsigned. jhrg 10/5/11
       if (end<0) end = sbuf.st_size;
-
+#endif
       if ((data = (char *) mmap((caddr_t)0, sbuf.st_size, PROT_READ, MAP_SHARED, 
                      fd, 0)) == (caddr_t)(-1)) {
          perror("mmap");

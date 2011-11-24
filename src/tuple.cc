@@ -129,8 +129,9 @@ Type Scheme::getType(const string &attr) const {
   return this->getType(this->getPosition(attr));
 }
 
-Type Scheme::getType(int i) const {
-  assert(i>=0 && i<sort.size());
+Type Scheme::getType(int j) const {
+  int i=(signed) j;
+  assert(i>=(signed)0 && i<(signed)sort.size());
   return sort[i].second;
 }
 
@@ -161,12 +162,12 @@ bool Scheme::isAttribute(const string &nm) const {
 }
 
 string Scheme::getAttribute(int position) const {
-  assert(position>=0  && position<sort.size());
-  return sort[position].first;
+  assert((signed)position>=(signed)0  && (signed)position<(signed)sort.size());
+  return sort[(signed)position].first;
 }
 
 void Scheme::print() { print(0); }
-void Scheme::print(int indent) { PrintTo(cout,0); }
+void Scheme::print(int ) { PrintTo(cout,0); }
 
 void Scheme::PrintTo(ostream &os, int indent) { 
   int i;

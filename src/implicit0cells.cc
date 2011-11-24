@@ -33,14 +33,14 @@ void Implicit0Cells::toNodeSet(set<Node> &outset) {
 }
 
 Cell Implicit0Cells::getCellCopy(idx i) {
-  assert(0 <= i && i < this->getsize());
+  assert(i < this->getsize());
   Cell c(1);
   c.getnodes()[0] = i;
   return c;
 }
 
 Cell *Implicit0Cells::getCell(idx i) { 
-    assert(0 <= i && i < this->getsize());
+    assert(i < this->getsize());
     if (i+1 > this->cleanup.size()) {
       Cell c(1);
       this->cleanup.resize(i+1, c);
@@ -52,7 +52,7 @@ Cell *Implicit0Cells::getCell(idx i) {
 }
 
 void Implicit0Cells::getIncidentCells(const Cell &c, set<CellId> &out) {
-  for (int i=0; i<c.getsize(); i++) {
+  for (unsigned int i=0; i<c.getsize(); i++) {
     out.insert(c.getnodes()[i]);
   }
 }
@@ -62,8 +62,8 @@ void Implicit0Cells::getIncidentCells(Node n, set<CellId> &out) {
 }
 
 
-void Implicit0Cells::mapNodes(NormNodeMap &h) {  }; 
-void Implicit0Cells::mapNodes(UnaryNodeMap &h) { 
+void Implicit0Cells::mapNodes(NormNodeMap &) {  }; 
+void Implicit0Cells::mapNodes(UnaryNodeMap &) { 
   //if (h.whoami() != NORMNODEMAP) {
   //  Fatal("Can't map implicit nodes"); 
   //}
@@ -116,7 +116,7 @@ AbstractCellArray *Implicit0Cells::Cross(AbstractCellArray *othercells, CrossNod
   }
 }
 
-Implicit0Cells *Implicit0Cells::Cross(Implicit0Cells *othercells, CrossNodeMap &h) {
+Implicit0Cells *Implicit0Cells::Cross(Implicit0Cells *othercells, CrossNodeMap &) {
   return new Implicit0Cells(this->size * othercells->size);  
 }
 

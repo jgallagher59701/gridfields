@@ -20,14 +20,14 @@ class ImplicitCrossNodeMap : public CrossNodeMap {
     return ((*cells == *Anodes) || (*cells == *Bnodes))
   }
 */
-  Node inv_b(Node o, Node a) { 
+  Node inv_b(Node o, Node ) { 
     Cell *c;
     int i = o % Bnodes->getsize();
     c = Bnodes->getCell(i);
     return c->getnodes()[0];
   };
   
-  Node inv_a(Node o, Node b) { 
+  Node inv_a(Node o, Node ) { 
     Cell *c;
     int i = o / Bnodes->getsize();
     c = Bnodes->getCell(i);

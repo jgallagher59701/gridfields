@@ -42,7 +42,7 @@ void TupleFunction::Parse(string unparsedExpr) {
   int pos;
   while (true) {
     pos = unparsedExpr.find("\n");
-    if (pos == string::npos) break;
+    if (pos == (signed)string::npos) break;
     unparsedExpr[pos] = ' ';
   } 
   split(unparsedExpr, ";", attribute_exprs);
@@ -124,7 +124,7 @@ void TupleFunction::Eval(Tuple &intup, Tuple &outtup) {
 }
 
 void SpecializedTupleFunction::SpecializeFor(Scheme &out) {
-  for (int i=0; i<inScheme.size(); i++) {
+  for (unsigned int i=0; i<inScheme.size(); i++) {
     string const &attr = inScheme.getAttribute(i);
     in_position_map[i] = make_pair(out.getPosition(attr), out.getType(attr));
   }
@@ -175,7 +175,7 @@ void SpecializedTupleFunction::Eval(Tuple &intup, Tuple &outtup) {
 void TupleFunction::BindVars(Tuple &intup, double *bindings) {
   string var;
   Scheme *real_inScheme = intup.getScheme();
-  for (int i=0; i<inScheme.size(); i++) {
+  for (unsigned int i=0; i<inScheme.size(); i++) {
     var = inScheme.getAttribute(i);
     if (real_inScheme->getType(var) == FLOAT) {
       bindings[i] = *(float *)intup.get(var);
@@ -189,7 +189,7 @@ void TupleFunction::BindVars(Tuple &intup, double *bindings) {
 void TupleFunction::getVars(string expr, vector<string> &retval) {
     
   string var("");
-  int i=0;
+  unsigned int i=0;
 
   while (i<expr.length()) {
     //variables begin with an alpha and are not reserved words

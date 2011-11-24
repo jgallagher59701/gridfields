@@ -1,6 +1,7 @@
 #ifndef _GRID_H
 #define _GRID_H
-
+#include <iostream>
+#include<cstring>
 #include <vector>
 #include <set>
 #include <map>
@@ -33,6 +34,7 @@ class Grid : public Object {
 
   Dim_t getdim();
   unsigned int Size(Dim_t k) {
+// cerr << "Grid::Size: k = " << k << endl;
     assert(k<cellsets.size()); 
     return cellsets[k]->getsize();
   };

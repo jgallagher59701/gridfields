@@ -12,7 +12,7 @@
 class NetCDFAdaptor {
 public:
   NetCDFAdaptor(string fn) : filename(fn), ncdf(NULL) {};
-  NetCDFAdaptor(char *fn) : filename(fn), ncdf(NULL) {};
+  NetCDFAdaptor(const char *fn) : filename(fn), ncdf(NULL) {};
   void Open(string mode = "r"); 
   void Close(); 
   void setFileName(char *fn) { filename = string(fn); };

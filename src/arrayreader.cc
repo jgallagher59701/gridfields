@@ -40,7 +40,7 @@ FileArrayReader::FileArrayReader(string fn, long off, string pa) :
 }
 
 FileArrayReader::FileArrayReader(ifstream *f) :
-  filename(""), f(f), mode(ios::binary), ArrayReader(f, f->tellg())
+ ArrayReader(f, f->tellg()), filename(""),f(f), mode(ios::binary)
 {
 }
 
@@ -195,8 +195,7 @@ void TextFileArrayReader::ReadPrimitives(ifstream &f, int *positions, int size, 
   
 }
 
-void ArrayReader::ReadPrimitives(istream &f, int *positions, int size, Type t, char *data) {
-  
+void ArrayReader::ReadPrimitives(istream &f, int *positions, int size, Type , char *data) {
   int i = 0;
   int index = 0;
   int block = 0;
@@ -309,8 +308,9 @@ void ProjectArrayReader::ReadPrimitives(istream &f, int *positions, int size, Ty
   delete [] scratch;
 }
 
-void ProjectArrayReader::ReadTuples(istream &f, int *positions, int size, Scheme *sch, UnTypedPtr *tupptrs) {
+void ProjectArrayReader::ReadTuples(istream &, int *, int , Scheme *, UnTypedPtr *) {
   Fatal("ReadTuples is deprecated; Arrays with complex schemes are deprecated.");
+
 }
 
 
@@ -333,7 +333,7 @@ void ArrayReader::ReadTuples(istream &f, int *positions, int size, Scheme *sch, 
    
   // NOT PORTABLE
   int valsize=0;
-  for (int j=0; j<sch->size(); j++) {
+  for (unsigned int j=0; j<sch->size(); j++) {
     valsize = valsize + typesize(sch->getType(j));
   }
   
