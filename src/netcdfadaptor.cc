@@ -2,6 +2,7 @@
 #include "util.h"
 #include "cellarray.h"
 #include "array.h"
+using namespace std;
 
 Type NetCDFAdaptor::mapType(NcType t) {Type nty=INT;
   switch (t) {
@@ -10,6 +11,7 @@ Type NetCDFAdaptor::mapType(NcType t) {Type nty=INT;
     case ncInt:
       nty= INT;
     default:
+      cout<<t<<endl;
       Fatal("Only ncFloat and ncInt are supported.");
       break;
       exit(1);

@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.68])
 AC_INIT([gridfields], [1.0.0], [Bill Howe <billhowe@cs.washington.edu>])
-AC_CONFIG_SRCDIR([abstractcellarray.h])
+AC_CONFIG_SRCDIR([src/abstractcellarray.h])
 AM_CONFIG_HEADER([config.h])
 
 # This provides a place to keep all the autotools stuff (m4 files, etc.)

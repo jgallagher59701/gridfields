@@ -1,7 +1,7 @@
-#include "grid.h"
-#include "gridfield.h"
-#include "array.h"
-#include "sift.h"
+#include "src/grid.h"
+#include "src/gridfield.h"
+#include "src/array.h"
+#include "src/sift.h"
 
 Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
