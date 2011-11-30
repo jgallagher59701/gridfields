@@ -1,5 +1,5 @@
 #include <iostream>
-#include "array.h"
+#include "src/array.h"
 #include "testarray.h"
 
 using namespace std;

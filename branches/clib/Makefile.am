@@ -37,7 +37,7 @@ libgridfields_la_CPPFLAGS = $(AM_CPPFLAGS)
 libgridfields_la_LIBADD = 
 
 # really?
-pkginclude_HEADERS = $(HDRS)
+pkginclude_HEADERS = src/$(HDRS)
 
 noinst_HEADERS = config.h
 
@@ -58,35 +58,35 @@ dist-hook:
 
 # MAINTAINERCLEANFILE
 
-SRCS = CmdLine.cpp accumulate.cc aggregate.cc aggregations.cc apply.cc	\
-array.cc arrayreader.cc arraywriter.cc assignments.cc bind.cc		\
-bindconstant.cc cell.cc cellarray.cc constarray.cc cross.cc		\
-datadump.cc dataset.cc elcircfile.cc elio.c expr.cc fparser.cc grid.cc	\
-gridfield.cc gridfieldoperator.cc implicit0cells.cc 		\
-merge.cc output.cc outputtuples.cc project.cc		\
-rankeddataset.cc refrestrict.cc restrict.cc scaninternal.cc sift.cc	\
-timing.cc tuple.cc type.cc unarynodemap.cc	\
-util.cc 
+SRCS = CmdLine.cpp src/accumulate.cc src/aggregate.cc src/aggregations.cc src/apply.cc	\
+src/array.cc src/arrayreader.cc src/arraywriter.cc src/assignments.cc src/bind.cc		\
+src/bindconstant.cc src/cell.cc src/cellarray.cc src/constarray.cc src/cross.cc		\
+src/datadump.cc src/dataset.cc src/elcircfile.cc src/elio.c src/expr.cc src/fparser.cc src/grid.cc	\
+src/gridfield.cc src/gridfieldoperator.cc src/implicit0cells.cc 		\
+src/merge.cc src/output.cc src/outputtuples.cc src/project.cc		\
+src/rankeddataset.cc src/refrestrict.cc src/restrict.cc src/scaninternal.cc src/sift.cc	\
+src/timing.cc src/tuple.cc src/type.cc src/unarynodemap.cc	\
+src/util.cc 
 
 if NETCDF_FOUND
-SRCS += tonetcdf.cc netcdfadaptor.cc 
+SRCS += src/tonetcdf.cc src/netcdfadaptor.cc 
 endif
 
-HDRS = CmdLine.h RTree.h abstractcellarray.h access.h accumulate.h	\
-aggregate.h aggregations.h apply.h array.h arrayreader.h arraywriter.h	\
-assignments.h binarynodemap.h bind.h bindconstant.h cell.h cellarray.h	\
-config.h constarray.h counted_ptr.h cross.h crossnodemap.h		\
-crossordmap.h datadump.h dataset.h elcircfile.h elio.h expr.h grid.h	\
-gridfield.h gridfieldoperator.h idnodemap.h idordmap.h			\
-implicit0cells.h implicitcrossnodemap.h leftnodemap.h merge.h		\
-nodemap.h normnodemap.h object.h onegrid.h ordmap.h	\
-output.h outputtuples.h partition.h project.h rankeddataset.h		\
-refrestrict.h restrict.h scan.h scaninternal.h sift.h		\
-subgridordmap.h timing.h tuple.h type.h unarynodemap.h	\
-util.h
+HDRS = CmdLine.h src/RTree.h src/abstractcellarray.h src/access.h src/accumulate.h	\
+src/aggregate.h src/aggregations.h src/apply.h src/array.h src/arrayreader.h src/arraywriter.h	\
+src/assignments.h src/binarynodemap.h src/bind.h src/bindconstant.h src/cell.h src/cellarray.h	\
+config.h src/constarray.h src/counted_ptr.h src/cross.h src/crossnodemap.h		\
+src/crossordmap.h src/datadump.h src/dataset.h src/elcircfile.h src/elio.h src/expr.h src/grid.h	\
+src/gridfield.h src/gridfieldoperator.h src/idnodemap.h src/idordmap.h			\
+src/implicit0cells.h src/implicitcrossnodemap.h src/leftnodemap.h src/merge.h		\
+src/nodemap.h src/normnodemap.h src/object.h src/onegrid.h src/ordmap.h	\
+src/output.h src/outputtuples.h src/partition.h src/project.h src/rankeddataset.h		\
+src/refrestrict.h src/restrict.h src/scan.h src/scaninternal.h src/sift.h		\
+src/subgridordmap.h src/timing.h src/tuple.h src/type.h src/unarynodemap.h	\
+src/util.h
 
 if NETCDF_FOUND
-HDRS += tonetcdf.h netcdfadaptor.h
+HDRS += src/tonetcdf.h src/netcdfadaptor.h
 endif
 
 OLD_REMOVED_SRCS = stuebe.cc

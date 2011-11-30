@@ -1,14 +1,14 @@
 #include <cstring>
-#include "grid.h"
-#include "gridfield.h"
-#include "array.h"
-#include "restrict.h"
-#include "merge.h"
-#include "aggregations.h"
-#include "apply.h"
-#include "accumulate.h"
-#include "project.h"
-#include "assignments.h"
+#include "src/grid.h"
+#include "src/gridfield.h"
+#include "src/array.h"
+#include "src/restrict.h"
+#include "src/merge.h"
+#include "src/aggregations.h"
+#include "src/apply.h"
+#include "src/accumulate.h"
+#include "src/project.h"
+#include "src/assignments.h"
 
 Grid *makeGrid(int scale,const string name) {
   CellArray *twocells;

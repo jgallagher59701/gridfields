@@ -1,6 +1,6 @@
-#include "grid.h"
-#include "gridfield.h"
-#include "array.h"
+#include "src/grid.h"
+#include "src/gridfield.h"
+#include "src/array.h"
 
 Grid *makeGrid(int scale, string name) {
   CellArray *twocells;

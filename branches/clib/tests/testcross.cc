@@ -1,12 +1,12 @@
 
 #include <cstdio>
 #include <cstring>
-#include "grid.h"
-#include "onegrid.h"
-#include "gridfield.h"
-#include "array.h"
-#include "arrayreader.h"
-#include "cross.h"
+#include "src/grid.h"
+#include "src/onegrid.h"
+#include "src/gridfield.h"
+#include "src/array.h"
+#include "src/arrayreader.h"
+#include "src/cross.h"
 
 Grid *makeGrid(int scale, char *name) {
   CellArray *twocells;

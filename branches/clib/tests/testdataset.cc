@@ -1,10 +1,10 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "array.h"
-#include "dataset.h"
-#include "type.h"
-#include "expr.h"
+#include "src/array.h"
+#include "src/dataset.h"
+#include "src/type.h"
+#include "src/expr.h"
 
 #include "testdataset.h"
 

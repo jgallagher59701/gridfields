@@ -1,7 +1,7 @@
-#include "cellarray.h"
-#include "implicit0cells.h"
-#include "util.h"
-#include "implicitcrossnodemap.h"
+#include "src/cellarray.h"
+#include "src/implicit0cells.h"
+#include "src/util.h"
+#include "src/implicitcrossnodemap.h"
 
 int main(int argc, char **argv) {
   

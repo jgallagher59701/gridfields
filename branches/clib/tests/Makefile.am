@@ -57,8 +57,8 @@ collect-coverage-data:
 #############################
 
 if NETCDF_FOUND
-testnetcdfadaptor_SOURCES = testnetcdfadaptor.cc
-testnetcdfadaptor_LDADD = -lnetcdf_c++ -lnetcdf ../libgridfields.la 
+#testnetcdfadaptor_SOURCES = testnetcdfadaptor.cc
+#testnetcdfadaptor_LDADD = -lnetcdf_c++ -lnetcdf ../libgridfields.la 
 
 testnetcdf_SOURCES = testnetcdf.cc
 testnetcdf_LDADD = -lnetcdf ../libgridfields.la 
