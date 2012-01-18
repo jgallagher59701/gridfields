@@ -1,0 +1,6 @@
+To Make run:
+
+autoreconf
+./configure
+make
+make check
