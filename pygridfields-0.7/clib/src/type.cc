@@ -12,12 +12,6 @@ char typeformat(Type t) {char nty='f';
       nty= 'i';
     case OBJ:
       nty= 'p';
-    case TUPLE:
-      exit(1);
-      nty= 't';
-    case GRIDFIELD:
-      exit(1);
-      nty= 'g';
   }
 return nty;
 };
