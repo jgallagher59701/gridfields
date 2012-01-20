@@ -29,7 +29,7 @@ print "Elements: ", H.Card(2)
 
 # What are the data attributes bound at rank 0?
 # Format is name:type, name:type, ...
-print "Attributes of vertices: ", H.GetScheme(0).asString()
+print "Attributes of vertices: ", H.GetScheme(0).show()
 
 # Get an attribute
 # Sadly, this object is not very useful in python
@@ -75,18 +75,17 @@ print "Number of vertices after restriction: ", answer.Card(2)
 # Now let's try to draw a picture using vtk
 try:
   import vtk
+  import gridfield.vis as vis
+
+  # Show the gridfield, making whatever assumptions necessary
+  # color by the "h" attribute
+  if os.fork():
+    vis.ToVTK(H, "h", show=True)
+  else:
+    vis.ToVTK(rH, "h", show=True)
+
+  # To save the image to a file and not interact with it, do this:
+  # vis.ToVTK(rH, "h", capture=True, fname="depth.png")
 except:
   print "VTK not installed -- no visualization attempted"
   sys.exit()
-
-import gridfield.vis as vis
-
-# Show the gridfield, making whatever assumptions necessary
-# color by the "h" attribute
-if os.fork():
-  vis.ToVTK(H, "h", show=True)
-else:
-  vis.ToVTK(rH, "h", show=True)
-
-# To save the image to a file and not interact with it, do this:
-# vis.ToVTK(rH, "h", capture=True, fname="depth.png")
