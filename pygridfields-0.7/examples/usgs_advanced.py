@@ -83,7 +83,7 @@ G=G2.getResult()
 # with the "Scan" operator.
 # Since we constrcuted ours from scratch,
 # so we lift the raw gridfield into an operator
-G = Wrap(G)
+
 
 # calculate a new attribute
 #aG = Apply("root=abs(q)", 2, G)
@@ -114,13 +114,7 @@ ax.show()
 print "Attributes of vertices: ", Result.GetScheme(0).asString()
 
 # Gridfields x,y,z to Numpy
-#d0 = Result.GetDataset(0)
-#lstvals = [gf.derefFloat(d0.GetAttributeVal("x", i)) for i in range(d0.Size())]
-#x = np.array(lstvals)
-#lstvals = [gf.derefFloat(d0.GetAttributeVal("y", i)) for i in range(d0.Size())]
-#y = np.array(lstvals)
-#lstvals = [gf.derefFloat(d0.GetAttributeVal("h", i)) for i in range(d0.Size())]
-#h = np.array(lstvals)
+
 x=np.array(ax1.makeArrayf()) 
 y=np.array(ax2.makeArrayf()) 
 h=np.array(ax.makeArrayf()) 
