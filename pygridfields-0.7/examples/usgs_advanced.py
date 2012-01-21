@@ -23,6 +23,11 @@ URL = 'http://geoport.whoi.edu/thredds/dodsC/usgs/data1/rsignell/models/adcirc/f
 # A 0-d grid is a grid consisting of points only
 
 nc = netCDF4.Dataset(URL)
+
+from gridfield import *
+import gridfield.core as gf
+from gridfield.algebra import Apply, Restrict, Wrap,Bind
+
 x=nc.variables['x']
 y=nc.variables['y']
 # read water depth at nodes
@@ -50,17 +55,6 @@ for i in range(1,NumPhysElems+1):
 # print NumPhysNodes
 # construct an array of X-values
 
-x = gf.Array("x", gf.FLOAT, NumPhysNodes)
-x.copyFloatData(x1,NumPhysNodes)
-
-
-# construct an array of Y-values
-y = gf.Array("y", gf.FLOAT, NumPhysNodes)
-y.copyFloatData(y1,NumPhysNodes)
-
-# construct an array of Y-values
-h = gf.Array("h", gf.FLOAT, NumPhysNodes)
-h.copyFloatData(h1,NumPhysNodes)
 
 #twocells.buildIncidenceIndex()
 # GridField = Topology + Data
@@ -70,11 +64,15 @@ h.copyFloatData(h1,NumPhysNodes)
 
 g.setKCells(twocells, 2);
 G = gf.GridField(g)
+#attach things to the Gridfield
 
+intermed=Bind("x",x1,0,G)
+G=intermed.getResult()
 # Attach the data
-G.Bind(0, x)
-G.Bind(0, y)
-G.Bind(0, h)
+G1=Bind("y",y1,0,G)
+G=G1.getResult()
+G2=Bind("h",h1,0,G)
+G=G2.getResult()
 
 
 # Now we can use some operators to manipulate the data
@@ -106,6 +104,8 @@ rG = Restrict(condition, 0, rG)
 # execute the recipe
 Result = rG.getResult()
 
+ax1 = Result.GetAttribute(0, "x")
+ax2 = Result.GetAttribute(0, "y")
 ax = Result.GetAttribute(0, "h")
 
 # print the result
@@ -114,14 +114,18 @@ ax.show()
 print "Attributes of vertices: ", Result.GetScheme(0).asString()
 
 # Gridfields x,y,z to Numpy
-d0 = Result.GetDataset(0)
-lstvals = [gf.derefFloat(d0.GetAttributeVal("x", i)) for i in range(d0.Size())]
-x = np.array(lstvals)
-lstvals = [gf.derefFloat(d0.GetAttributeVal("y", i)) for i in range(d0.Size())]
-y = np.array(lstvals)
-lstvals = [gf.derefFloat(d0.GetAttributeVal("h", i)) for i in range(d0.Size())]
-h = np.array(lstvals)
+#d0 = Result.GetDataset(0)
+#lstvals = [gf.derefFloat(d0.GetAttributeVal("x", i)) for i in range(d0.Size())]
+#x = np.array(lstvals)
+#lstvals = [gf.derefFloat(d0.GetAttributeVal("y", i)) for i in range(d0.Size())]
+#y = np.array(lstvals)
+#lstvals = [gf.derefFloat(d0.GetAttributeVal("h", i)) for i in range(d0.Size())]
+#h = np.array(lstvals)
+x=np.array(ax1.makeArrayf()) 
+y=np.array(ax2.makeArrayf()) 
+h=np.array(ax.makeArrayf()) 
 
+print h
 # Gridfields ele connectivity array to Numpy
 newG   = Result.GetGrid()
 newG.normalize()   # reindex the connectiviy array to the restricted grid
