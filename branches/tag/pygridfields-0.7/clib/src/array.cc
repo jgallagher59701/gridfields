@@ -594,6 +594,30 @@ vector<int> Array::makeArray(){
   return array;
 }
 
+vector<double> Array::makeArrayf(){
+
+  Array *arr;
+
+  arr = this;
+  int i;
+  //vector<int>* array=new vector<int>;
+  vector<double> array;
+  cout<<"this "<<_size<<" "<<arr->type<<endl;
+  array.reserve(_size);
+  switch (arr->type) {
+  case 2:
+    for (i=0; i<(_size); i++) {
+      array.push_back(arr->floats[i]);
+    }
+    break;
+  default:
+    cout << "unknown type";
+    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11 
+  }
+  cout<<array.at(_size-1)<<endl;
+  return array;
+}
+
 void Array::print() {
   Array *arr;
   arr = this;
