@@ -20,6 +20,7 @@ class Array : public Object {
   Array(std::string nm, Scheme *sch);
   Array(const char *nm, Scheme *sch);
   vector<int> makeArray();
+  vector<double> makeArrayf();
   void unref();
   void ref();
   virtual ~Array();
