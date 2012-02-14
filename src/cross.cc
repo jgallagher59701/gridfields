@@ -68,15 +68,15 @@ void CrossOp::crossData(GridField *Gg, GridField *Aa, Dim_t i, GridField *Bb, Di
   string attr;
   Array *temparr;
 
-  float start = gettime();
-  for (int a=0; a<Aa->Arity(i); a++) {
+  float start = gettime();(void)start;
+  for (unsigned int a=0; a<Aa->Arity(i); a++) {
     attr = Asch.getAttribute(a);
     temparr = Aa->GetAttribute(i, attr)->expand(Bsize);
     Gg->Bind(i+j, temparr);
     temparr->unref();
   }
 
-  for (int b=0; b<Bb->Arity(j); b++) {    
+  for (unsigned int b=0; b<Bb->Arity(j); b++) {    
     attr = Bsch.getAttribute(b);
     temparr = Bb->GetAttribute(j, attr)->repeat(Asize);
     Gg->Bind(i+j, temparr);

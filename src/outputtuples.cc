@@ -124,7 +124,7 @@ NcVar *OutputTuplesOp::putData(Array *a, NcFile *ncdf, long *counts, NcDim **d, 
   return var;
 }
 */
-void OutputTuplesOp::Output(GridField *GF, string filename, long offset) {
+void OutputTuplesOp::Output(GridField *GF, string filename, long ) {
   /*
    * internal representation:
    *  magic : 'GFGRID'
@@ -145,7 +145,6 @@ void OutputTuplesOp::Output(GridField *GF, string filename, long offset) {
    *      nodes : size*(node : i)
    *    )
    */
-
    ofstream f(filename.c_str(), ios::binary | ios::out);
     
    char magic[7] = "GFGRID";

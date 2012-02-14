@@ -4,39 +4,39 @@
 #include "expr.h"
 #include "timing.h"
 #include "bind.h"
-
+using namespace std;
 BindOp::BindOp(Array *arr, Dim_t k, GridFieldOperator *op) 
- : UnaryGridFieldOperator(op), array(arr), attr(arr->getName()), type(arr->type), _k(k),
-   reader(NULL)
-{
+ : UnaryGridFieldOperator(op), array(arr), attr(arr->getName()), type(arr->type), 
+   reader(NULL), _k(k)
+{cout<<"ahoy!"<<endl;
 //  this->cleanup = false;
 }
 
 BindOp::BindOp(Array *arr, ArrayReader *rdr, Dim_t k, GridFieldOperator *op) 
- : UnaryGridFieldOperator(op), array(arr), attr(arr->getName()), type(arr->type), _k(k),
-   reader(rdr)
+ : UnaryGridFieldOperator(op), array(arr), attr(arr->getName()), type(arr->type), 
+   reader(rdr), _k(k)
 {
 //  this->cleanup = false;
 }
 
 BindOp::BindOp(string attr, Type t, ArrayReader *reader, Dim_t k, GridFieldOperator *op) 
- : UnaryGridFieldOperator(op), array(NULL), attr(attr), type(t), _k(k),
-   reader(reader), temp(0)
+ : UnaryGridFieldOperator(op), temp(0), array(NULL), attr(attr), type(t),
+   reader(reader),  _k(k)
 {
 //  this->cleanup = false;
 }
 
 BindOp::BindOp(string attr, Type t, string filename, int offset, Dim_t k, GridFieldOperator *op) 
-   : UnaryGridFieldOperator(op), array(NULL), attr(attr), type(t), _k(k),
-     reader(new FileArrayReader(filename, offset))
+   : UnaryGridFieldOperator(op), array(NULL), attr(attr), type(t),
+     reader(new FileArrayReader(filename, offset)), _k(k)
 {
 //  this->cleanup = false;
 }
 
 BindOp::BindOp(string attr, Type t, string filename, int offset, 
   string addresses, Dim_t k, GridFieldOperator *op) 
-   : UnaryGridFieldOperator(op), array(NULL), attr(attr), type(t), _k(k),
-     reader(new FileArrayReader(filename, offset, addresses))
+   : UnaryGridFieldOperator(op), array(NULL), attr(attr), type(t),
+     reader(new FileArrayReader(filename, offset, addresses)), _k(k)
 {
 //  this->cleanup = false;
 }

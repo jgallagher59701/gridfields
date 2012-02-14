@@ -46,7 +46,6 @@ GridField *AggregateOp::Aggregate(GridField *Tt, Dim_t _i,
 
   string gname = newName(T->name, S->name);
 
-
   GridField *Out;
   Out = new GridField(Tt);
   
@@ -77,7 +76,6 @@ GridField *AggregateOp::Aggregate(GridField *Tt, Dim_t _i,
   const Dataset &sourceds = Ss->GetDataset(_j);
   
   for (size_t i=0; i<Out->Size(_i); i++) {
-
     m(i, cs);
 
     if (vs.size() != cs.size()) {
@@ -88,18 +86,18 @@ GridField *AggregateOp::Aggregate(GridField *Tt, Dim_t _i,
     FOR(vector<CellId>, c, cs) {
       sourceds.FastBindTuple(*c, vs[j++]);
     }
-//    Ss->BindTuples(cs, vs);
-    
+#if 0
+    Ss->BindTuples(cs, vs);
+#endif
     ds.FastBindTuple(i, t);
     f(vs, t);
+#if 0
     //t.print();
     //getchar();
-
+#endif
     cs.clear();
-
   }
 
-  //cout << "Aggregate()" << endl;
   return Out;
 }
 

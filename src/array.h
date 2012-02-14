@@ -5,7 +5,7 @@
 #include "type.h"
 #include "object.h"
 #include "expr.h"
-
+#include <vector>
 #include <string>
 
 class Scheme;
@@ -19,6 +19,8 @@ class Array : public Object {
   Array(const char *nm, Type t);
   Array(std::string nm, Scheme *sch);
   Array(const char *nm, Scheme *sch);
+  vector<int> makeArray();
+  vector<double> makeArrayf();
   void unref();
   void ref();
   virtual ~Array();
@@ -53,6 +55,7 @@ class Array : public Object {
   virtual void setVals(UnTypedPtr vals, int s);
   virtual UnTypedPtr getVals();
   virtual UnTypedPtr getValPtr(int i);
+  virtual int getValInt(int i);
 
   virtual inline void next(UnTypedPtr *p) { 
     plusplus(p, type);

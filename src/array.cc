@@ -5,6 +5,7 @@
 #include "tuple.h"
 #include <string>
 #include <string.h>
+#include <vector>
 using namespace std;
 
 //#define DEBUG 0
@@ -45,6 +46,10 @@ Array::Array(string nm, Type t, int sz) {
     case OBJ:
       this->objs = new UnTypedPtr[sz];
       break;
+    case TUPLE:
+    case GRIDFIELD:
+      // jhrg 10/5/11
+      cerr << "TUPLE or GRIDFIELD found in Array::Array; objs is likely invalid" << endl;
   }
   _size = sz;
   this->full = true;
@@ -80,7 +85,7 @@ void Array::fill(DatumIterator<float> &d) {
 Array::Array(Array *a, string nm) {
   // If 'a' is a tuple-valued array, this method copies 
   // the given attribute out of the tuples and creates a new array
-  Type t;
+  Type t=TUPLE;
   if (a->type == OBJ) {
     Scheme *sch = a->getScheme();
     if (sch->isAttribute(nm)) {
@@ -261,7 +266,9 @@ void Array::shareObjData(void **data, int _size) {
 
 Array *Array::copy() {
   Array *arr = this;
+#if 0
   int i;
+#endif
   Array *newarr;
   UnTypedPtr vals = arr->getVals();
 
@@ -308,8 +315,10 @@ Array *Array::copyAndFilter(bool *filter) {
   Array *arr;
   arr = this;
   Array *newarr;
+#if 0
   UnTypedPtr newvals;
   UnTypedPtr vals;
+#endif
   int i;
   int j = 0;;
   int new_size=0;
@@ -488,6 +497,22 @@ UnTypedPtr Array::getValPtr(int i) {
   return NULL;  
 }
 
+int Array::getValInt(int i) {
+//  assert(i<_size);
+  Array *arr;
+  arr = this;
+
+  switch (arr->type) {
+  case INT:
+    return arr->ints[i];
+    break;
+  default:
+    break;
+  }
+
+  return NULL;  
+}
+
 UnTypedPtr Array::getVals() {
   Array *arr;
   arr = this;
@@ -545,6 +570,54 @@ Array *Array::repeat(int n) {
   return out;
 }
 
+vector<int> Array::makeArray(){
+
+  Array *arr;
+
+  arr = this;
+  int i;
+  //vector<int>* array=new vector<int>;
+  vector<int> array;
+  cout<<"this "<<_size<<" "<<arr->type<<endl;
+  array.reserve(_size);
+  switch (arr->type) {
+  case 1:
+    for (i=0; i<(_size); i++) {
+      array.push_back(arr->ints[i]);
+    }
+    break;
+  default:
+    cout << "unknown type";
+    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11 
+  }
+  cout<<array.at(_size-1)<<endl;
+  return array;
+}
+
+vector<double> Array::makeArrayf(){
+
+  Array *arr;
+
+  arr = this;
+  int i;
+  //vector<int>* array=new vector<int>;
+  vector<double> array;
+  cout<<"this "<<_size<<" "<<arr->type<<endl;
+  array.reserve(_size);
+  switch (arr->type) {
+  case 2:
+    for (i=0; i<(_size); i++) {
+      array.push_back(arr->floats[i]);
+    }
+    break;
+  default:
+    cout << "unknown type";
+    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11 
+  }
+  cout<<array.at(_size-1)<<endl;
+  return array;
+}
+
 void Array::print() {
   Array *arr;
   arr = this;
@@ -577,6 +650,7 @@ void Array::print() {
     break;
   default:
     cout << "unknown type";
+    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11
   }
   if (i < _size) cout << "...";
   cout << "\n";

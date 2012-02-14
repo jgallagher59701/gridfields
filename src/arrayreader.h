@@ -19,6 +19,8 @@ class ArrayReader {
     virtual ~ArrayReader();
     ArrayReader(istream *is) : s(is), offset(0) {};
     ArrayReader(istream *is, long offset) : s(is), offset(offset) {};
+    ArrayReader * makeArrayReader(int *array, int size);
+    ArrayReader * makeArrayReader(double *array, int size);
     virtual void ReadTuples(istream &f, int *positions, 
                           int size, Scheme *sch, UnTypedPtr *_data);
     virtual void ReadPrimitives(istream &f, int *positions, 

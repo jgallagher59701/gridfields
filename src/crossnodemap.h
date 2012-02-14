@@ -23,14 +23,14 @@ class CrossNodeMap : public BinaryNodeMap {
     Bnodes = Bn;
   }
 
-  Node inv_b(Node o, Node a) { 
+  Node inv_b(Node o, Node /* a unused jhrg 10/5/11*/) { 
     Cell *c;
     int i = o % Bnodes->getsize();
     c = Bnodes->getCell(i);
     return c->getnodes()[0];
   };
   
-  Node inv_a(Node o, Node b) { 
+  Node inv_a(Node o, Node /* b */) { 
     Cell *c;
     int i = o / Bnodes->getsize();
     c = Bnodes->getCell(i);

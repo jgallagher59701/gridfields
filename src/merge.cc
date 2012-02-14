@@ -21,9 +21,11 @@ GridField *MergeOp::Merge(GridField *Aa, GridField *Bb) {
   GridField *Gg;
   Grid *A = Aa->GetGrid();
   Grid *B = Bb->GetGrid();
+#if 0
   cout << "Merge(...)" << endl;
-//  Aa->getAttribute("salt")->print();
-//  Bb->getAttribute("sumsalt")->print();
+  Aa->getAttribute("salt")->print();
+  Bb->getAttribute("sumsalt")->print();
+#endif
   string gname = newName(A->name, B->name);
 
   if (A == B) {

@@ -199,6 +199,8 @@ ginfo: ginfo.o
 #include <math.h>
 #include <time.h>
 #include "elio.h"
+#include <string.h>
+
 
 /*!
  * @def WIN32
@@ -403,7 +405,7 @@ int ElioGetTimeStep(FILE * fp, int step, ElcircHeader * h, ElcircTimeStep * t)
 {
     off_t skip;
     int i, n;
-    short *b;
+   // short *b;
     skip = (off_t) h->hsize + (off_t) step *(off_t) h->ssize;
     if (fseeko(fp, skip, SEEK_SET)) {
 	return ELIO_FSEEK_ERR;
@@ -514,7 +516,7 @@ int ElioGetNodeSurfaceIndex(FILE * fp, int node, int step, ElcircHeader * h)
  */
 int ElioGetNode(FILE * fp, int step, int node, ElcircHeader * h, float *t, int *it, int *bind, int *sind, float *d)
 {
-    int i, npts, itmp;
+    int npts, itmp;
     float e;
     off_t skip;
     *bind = h->bi[node];
@@ -782,7 +784,7 @@ int ElioGetXYData2(FILE * fp, int step, int elem, ElcircHeader * h, double *hh, 
 {
     int i, j, nn[4], tcnt, cnt[4];
     double uret, vret;
-    double *u[4], *v[4], dd[4], vv[4];
+    double  dd[4], vv[4];//*u[4], *v[4],
     float dtmp[4][400];
     float dt[400];
 
@@ -892,9 +894,9 @@ int ElioGetXYData2(FILE * fp, int step, int elem, ElcircHeader * h, double *hh, 
  */
 int ElioInterpTimeStepSigma(ElcircHeader * h, int elem, double x, double y, double *hh, ElcircTimeStep * t, float *d)
 {
-    int i, j, nn[4], tcnt, cnt[4];
+    int i, j, nn[4];// tcnt, cnt[4];
     double uret, vret;
-    double *u[4], *v[4], dd[4], vv[4];
+    double dd[4], vv[4];//*u[4], *v[4], 
     float dtmp[4][400];
     float dt[400];
 /* get the nodes for the element */
@@ -941,7 +943,7 @@ int ElioInterpTimeStep(ElcircHeader * h, int elem, double x, double y, double *h
 {
     int i, j, nn[4], tcnt, cnt[4];
     double uret, vret;
-    double *u[4], *v[4], dd[4], vv[4];
+    double  dd[4], vv[4];//*u[4], *v[4],
     float dtmp[4][400];
     float dt[400];
 
@@ -1061,7 +1063,7 @@ int ElioGetXYData(FILE * fp, int step, double x, double y, ElcircHeader * h, flo
 {
     int i, j, elem, nn[4];
     double hh[4], uret;
-    double *u[4], *v[4], dd[4];
+    double dd[4];//*u[4], *v[4], 
     float dtmp[4][400];
 
 /* find the element that contains the point */
@@ -1112,7 +1114,7 @@ int ElioGetXYData(FILE * fp, int step, double x, double y, ElcircHeader * h, flo
  */
 int ElioGetPoint(FILE * fp, int step, int node, int level, ElcircHeader * h, float *t, int *it, float *d)
 {
-    int i, npts, sind;
+    int npts, sind;
     off_t skip;
     if (h->i23d == 3) {		/* 3d data */
 	skip = (off_t) h->hsize + (off_t) step *(off_t) h->ssize;
@@ -1205,7 +1207,7 @@ int ElioGetPoint(FILE * fp, int step, int node, int level, ElcircHeader * h, flo
 int ElioGetHeader(char *fname, ElcircHeader * h)
 {
     FILE *fp;
-    int *itmp, i, j, ss;
+    int *itmp, i, j;// ss;
     if (sizeof(int) != 4 || sizeof(char) != 1 || sizeof(float) != 4) {
 	fprintf(stderr, "Sizeof problems, please investigate: sizeof(char,int,float) = (%d,%d,%d)\n", sizeof(int), sizeof(char), sizeof(float));
 	exit(1);
@@ -1483,7 +1485,7 @@ int ElioMakeVectorsOld(ElcircHeader * h, float *d, float *dd)
  */
 int ElioGetNStepsInFile(char *fname, ElcircHeader * h)
 {
-    char id[5];
+ //   char id[5];
     int n;
     off_t fsize = 0;
     FILE *fp = fopen(fname, "rb");
@@ -1515,7 +1517,7 @@ int ElioExtractGrid(ElcircHeader * h1, int nb, double *xb, double *yb, int *isin
 {
     int i;
     int n;
-    int np, ne;
+    //int np ne;
     int n1, n2, n3, n4;
     double x, y;
 
@@ -1638,8 +1640,8 @@ int ElioExtractGrid(ElcircHeader * h1, int nb, double *xb, double *yb, int *isin
  */
 int ElioExtractData(ElcircHeader * h1, ElcircHeader * h2, int *isin, ElcircTimeStep t1, ElcircTimeStep * t2)
 {
-    int i, j, n, *si, npts;
-    float *d;
+    int i, j, n, *si;// npts;
+   // float *d;
     *t2 = t1;
     si = (int *) malloc(h2->np * sizeof(int));
     n = 0;
@@ -1715,7 +1717,7 @@ int ElioIntersectToLeft(double x, double y, double x1, double y1, double x2, dou
  */
 int ElioInPolygon(double x, double y, int n, double *xlist, double *ylist)
 {
-    int i, l = 0, ll = 0;
+    int i, l = 0;// ll = 0;
 
     for (i = 0; i < n; i++) {
 	if ((y < ylist[i] && y < ylist[(i + 1) % n])
@@ -1739,7 +1741,7 @@ int ElioInPolygon(double x, double y, int n, double *xlist, double *ylist)
 int ElioFindElementXY(ElcircHeader * h, double xp, double yp)
 {
     int i, j;
-    int n0, n1, n2, n3;
+    //int n0, n1, n2, n3;
     double x[4], y[4];
     for (i = 0; i < h->ne; i++) {
 	for (j = 0; j < h->etype[i]; j++) {
@@ -1870,7 +1872,7 @@ int ElioEvalScalarXY(int n, double *h, double *c, double *uret)
 int ElioGetCoefficients(ElcircHeader * h, int elem, double xp, double yp, double *w)
 {
     double aum, ado, atr, bum, bdo, btr, cum, cdo, ctr;
-    double x1, y1, x2, y2, x3, y3, x4, y4, c1, c2, c3, arei;
+    double x1, y1, x2, y2, x3, y3, x4, y4,  arei;//c1, c2, c3,
     double xi, eta;
     int nn[4];
     nn[0] = h->icon[0][elem];
@@ -1922,7 +1924,7 @@ int ElioGetCoefficients(ElcircHeader * h, int elem, double xp, double yp, double
 int ElioGetCoefficientsGrid(ElioGrid * g, int elem, double xp, double yp, double *w)
 {
     double aum, ado, atr, bum, bdo, btr, cum, cdo, ctr;
-    double x1, y1, x2, y2, x3, y3, x4, y4, c1, c2, c3, arei;
+    double x1, y1, x2, y2, x3, y3, x4, y4, arei;//c1, c2, c3, 
     double xi, eta;
     int nn[4];
     if (g == NULL || elem < 0 || elem >= g->ne) {
@@ -1977,7 +1979,7 @@ int ElioGetCoefficientsGrid(ElioGrid * g, int elem, double xp, double yp, double
 int ElioGetCoefficientsXY(int n, double *x, double *y, double xp, double yp, double *w)
 {
     double aum, ado, atr, bum, bdo, btr, cum, cdo, ctr;
-    double x1, y1, x2, y2, x3, y3, x4, y4, c1, c2, c3, arei;
+    double x1, y1, x2, y2, x3, y3, x4, y4,  arei;//c1, c2, c3,
     double xi, eta;
     x1 = x[0];
     y1 = y[0];
@@ -2017,7 +2019,7 @@ int ElioGetCoefficientsXY(int n, double *x, double *y, double xp, double yp, dou
 */
 int ElioGetSurfaceHeader(ElcircHeader * h1, ElcircHeader * h2)
 {
-    int i, j;
+    int i;// j;
     strncpy(h2->magic, h1->magic, 48);
     strncpy(h2->version, h1->version, 48);
     strncpy(h2->start_time, h1->start_time, 48);
@@ -2144,7 +2146,7 @@ int ElioGetZLevelStep(ElcircHeader * h1, ElcircHeader * h2, ElcircTimeStep t1, f
  */
 int ElioPutHeader(FILE * fp, ElcircHeader * h)
 {
-    int *itmp, i, j, bitmp, etmp;
+    int  i, j, bitmp, etmp;//*itmp,
     if (fp == NULL) {
 	fprintf(stderr, "Bad file pointer\n");
 	return ELIO_ERR;
@@ -2306,8 +2308,8 @@ int ElioGetFileType(FILE * fp)
  */
 int ElioCopyHeader(ElcircHeader * h1, ElcircHeader * h2)
 {
-    FILE *fp;
-    int *itmp, i, j, ss;
+    //FILE *fp;
+    int  i;//*itmp, j, ss;
     *h2 = *h1;
     memcpy(h2->magic, h1->magic, 48);
     memcpy(h2->version, h1->version, 48);
@@ -2492,8 +2494,8 @@ int ElioReadGrid(char *gname, ElioGrid * g)
     if ((fp = fopen(gname, "rb")) == NULL) {
 	return ELIO_ERR;
     }
-    fgets(buf, 255, fp);
-    fgets(buf, 255, fp);
+    char* creturn=fgets(buf, 255, fp);
+    creturn=fgets(buf, 255, fp);
     sscanf(buf, "%d %d", &g->ne, &g->np);
     g->x = (double *) malloc(g->np * sizeof(double));
     g->y = (double *) malloc(g->np * sizeof(double));
@@ -2503,11 +2505,11 @@ int ElioReadGrid(char *gname, ElioGrid * g)
 	g->icon[i] = (int *) malloc(g->ne * sizeof(int));
     }
     for (i = 0; i < g->np; i++) {
-	fgets(buf, 255, fp);
+	creturn=fgets(buf, 255, fp);
 	sscanf(buf, "%*d %lf %lf %lf", &g->x[i], &g->y[i], &g->d[i]);
     }
     for (i = 0; i < g->ne; i++) {
-	fgets(buf, 255, fp);
+	creturn=fgets(buf, 255, fp);
 	sscanf(buf, "%*d %d %d %d %d %d", &g->etype[i], &g->icon[0][i], &g->icon[1][i], &g->icon[2][i], &g->icon[3][i]);
 	g->icon[0][i]--;
 	g->icon[1][i]--;
@@ -2524,7 +2526,7 @@ int ElioReadGrid(char *gname, ElioGrid * g)
 int ElioFindElementInGrid(ElioGrid * g, double xp, double yp)
 {
     int i, j;
-    int n0, n1, n2, n3;
+   // int n0, n1, n2, n3;
     double x[4], y[4];
     for (i = 0; i < g->ne; i++) {
 	for (j = 0; j < g->etype[i]; j++) {
@@ -2593,7 +2595,7 @@ int ElioFindNearestNode(ElcircHeader * h, double x, double y)
 int ElioWriteGrid(char *gname, ElioGrid * g)
 {
     FILE *fp;
-    char buf[1024];
+ //   char buf[1024];
     int i;
     if ((fp = fopen(gname, "wb")) == NULL) {
 	return ELIO_ERR;
@@ -2676,7 +2678,7 @@ double ElioGetCorieDay(int when)
  */
 double ElioGetDay(int mon, int day, int year, int h, int mi, double se)
 {
-    double frac = (int) se - se;
+//    double frac = (int) se - se;
     struct tm t;
     time_t j;
     t.tm_sec = se;
@@ -2730,7 +2732,7 @@ int ibilinear(double x1, double x2, double x3, double x4, double y1, double y2, 
 {
     double axi[2], aet[2], bxy[2], root_xi[2], root_et[2];
     double x0, y0, dxi, deta, dd, beta, delta, dgamma;
-    int i, j, icount, icaseno;
+    int i, icount, icaseno;
 
     static double SMALL = 1.0e-5;
 
@@ -2765,7 +2767,7 @@ int ibilinear(double x1, double x2, double x3, double x4, double y1, double y2, 
 	*eta = 4 * (bxy[1] * (x - x0) - bxy[1] * (y - y0)) / deta;
 	dd = (axi[0] + *eta * bxy[0]) * (axi[0] + *eta * bxy[0]) + (axi[1] + *eta * bxy[1]) * (axi[1] + *eta * bxy[1]);
 	if (dd == 0) {
-	    fprintf(stderr, "Case 2 error: &lf\n", dd);
+	    fprintf(stderr, "Case 2 error: %lf\n", dd);
 	    return ELIO_ERR;
 	}
 	*xi = ((4 * (x - x0) - *eta * aet[0]) * (axi[0] + *eta * bxy[0]) + (4 * (y - y0) - *eta * aet[1]) * (axi[1] + *eta * bxy[1])) / dd;
@@ -2776,7 +2778,7 @@ int ibilinear(double x1, double x2, double x3, double x4, double y1, double y2, 
 	*xi = 4 * (bxy[1] * (x - x0) - bxy[0] * (y - y0)) / dxi;
 	dd = (aet[0] + *xi * bxy[0]) * (aet[0] + *xi * bxy[0]) + (aet[1] + *xi * bxy[1]) * (aet[1] + *xi * bxy[1]);
 	if (dd == 0) {
-	    fprintf(stderr, "Case 3 error: &lf\n", dd);
+	    fprintf(stderr, "Case 3 error: %lf\n", dd);
 	    return ELIO_ERR;
 	}
 	*eta = ((4 * (x - x0) - *xi * axi[0]) * (aet[0] + *xi * bxy[0]) + (4 * (y - y0) - *xi * axi[1]) * (aet[1] + *xi * bxy[1])) / dd;
@@ -2865,7 +2867,7 @@ static double C(double sigma, ElcircHeader * h)
  */
 double ElioGetSigmaDepthAtNode(int node, int level, float eta, ElcircHeader * eh)
 {
-    double z, sigma, h;
+    double z, sigma, h;z=0.0;
     sigma = eh->zcor[level];
     h = eh->d[node];
     if (eh->ivcor == 1) {
@@ -2882,7 +2884,7 @@ double ElioGetSigmaDepthAtNode(int node, int level, float eta, ElcircHeader * eh
 
 int ElioGetSigmaDepth(int node, float eta, ElcircHeader * eh, double *depths)
 {
-    double z, sigma, h;
+    //double z, sigma, h;
     int i;
 
     for (i = 0; i < eh->nvrt; i++) {
@@ -2906,11 +2908,13 @@ int ElioGetSigmaDepth(int node, float eta, ElcircHeader * eh, double *depths)
  */
 double ElioGetSigmaDepthAtXY(double x, double y, int level, float e, ElcircHeader * eh)
 {
-    double H, h, eta, sigma;
+//    double H, h;// eta, sigma;
     /* Need to interpolate elevation and depth */
     //H = eh->d[node] + e;
-    h = H * eh->zcor[level] + e;
-    return h;
+   // h = H * eh->zcor[level] + e;
+   // return h;
+    printf("error! ElioGetSigmaDepthAtXY broken %s\n",0.0);
+    return 0.0;
 }
 
 /*!
@@ -2928,10 +2932,11 @@ double ElioGetSigmaDepthAtXY(double x, double y, int level, float e, ElcircHeade
  */
 double ElioGetSigmaDepthAtXYZ(double x, double y, double z, float e, ElcircHeader * eh)
 {
-    double H, h, eta, sigma;
+  //  double h;//H,  eta, sigma;
     //H = eh->d[node] + e;
     //h = H * eh->zcor[level] + e;
-    return h;
+    printf("error! ElioGetSigmaDepthAtXYZ broken %.2f\n",0.0);
+    return 0.0;
 }
 
 /*!
@@ -3092,7 +3097,7 @@ int ElioFindIndex(int n, double *data, double d)
  */
 void ElioInterpolateArray(int n, double *z, double *s, int np, double *zp, double *sp)
 {
-    int i, j, l1, l2;
+    int i, j, l1=1, l2=0;
     double tmp;
     for (j = 0; j < np; j++) {
 /* Use minimum value */
@@ -3136,7 +3141,7 @@ void ElioInterpolateArray(int n, double *z, double *s, int np, double *zp, doubl
  */
 double ElioInterpolate(int n, double *z, double *s, double zp)
 {
-    int i, l1, l2;
+    int i, l1=0, l2=1;
     double sp = 0.0;
     double tmp;
 /* Use minimum value */
@@ -3180,7 +3185,7 @@ double ElioInterpolate(int n, double *z, double *s, double zp)
  */
 double ElioInterpolateAtIndex(int n, double *z, double *s, int ind, double zp)
 {
-    int i, l1, l2;
+    int l1, l2;
     double sp = 0.0;
     double tmp;
 /* Use minimum value */

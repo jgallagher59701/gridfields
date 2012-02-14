@@ -5,7 +5,7 @@
 #include <math.h>
 
 ProjectOp::ProjectOp(GridFieldOperator *op, Dim_t k, string attribute_list) 
-         : _k(k), UnaryGridFieldOperator(op) 
+         :  UnaryGridFieldOperator(op),_k(k) 
 {
   split(attribute_list, ";, -:", keepers);
 }

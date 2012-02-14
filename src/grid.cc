@@ -355,7 +355,7 @@ bool Grid::checkWellFormed() {
     for (; iter!=B.end(); iter++) {
       s = A.size();
       A.insert(*iter);
-      x = (A.size() == s);
+      x = ((signed)A.size() == s);
       if (!x) break;
     }
   }
@@ -407,7 +407,7 @@ Grid::~Grid() {
   g_instances--;
 
   int i;
-  for (i=0; i<cellsets.size(); i++) {
+  for (i=0; i<(signed)cellsets.size(); i++) {
     AbstractCellArray *ca = this->cellsets[i];
     DEBUG << " unreffing cellarray " << i << flush; 
     ca->unref();

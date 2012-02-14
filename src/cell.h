@@ -13,6 +13,7 @@ class CrossNodeMap;
 
 typedef unsigned long CellId;
 typedef std::vector<CellId> CellVector;
+// Changed 'short' to 'unsigned short'. jhrg 10/5/11
 typedef short Dim_t;
 
 class Cell {

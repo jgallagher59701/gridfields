@@ -25,7 +25,7 @@ using namespace std;
 
 OutputNetCDFOp::OutputNetCDFOp(string fn, GridFieldOperator *op, 
 		               const Scheme f, const Scheme t)  
- : UnaryGridFieldOperator(op), fixed(f), time(t), filename(fn), ncdf(NULL) {
+ : UnaryGridFieldOperator(op), filename(fn), fixed(f), time(t),  ncdf(NULL) {
    GF = NULL;
 }
 
@@ -41,15 +41,19 @@ void OutputNetCDFOp::Execute() {
   this->Result = this->GF;
 }
 
-NcType mapType(Type t) {
+NcType mapType(Type t) {NcType nyt=ncInt;
   switch (t) {
     case FLOAT:
-      return ncFloat;
+      nyt= ncFloat;
+      break;
     case INT:
-      return ncInt;
+      nyt= ncInt;
+      break;
     default:
       Fatal("Unknown Type encountered during netCDF emission");
+      exit(1);
   }
+return nyt;
 }
 
 void OutputNetCDFOp::WriteTimeVars(GridFieldOperator *op, int index, float timestep) {
@@ -61,12 +65,12 @@ void OutputNetCDFOp::WriteTimeVars(GridFieldOperator *op, int index, float times
   if (!nodedim) {
     Fatal("Unable to find dimension 'node'");
   }
-  for (int k=0; k<tsch.size(); k++) {
+  for (unsigned int k=0; k<tsch.size(); k++) {
     attr = gf->GetAttribute(0, tsch.getAttribute(k));
     //cout << attr->sname() <<", " << endl;
     //attr->print();
     var = ncdf->get_var(attr->sname().c_str());
-    long *foo = var->edges();
+    //long *foo = var->edges();
     var->set_cur(index, 0);
     var->put((float *) attr->getVals(), 1, nodedim->size());
   }
@@ -142,9 +146,8 @@ void addAttributes(NcVar *var, string datestr) {
   }
 }
 
-void OutputNetCDFOp::WriteNetCDF(vector<GridField *> &dims, GridField *cross, 
+void OutputNetCDFOp::WriteNetCDF(vector<GridField *> &, GridField *cross, 
 		                  const string &filename) {
-
    GridField *gf = cross;
    // only works for 2-D gridfields
    assert(gf->Dim() == 2);
@@ -179,8 +182,8 @@ void OutputNetCDFOp::WriteNetCDF(vector<GridField *> &dims, GridField *cross,
    
    // write cells
    NcVar *cellvertices = ncdf->add_var("cell_vertices", ncInt, celldim, cellvertexdim);
-   int cd = celldim->size();
-   int cv = cellvertexdim->size();
+//   int cd = celldim->size();
+//   int cv = cellvertexdim->size();
    AbstractCellArray *ca = gf->GetGrid()->getKCells(2);
    int *nodes; 
    nodes = new int[MAXCELLVERTEX];
@@ -189,7 +192,7 @@ void OutputNetCDFOp::WriteNetCDF(vector<GridField *> &dims, GridField *cross,
 
      assert(c->getsize() <= MAXCELLVERTEX);
      
-     for (int j=0; j<c->getsize(); j++) {
+     for (unsigned int j=0; j<c->getsize(); j++) {
        nodes[j] = c->getnodes()[j]; 
      }
    
@@ -218,7 +221,7 @@ void OutputNetCDFOp::WriteNetCDF(vector<GridField *> &dims, GridField *cross,
 
    // write fixed data
    const Scheme &fsch = this->fixed;
-   for (int k=0; k<fsch.size(); k++) {
+   for (unsigned int k=0; k<fsch.size(); k++) {
      attr = gf->GetAttribute(0, fsch.getAttribute(k));
      var = ncdf->add_var(attr->sname().c_str(), mapType(attr->type), nodedim);
      addAttributes(var, this->datestr);
@@ -227,14 +230,14 @@ void OutputNetCDFOp::WriteNetCDF(vector<GridField *> &dims, GridField *cross,
    // prepare time-varying data
    const Scheme &tsch = this->time;
    string name;
-   for (int k=0; k<tsch.size(); k++) {
+   for (unsigned int k=0; k<tsch.size(); k++) {
      name = tsch.getAttribute(k);
      var = ncdf->add_var(name.c_str(), mapType(tsch.getType(k)), timedim, nodedim);
      addAttributes(var, this->datestr);
    }
 
    // write data last so we don't need to return to define mode
-   for (int k=0; k<fsch.size(); k++) {
+   for (unsigned int k=0; k<fsch.size(); k++) {
      attr = gf->GetAttribute(0, fsch.getAttribute(k));
      var = ncdf->get_var(attr->sname().c_str());
      switch (fsch.getType(k)) {
@@ -316,7 +319,8 @@ void OutputNetCDFOp::WriteNetCDF(vector<GridField *> &dims, GridField *cross,
 }
   */
 
-NcVar *OutputNetCDFOp::putData(Array *a, NcFile *ncdf, long *counts, NcDim **d, int dimcount) {
+NcVar *OutputNetCDFOp::putData(Array *, NcFile *, long *, NcDim **, int ) {
+
 	/*
   Type t = a->type;
   NcVar *var = NULL;
@@ -338,7 +342,8 @@ NcVar *OutputNetCDFOp::putData(Array *a, NcFile *ncdf, long *counts, NcDim **d, 
   }
   return var;
   */
-}
+NcVar *var=NULL;
+return var;}
 /*
 void OutputNetCDFOp::writeName(string name, ofstream &f) {
    int s = name.size();
@@ -358,13 +363,14 @@ unsigned int i,  //index for the unbounded dimension
 float t // value for the unbounded dimension
 )
 : 
-UnaryGridFieldOperator(Op), 
-dimscheme(dims), 
-ncdf(f), 
-dim(d),
+UnaryGridFieldOperator(Op),  
+datestr(""),
 time(t),
+dimscheme(dims),
 index(i),
-datestr("")
+ncdf(f), 
+dim(d)
+
 {
    GF = NULL;
 };
@@ -376,10 +382,11 @@ OutputNetCDFDim::OutputNetCDFDim
   string dn, 
   GridFieldOperator *Op
 ) : UnaryGridFieldOperator(Op), 
-    ncdf(f), 
-    dim(d),
+
+    datestr(""),
     basedimname(dn),
-    datestr("")
+    ncdf(f), 
+    dim(d)
 {
    GF = NULL;
 };
@@ -391,12 +398,12 @@ void OutputNetCDFVars::Execute() {
   GridField *gf = this->GF->getResult();
   const Scheme &dsch = this->dimscheme;
 
-  Array *attr;
+  //Array *attr;
   NcVar *var;
   const NcDim **vdims = new const NcDim *[dsch.size()+1];
   int sz = 1;
   // Dims are in reverse order in C and C++.  Record dimension is "first"
-  for (int k=0; k<dsch.size(); k++) {
+  for (unsigned int k=0; k<dsch.size(); k++) {
     int r = dsch.size() - k;
     string a = dsch.getAttribute(k);
     
@@ -443,7 +450,7 @@ void OutputNetCDFVars::Execute() {
   ncdf->sync();
 
   const Scheme &tsch = gf->GetScheme(this->dim);
-  for (int k=0; k<tsch.size(); k++) {
+  for (unsigned int k=0; k<tsch.size(); k++) {
     Array *attr = gf->GetAttribute(this->dim, tsch.getAttribute(k));
     if (attr->size() != sz) {
       Fatal("Cardinality %i does not match product of dimension sizes %i", attr->size(), sz);
@@ -489,7 +496,7 @@ void OutputNetCDFDim::WriteCells(AbstractCellArray *ca, Dim_t d) {
   DEBUG << "writing Cells" << endl;
   // Compute maximum number of cell vertices
   unsigned int maxcellsize = 0;
-  for (int i=0; i<ca->getsize(); i++) { 
+  for (unsigned int i=0; i<ca->getsize(); i++) { 
      Cell *c = ca->getCell(i);
      if (maxcellsize < c->getsize()) maxcellsize = c->getsize();
   }
@@ -506,8 +513,8 @@ void OutputNetCDFDim::WriteCells(AbstractCellArray *ca, Dim_t d) {
   DEBUG << "writing cells" << endl;
   NcVar *cellvertices = ncdf->add_var("cell_vertices", ncInt, celldim, cellvertexdim);
 
-  int cd = celldim->size();
-  int cv = cellvertexdim->size();
+//  int cd = celldim->size();
+//  int cv = cellvertexdim->size();
   int *nodes;
 
   nodes = new int[maxcellsize];
@@ -517,7 +524,7 @@ void OutputNetCDFDim::WriteCells(AbstractCellArray *ca, Dim_t d) {
 
     assert(c->getsize() <= maxcellsize);
 
-    for (int j=0; j<c->getsize(); j++) {
+    for (unsigned int j=0; j<c->getsize(); j++) {
       nodes[j] = c->getnodes()[j];
     }
 
@@ -576,7 +583,7 @@ void OutputNetCDFDim::Execute() {
 
   const Scheme &nodescheme = gf->GetScheme(0);
   const Scheme &cellscheme = gf->GetScheme(this->dim);
-  NcDim *celldim;
+  NcDim *celldim = 0;
 
   DEBUG << "Exporting gridfield as netcdf dims" << endl;
   // add dims
@@ -587,7 +594,7 @@ void OutputNetCDFDim::Execute() {
     // write cell vars
     DEBUG << "Adding cell vars" << endl;
     celldim = ncdf->get_dim("cell");
-    for (int k=0; k<cellscheme.size(); k++) {
+    for (unsigned int k=0; k<cellscheme.size(); k++) {
       DEBUG << "Adding cell var " << cellscheme.getAttribute(k) << endl;
       Array *attr = gf->GetAttribute(this->dim, cellscheme.getAttribute(k));
       NcVar *var = ncdf->add_var(attr->sname().c_str(), mapType(attr->type), celldim);
@@ -617,7 +624,7 @@ void OutputNetCDFDim::Execute() {
 
   if (writenodes) {
     // write node vars
-    for (int k=0; k<nodescheme.size(); k++) {
+    for (unsigned int k=0; k<nodescheme.size(); k++) {
       Array *attr = gf->GetAttribute(0, nodescheme.getAttribute(k));
       assert(attr->size() == nodedim->size());
       DEBUG << "Adding var for nodes " << attr->sname() << endl;
@@ -631,7 +638,7 @@ void OutputNetCDFDim::Execute() {
   DEBUG << "Writing node data" << endl;
   if (writenodes) {
     // write data last so we don't need to return to define mode
-    for (int k=0; k<nodescheme.size(); k++) {
+    for (unsigned int k=0; k<nodescheme.size(); k++) {
       Array *attr = gf->GetAttribute(0, nodescheme.getAttribute(k));
       NcVar *var = ncdf->get_var(attr->sname().c_str());
     switch (attr->type) {
@@ -650,7 +657,7 @@ void OutputNetCDFDim::Execute() {
 
   if (this->dim > 0) {
     // write data last so we don't need to return to define mode
-    for (int k=0; k<cellscheme.size(); k++) {
+    for (unsigned int k=0; k<cellscheme.size(); k++) {
       Array *attr = gf->GetAttribute(0, cellscheme.getAttribute(k));
       NcVar *var = ncdf->get_var(attr->sname().c_str());
 
