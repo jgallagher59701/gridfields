@@ -83,6 +83,10 @@ class SwigPyIterator:
 SwigPyIterator_swigregister = _core.SwigPyIterator_swigregister
 SwigPyIterator_swigregister(SwigPyIterator)
 
+
+def castToCellArray(*args):
+  return _core.castToCellArray(*args)
+castToCellArray = _core.castToCellArray
 class vectori:
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, vectori, name, value)
@@ -283,6 +287,10 @@ class Object:
     __del__ = lambda self : None;
 Object_swigregister = _core.Object_swigregister
 Object_swigregister(Object)
+
+def makeArrayReader(*args):
+  return _core.makeArrayReader(*args)
+makeArrayReader = _core.makeArrayReader
 
 class GridFieldOperator:
     __swig_setmethods__ = {}
@@ -505,6 +513,7 @@ class Array(Object):
         this = _core.new_Array(*args)
         try: self.this.append(this)
         except: self.this = this
+    def makeArray(self): return _core.Array_makeArray(self)
     def unref(self): return _core.Array_unref(self)
     def ref(self): return _core.Array_ref(self)
     __swig_destroy__ = _core.delete_Array
@@ -526,6 +535,7 @@ class Array(Object):
     def setVals(self, *args): return _core.Array_setVals(self, *args)
     def getVals(self): return _core.Array_getVals(self)
     def getValPtr(self, *args): return _core.Array_getValPtr(self, *args)
+    def getValInt(self, *args): return _core.Array_getValInt(self, *args)
     def next(self, *args): return _core.Array_next(self, *args)
     def expand(self, *args): return _core.Array_expand(self, *args)
     def repeat(self, *args): return _core.Array_repeat(self, *args)
@@ -832,6 +842,7 @@ class ArrayReader:
         this = _core.new_ArrayReader(*args)
         try: self.this.append(this)
         except: self.this = this
+    def makeArrayReader(self, *args): return _core.ArrayReader_makeArrayReader(self, *args)
     def ReadTuples(self, *args): return _core.ArrayReader_ReadTuples(self, *args)
     def ReadPrimitives(self, *args): return _core.ArrayReader_ReadPrimitives(self, *args)
     def Read(self, *args): return _core.ArrayReader_Read(self, *args)
@@ -1065,62 +1076,6 @@ def BindConstantOp_BindConstant(*args):
   return _core.BindConstantOp_BindConstant(*args)
 BindConstantOp_BindConstant = _core.BindConstantOp_BindConstant
 
-class IterateOp(BinaryGridFieldOperator):
-    __swig_setmethods__ = {}
-    for _s in [BinaryGridFieldOperator]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, IterateOp, name, value)
-    __swig_getmethods__ = {}
-    for _s in [BinaryGridFieldOperator]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, IterateOp, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _core.new_IterateOp(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    def Execute(self): return _core.IterateOp_Execute(self)
-    __swig_destroy__ = _core.delete_IterateOp
-    __del__ = lambda self : None;
-IterateOp_swigregister = _core.IterateOp_swigregister
-IterateOp_swigregister(IterateOp)
-
-class StateOp(UnaryGridFieldOperator):
-    __swig_setmethods__ = {}
-    for _s in [UnaryGridFieldOperator]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, StateOp, name, value)
-    __swig_getmethods__ = {}
-    for _s in [UnaryGridFieldOperator]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, StateOp, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _core.new_StateOp(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    def SetState(self, *args): return _core.StateOp_SetState(self, *args)
-    def Execute(self): return _core.StateOp_Execute(self)
-    __swig_destroy__ = _core.delete_StateOp
-    __del__ = lambda self : None;
-StateOp_swigregister = _core.StateOp_swigregister
-StateOp_swigregister(StateOp)
-
-class TagOp(BinaryGridFieldOperator):
-    __swig_setmethods__ = {}
-    for _s in [BinaryGridFieldOperator]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, TagOp, name, value)
-    __swig_getmethods__ = {}
-    for _s in [BinaryGridFieldOperator]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, TagOp, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _core.new_TagOp(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _core.delete_TagOp
-    __del__ = lambda self : None;
-    def Execute(self): return _core.TagOp_Execute(self)
-    def Tag(self, *args): return _core.TagOp_Tag(self, *args)
-TagOp_swigregister = _core.TagOp_swigregister
-TagOp_swigregister(TagOp)
-
 class DataDumpOp(UnaryGridFieldOperator):
     __swig_setmethods__ = {}
     for _s in [UnaryGridFieldOperator]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
@@ -1167,27 +1122,6 @@ class OutputOp(UnaryGridFieldOperator):
     __del__ = lambda self : None;
 OutputOp_swigregister = _core.OutputOp_swigregister
 OutputOp_swigregister(OutputOp)
-
-class StuebeNetCDFOp:
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, StuebeNetCDFOp, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, StuebeNetCDFOp, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _core.new_StuebeNetCDFOp(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_setmethods__["filename"] = _core.StuebeNetCDFOp_filename_set
-    __swig_getmethods__["filename"] = _core.StuebeNetCDFOp_filename_get
-    def setFileName(self, *args): return _core.StuebeNetCDFOp_setFileName(self, *args)
-    def WriteSELFENetCDF(self, *args): return _core.StuebeNetCDFOp_WriteSELFENetCDF(self, *args)
-    def SetDate(self, *args): return _core.StuebeNetCDFOp_SetDate(self, *args)
-    def Write3DTimestep(self, *args): return _core.StuebeNetCDFOp_Write3DTimestep(self, *args)
-    __swig_destroy__ = _core.delete_StuebeNetCDFOp
-    __del__ = lambda self : None;
-StuebeNetCDFOp_swigregister = _core.StuebeNetCDFOp_swigregister
-StuebeNetCDFOp_swigregister(StuebeNetCDFOp)
 
 class OutputNetCDFOp(UnaryGridFieldOperator):
     __swig_setmethods__ = {}

@@ -6,6 +6,8 @@ import log
 import time
 import re
 import xmlrpclib as xrl
+from gridfield.core import makeArrayReader, BindOp
+import numpy as np
 
 def attachclass(obj):
   #attaches the class name as an attribute for transmission via xmlrpc
@@ -217,7 +219,13 @@ class UnaryOperator(Operator):
     self.previous.mkGraph(addEdge, addNode)
     addNode(self.oid(), self.opstr())
     addEdge(self.oid(), self.previous.oid())
-    
+
+  def init(self):
+   if isinstance(self.previous, gridfield.GridField):
+     self.previous = Wrap(self.previous)
+   self.previous.init()
+   return not hasattr(self, "_physicalop") 
+ 
 class BinaryOperator(Operator):
   def __init__(self, left, right):
     self.left = left
@@ -271,6 +279,26 @@ class BinaryOperator(Operator):
     addNode(self.oid(), self.opstr())
     addEdge(self.oid(), self.left.oid())
     addEdge(self.oid(), self.right.oid())
+
+  def init(self):
+    if isinstance(self.left, gridfield.GridField):
+     self.left = Wrap(self.left)
+    if isinstance(self.right, gridfield.GridField):
+     self.right = Wrap(self.right)
+    self.left.init()
+    self.right.init()
+    return not hasattr(self, "_physicalop")
+
+  def init2(self):
+    if isinstance(self.left, gridfield.GridField):
+     self.left = Wrap(self.left)
+    if isinstance(self.right, gridfield.GridField):
+     self.right = Wrap(self.right)
+    if isinstance(self.state, gridfield.GridField):
+     self.state = Wrap(self.state)
+    self.left.init()
+    self.right.init()
+    return not hasattr(self, "_physicalop")
 
 class Scan(ZeroaryOperator):
   def __init__(self, address, name):
@@ -326,8 +354,7 @@ class Restrict(UnaryOperator):
     return "Restrict(%s)" % (self.condition,)
     
   def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if UnaryOperator.init(self):
       self._physicalop = gridfield.RestrictOp(self.condition, self.dim, self.previous._physicalop)
   
 class Bind2(UnaryOperator):
@@ -379,61 +406,10 @@ class BindConstant(UnaryOperator):
     return "BindConstant(%s, %s, %s)" % (self.attr, self.val, self.dim)
     
   def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if UnaryOperator.init(self):
       self._physicalop = gridfield.BindConstantOp(self.attr, self.val, 
                                            self.previous._physicalop)
-      
-class Bind(UnaryOperator):
-  def __init__(self, address, attr, dim, gf, ptrs="", gftype=gridfield.FLOAT):
-    UnaryOperator.__init__(self, gf)
-    if type(address) == type("foo"):
-      # in case we are passed a string of python syntax
-      self.address = eval("dict('%s')" % (address,))
-    else:
-      self.address = dict(address)
-    self.attr = attr
-    self.dim = dim
-    self.ptrs = ptrs
-    self.type = gftype
 
-  def ReplaceContext(self, context):
-    self.address = context.copy()
-    self.dirty = True
-    if self.__dict__.has_key("_physicalop"):
-      ar = catalog.getArrayReader(self.address, self.attr, self.ptrs)
-      self._physicalop.setArrayReader(ar)
-    #fn, o = catalog.resolveContext(self.address)
-    #self._physicalop.setFilename(fn)
-    #self._physicalop.setOffsetInt(o)
-
-  def ChangeContext(self, attr, val):
-    self.address[attr] = val
-    #fn, o = catalog.resolveContext(self.address)
-    #self._physicalop.setFilename(fn)
-    #self._physicalop.setOffsetInt(o)
-    if self.__dict__.has_key("_physicalop"):
-      ar = catalog.getArrayReader(self.address, self.attr, self.ptrs)
-      self._physicalop.setArrayReader(ar)
-
-  def __repr__(self):
-    return "Bind(%s, %s, %s, %s, %s)" % (self.address, self.attr, self.ptrs, self.dim, self.previous)
-    
-
-  def opstr(self):
-    return "Bind(%s, %s, %s)" % (self.attr, self.dim, self.ptrs)
-    
-  def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
-      #fn, o = catalog.resolveContext(self.address)
-      #ef = gridfield.ElcircFile(fn)
-      #ar = ef.getVariableReader(0, "addr")
-      #fn, o = catalog.resolveContext(self.address)
-      ar = catalog.getArrayReader(self.address, self.attr, self.ptrs)
-      self._physicalop = gridfield.BindOp(self.attr, self.type, 
-                                       ar, self.dim, self.previous._physicalop)
-      
 class Wrap(ZeroaryOperator):
   def __init__(self, gf):
     ZeroaryOperator.__init__(self)
@@ -459,6 +435,86 @@ class Wrap(ZeroaryOperator):
 
   def execute(self):
     self._Result = self.gf
+      
+class Bind(UnaryOperator):
+#  def __init__(self, address, attr, dim, gf, ptrs="", gftype=gridfield.FLOAT):
+#    UnaryOperator.__init__(self, gf)
+  def __init__(self, name, array, dim, previous, gftype=gridfield.FLOAT, patternAttribute=None):
+    self.array = array
+    self.name  = name
+    self.previous=previous
+    self.patternAttribute=patternAttribute;
+    if array.dtype==np.int32:
+      self.type=gridfield.INT
+    else:
+      self.type=gftype;
+#    if type(address) == type("foo"):
+      # in case we are passed a string of python syntax
+#      self.address = eval("dict('%s')" % (address,))
+#    else:
+#      self.address = dict(address)
+#    self.attr = attr
+    self.dim = dim
+#    self.ptrs = ptrs
+
+  def ReplaceContext(self, context):
+    self.address = context.copy()
+    self.dirty = True
+    if self.__dict__.has_key("_physicalop"):
+##      ar = catalog.getArrayReader(self.address, self.attr, self.ptrs)
+      ar = makeArrayReader(self.array,len(self.array))
+      ar =  makeArrayReader(self.array,len(self.array))
+      if (self.patternAttribute !=None):
+         ar.setPatternAttribute(self.patternAttribute)
+      self._physicalop.setArrayReader(ar)
+    #fn, o = catalog.resolveContext(self.address)
+    #self._physicalop.setFilename(fn)
+    #self._physicalop.setOffsetInt(o)
+
+  def ChangeContext(self, attr, val):
+    self.address[attr] = val
+    #fn, o = catalog.resolveContext(self.address)
+    #self._physicalop.setFilename(fn)
+    #self._physicalop.setOffsetInt(o)
+    if self.__dict__.has_key("_physicalop"):
+#      ar = catalog.getArrayReader(self.address, self.attr, self.ptrs)
+      ar = makeArrayReader(self.array,len(self.array))
+      ar = makeArrayReader(self.array,len(self.array))
+      if (self.patternAttribute !=None):
+         ar.setPatternAttribute(self.patternAttribute)
+      self._physicalop.setArrayReader(ar)
+
+
+
+  def __repr__(self):
+    return "Bind(%s, %s, %s, %s, %s,%s)" % (self.name, self.array, self.dim, self.previous, self.gftype, self.patternAttribute)
+    
+
+  def opstr(self):
+    return "Bind(%s, %s, %s)" % (self.attr, self.dim, self.ptrs)
+    
+  def init(self):
+    #try:
+#    if isinstance(self.previous, gridfield.GridField):
+#     self.previous = Wrap(self.previous)
+#    self.previous.init()
+    #except AttributeError:  
+     #self.previous=Wrap(self.previous) 
+     #self.previous.init()
+    if UnaryOperator.init(self):
+      #fn, o = catalog.resolveContext(self.address)
+      #ef = gridfield.ElcircFile(fn)
+      #ar = ef.getVariableReader(0, "addr")
+      #fn, o = catalog.resolveContext(self.address)
+      #ar = catalog.getArrayReader(self.address, self.attr, self.ptrs)
+      ar = makeArrayReader(self.array,len(self.array))
+      if (self.patternAttribute !=None):
+         ar.setPatternAttribute(self.patternAttribute)
+      #try:
+      self._physicalop = BindOp(self.name,self.type, ar, self.dim, self.previous._physicalop)
+      #except AttributeError:  
+      # self.previous=Wrap(self.previous)    
+      # self._physicalop = BindOp(self.name,self.type, ar, self.dim, self.previous._physicalop)
 
 class Cross(BinaryOperator):
   def __init__(self, left, right):
@@ -471,9 +527,7 @@ class Cross(BinaryOperator):
     return "X"
   
   def init(self):
-    self.left.init()
-    self.right.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if BinaryOperator.init(self):
       self._physicalop = gridfield.CrossOp(self.left._physicalop, self.right._physicalop)
     
 class Apply(UnaryOperator):
@@ -498,8 +552,7 @@ class Apply(UnaryOperator):
        (';\n'.join(self.expr.split(';')),self.dim)
 
   def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if UnaryOperator.init(self):
       self._physicalop = gridfield.ApplyOp(self.expr, self.dim, self.previous._physicalop)
 
 class Accumulate(UnaryOperator):
@@ -520,8 +573,7 @@ class Accumulate(UnaryOperator):
             % (self.attr, self.expr, self.seed, self.dim, self.offset)
 
   def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if UnaryOperator.init(self):
       self._physicalop = gridfield.AccumulateOp(self.previous._physicalop, self.dim,
                                              self.attr, 
                                              self.expr, 
@@ -534,8 +586,7 @@ class Sift(UnaryOperator):
     self.dim = dim
     
   def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if UnaryOperator.init(self):
       self._physicalop = gridfield.SiftOp(self.dim, self.previous._physicalop)
     
   def __repr__(self):
@@ -553,9 +604,7 @@ class Aggregate(BinaryOperator):
     self.aggregate = agg
     
   def init(self):
-    self.left.init()
-    self.right.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if BinaryOperator.init(self):
       self._physicalop \
            = gridfield.AggregateOp(self.left._physicalop, self.i,
                                  self.assign, 
@@ -575,9 +624,7 @@ class Merge(BinaryOperator):
     BinaryOperator.__init__(self, left, right)
     
   def init(self):
-    self.left.init()
-    self.right.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if BinaryOperator.init(self):
       self._physicalop = gridfield.MergeOp(self.left._physicalop, 
                                         self.right._physicalop)
 
@@ -594,9 +641,7 @@ class Tag(BinaryOperator):
     self.j = j
 
   def init(self):
-    self.left.init()
-    self.right.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if BinaryOperator.init(self):
       self._physicalop = gridfield.TagOp(self.left._physicalop, self.i,
                                       self.right._physicalop, self.j)
 
@@ -612,8 +657,7 @@ class State(UnaryOperator):
     UnaryOperator.__init__(self, previous)
 
   def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if UnaryOp.init(self):
       self._physicalop = gridfield.StateOp(self.previous._physicalop)
 
   def SetState(self, state):
@@ -693,8 +737,7 @@ class Project(UnaryOperator):
     return "Project(%s)" % (self.attrs,)
 
   def init(self):
-    self.previous.init()
-    if not hasattr(self,"_physicalop"):
+    if UnaryOp.init(self):
       self._physicalop = gridfield.ProjectOp(self.previous._physicalop, self.i, self.attrs)
 
 class Fetch(UnaryOperator):
@@ -753,8 +796,7 @@ class Store(UnaryOperator):
       self._physicalop.setFileName(filename)
 
   def init(self):
-    self.previous.init()
-    if not self.__dict__.has_key("_physicalop"):
+    if UnaryOp.init(self):
       self._physicalop = gridfield.OutputOp(self.filename,0,self.previous._physicalop)
     
 

@@ -57,6 +57,8 @@ extern "C" {
 %include "std_vector.i"
 %include "cpointer.i"
 
+
+
 %pointer_cast(AbstractCellArray * , CellArray *, castToCellArray)
 namespace std {
    %template(vectori) vector<int>;
@@ -94,6 +96,20 @@ namespace std {
   }
 }
 
+
+
+%typemap(out) vector<int> {
+   int i;
+   using namespace std;
+   int length = $1.size();
+   $result = PyList_New( length );
+   for (i = 0; i < length; i++) {
+     PyObject *o = PyInt_FromLong( $1[i] );
+     PyList_SetItem($result,i,o);
+   }
+} 
+
+
 %typemap(in) Node * {
   int i,sz;
                                                                                
@@ -113,6 +129,8 @@ namespace std {
     $1[i] = ($*1_ltype) PyInt_AsLong(o);
   }
 }
+
+
 
 
 
@@ -137,9 +155,11 @@ namespace std {
 }
 
 
+
 %typemap(freearg) float *, int *, double * {
   if ($1) free($1);
 }
+
 
 
 #endif
@@ -147,6 +167,8 @@ namespace std {
 %typecheck(SWIG_TYPECHECK_POINTER) float * {
   $1 = PySequence_Check($input) ? 1 : 0;
 }
+
+
 
 typedef short Dim_t;
 %inline %{
@@ -181,6 +203,22 @@ PyObject *asPyObject(UnTypedPtr ptr) {
 
 PyStringObject *asPyString(UnTypedPtr p) {
   return (PyStringObject *) p;
+}
+
+ArrayReader *makeArrayReader(int *array, int size) {
+ stringstream *ss = new stringstream();
+ stringbuf *pbuf;
+ pbuf=ss->rdbuf();
+ pbuf->sputn((char *) array, 4*size);
+ return new ArrayReader(ss);
+}
+
+ArrayReader *makeArrayReader(float *array, int size) {
+ stringstream *ss = new stringstream();
+ stringbuf *pbuf;
+ pbuf=ss->rdbuf();
+ pbuf->sputn((char *) array, 4*size);
+ return new ArrayReader(ss);
 }
 
 UnTypedPtr asUnTypedPtr(PyObject *p) {

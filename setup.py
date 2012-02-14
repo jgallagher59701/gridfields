@@ -8,7 +8,7 @@ ez_setup.use_setuptools()
 from setuptools import setup, find_packages, Extension
 #from distutils.core import setup, Extension
 
-b = op.abspath(op.join('.','src'))
+b = op.abspath(op.join('.','clib/src'))
 gfdir = op.abspath(op.join('.','gridfield'))
 allsources = os.listdir(b)
 
@@ -23,9 +23,9 @@ elio = Extension('elio',
 # Ugh, does distutils provide an easy wa yto derive this 
 # location from the environment a la configure?
 vtkincl = '/usr/include/vtk-5.2'
-vb = op.abspath(op.join('.','src/vis'))
+#vb = op.abspath(op.join('.','src/vis'))
 
-swig_opts = ['-c++', '-I%s' % b, '-I%s' % vb, '-I%s' % vtkincl, '-classic']
+swig_opts = ['-c++', '-I%s' % b, '-I%s' % vtkincl, '-classic']
 
 # c++ gridfield core extension
 csources = [c for c in allsources if op.splitext(c)[1]  in ['.cc', '.cpp', '.c++', '.c']]
@@ -40,28 +40,28 @@ pygridfield = Extension('_core',
 
 ext_modules = [elio, pygridfield]
 
-try:
+#try:
   # only build vtk if the vtk modules are installed
-  import vtk
+#  import vtk
 
   # vtk-based visualization
   # not sure how to avoid recompiling and relinking the gridfield objs
   # Very wasteful, but I'm having trouble instructing python
   # to use the symbols from _gridfield.so
-  gfsources = [c for c in csources if 'output' not in c and 'netcdf' not in c and 'stuebe' not in c]
-  vsources = [op.join('gridfield','gfvis.i'), 
-              op.join(vb,'vtkGridField.cxx')] + gfsources
-  vtkgridfield = Extension('_gfvis',
-                         vsources,
-                         include_dirs = [vtkincl, vb, b],
-                         libraries = ['vtkFiltering', 'vtkCommon','vtkRendering', 'vtkIO', 'vtkCommonPythonD'],
-                         swig_opts = swig_opts
-                         )
-  ext_modules = [vtkgridfield] + ext_modules
+#  gfsources = [c for c in csources if 'output' not in c and 'netcdf' not in c and 'stuebe' not in c]
+#  vsources = [op.join('gridfield','gfvis.i'), 
+#              op.join(vb,'vtkGridField.cxx')] + gfsources
+#  vtkgridfield = Extension('_gfvis',
+#                         vsources,
+#                         include_dirs = [vtkincl, vb, b],
+#                         libraries = ['vtkFiltering', 'vtkCommon','vtkRendering', 'vtkIO', 'vtkCommonPythonD'],
+#                         swig_opts = swig_opts
+#                         )
+#  ext_modules = [vtkgridfield] + ext_modules
 
-except ImportError:
-  print "VTK or the VTK python bindings do not appear to be installed....skipping the vis module"
-  pass
+#except ImportError:
+#  print "VTK or the VTK python bindings do not appear to be installed....skipping the vis module"
+#  pass
 
 # Workaround for SWIG/C++ bug
 # Specifying "-c++" above should be enough to get .cpp SWIG output, but it isn't
