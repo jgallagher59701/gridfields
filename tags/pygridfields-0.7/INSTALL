@@ -1,0 +1,10 @@
+To install:
+
+python setup.py build
+python setup.py install
+
+then test the install using the examples provided in the examples folder
+
+cd examples
+
+python helloworld.py
