@@ -1,6 +1,0 @@
-To Make:
-
-autoreconf
-./configure
-make
-make check
