@@ -64,8 +64,8 @@ src/bindconstant.cc src/cell.cc src/cellarray.cc src/constarray.cc src/cross.cc	
 src/datadump.cc src/dataset.cc src/elcircfile.cc src/elio.c src/expr.cc src/fparser.cc src/grid.cc	\
 src/gridfield.cc src/gridfieldoperator.cc src/implicit0cells.cc 		\
 src/merge.cc src/output.cc src/outputtuples.cc src/project.cc		\
-src/rankeddataset.cc src/refrestrict.cc src/restrict.cc src/scaninternal.cc src/sift.cc	\
-src/timing.cc src/tuple.cc src/type.cc src/unarynodemap.cc	\
+src/rankeddataset.cc src/refrestrict.cc src/restrict.cc src/remesh.cc src/scaninternal.cc src/sift.cc	\
+src/triangulate.cc src/timing.cc src/tuple.cc src/type.cc src/unarynodemap.cc	\
 src/util.cc 
 
 if NETCDF_FOUND
@@ -81,8 +81,8 @@ src/gridfield.h src/gridfieldoperator.h src/idnodemap.h src/idordmap.h			\
 src/implicit0cells.h src/implicitcrossnodemap.h src/leftnodemap.h src/merge.h		\
 src/nodemap.h src/normnodemap.h src/object.h src/onegrid.h src/ordmap.h	\
 src/output.h src/outputtuples.h src/partition.h src/project.h src/rankeddataset.h		\
-src/refrestrict.h src/restrict.h src/scan.h src/scaninternal.h src/sift.h		\
-src/subgridordmap.h src/timing.h src/tuple.h src/type.h src/unarynodemap.h	\
+src/refrestrict.h src/restrict.h src/remesh.h src/scan.h src/scaninternal.h src/sift.h		\
+src/triangulate.h src/subgridordmap.h src/timing.h src/tuple.h src/type.h src/unarynodemap.h	\
 src/util.h
 
 if NETCDF_FOUND
