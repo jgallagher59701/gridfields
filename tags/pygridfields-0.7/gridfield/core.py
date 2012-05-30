@@ -228,6 +228,53 @@ class vectorS:
 vectorS_swigregister = _core.vectorS_swigregister
 vectorS_swigregister(vectorS)
 
+class VecVecdouble:
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, VecVecdouble, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, VecVecdouble, name)
+    __repr__ = _swig_repr
+    def iterator(self): return _core.VecVecdouble_iterator(self)
+    def __iter__(self): return self.iterator()
+    def __nonzero__(self): return _core.VecVecdouble___nonzero__(self)
+    def __bool__(self): return _core.VecVecdouble___bool__(self)
+    def __len__(self): return _core.VecVecdouble___len__(self)
+    def pop(self): return _core.VecVecdouble_pop(self)
+    def __getslice__(self, *args): return _core.VecVecdouble___getslice__(self, *args)
+    def __setslice__(self, *args): return _core.VecVecdouble___setslice__(self, *args)
+    def __delslice__(self, *args): return _core.VecVecdouble___delslice__(self, *args)
+    def __delitem__(self, *args): return _core.VecVecdouble___delitem__(self, *args)
+    def __getitem__(self, *args): return _core.VecVecdouble___getitem__(self, *args)
+    def __setitem__(self, *args): return _core.VecVecdouble___setitem__(self, *args)
+    def append(self, *args): return _core.VecVecdouble_append(self, *args)
+    def empty(self): return _core.VecVecdouble_empty(self)
+    def size(self): return _core.VecVecdouble_size(self)
+    def clear(self): return _core.VecVecdouble_clear(self)
+    def swap(self, *args): return _core.VecVecdouble_swap(self, *args)
+    def get_allocator(self): return _core.VecVecdouble_get_allocator(self)
+    def begin(self): return _core.VecVecdouble_begin(self)
+    def end(self): return _core.VecVecdouble_end(self)
+    def rbegin(self): return _core.VecVecdouble_rbegin(self)
+    def rend(self): return _core.VecVecdouble_rend(self)
+    def pop_back(self): return _core.VecVecdouble_pop_back(self)
+    def erase(self, *args): return _core.VecVecdouble_erase(self, *args)
+    def __init__(self, *args): 
+        this = _core.new_VecVecdouble(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def push_back(self, *args): return _core.VecVecdouble_push_back(self, *args)
+    def front(self): return _core.VecVecdouble_front(self)
+    def back(self): return _core.VecVecdouble_back(self)
+    def assign(self, *args): return _core.VecVecdouble_assign(self, *args)
+    def resize(self, *args): return _core.VecVecdouble_resize(self, *args)
+    def insert(self, *args): return _core.VecVecdouble_insert(self, *args)
+    def reserve(self, *args): return _core.VecVecdouble_reserve(self, *args)
+    def capacity(self): return _core.VecVecdouble_capacity(self)
+    __swig_destroy__ = _core.delete_VecVecdouble
+    __del__ = lambda self : None;
+VecVecdouble_swigregister = _core.VecVecdouble_swigregister
+VecVecdouble_swigregister(VecVecdouble)
+
 
 def derefFloat(*args):
   return _core.derefFloat(*args)
@@ -514,6 +561,7 @@ class Array(Object):
         try: self.this.append(this)
         except: self.this = this
     def makeArray(self): return _core.Array_makeArray(self)
+    def makeArrayf(self): return _core.Array_makeArrayf(self)
     def unref(self): return _core.Array_unref(self)
     def ref(self): return _core.Array_ref(self)
     __swig_destroy__ = _core.delete_Array
@@ -536,6 +584,7 @@ class Array(Object):
     def getVals(self): return _core.Array_getVals(self)
     def getValPtr(self, *args): return _core.Array_getValPtr(self, *args)
     def getValInt(self, *args): return _core.Array_getValInt(self, *args)
+    def getValfloat(self, *args): return _core.Array_getValfloat(self, *args)
     def next(self, *args): return _core.Array_next(self, *args)
     def expand(self, *args): return _core.Array_expand(self, *args)
     def repeat(self, *args): return _core.Array_repeat(self, *args)
@@ -696,6 +745,7 @@ class CellArray:
     def getsize(self): return _core.CellArray_getsize(self)
     def addCell(self, *args): return _core.CellArray_addCell(self, *args)
     def addCellNodes(self, *args): return _core.CellArray_addCellNodes(self, *args)
+    def makeArrayInts(self): return _core.CellArray_makeArrayInts(self)
     def getCell(self, *args): return _core.CellArray_getCell(self, *args)
     def getCellCopy(self, *args): return _core.CellArray_getCellCopy(self, *args)
     def getCellNodes(self, *args): return _core.CellArray_getCellNodes(self, *args)
@@ -1000,6 +1050,38 @@ RestrictOp_swigregister(RestrictOp)
 def RestrictOp_Restrict(*args):
   return _core.RestrictOp_Restrict(*args)
 RestrictOp_Restrict = _core.RestrictOp_Restrict
+
+class RemeshOp(UnaryGridFieldOperator):
+    __swig_setmethods__ = {}
+    for _s in [UnaryGridFieldOperator]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, RemeshOp, name, value)
+    __swig_getmethods__ = {}
+    for _s in [UnaryGridFieldOperator]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, RemeshOp, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args): 
+        this = _core.new_RemeshOp(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_setmethods__["Gnew"] = _core.RemeshOp_Gnew_set
+    __swig_getmethods__["Gnew"] = _core.RemeshOp_Gnew_get
+    __swig_setmethods__["attry"] = _core.RemeshOp_attry_set
+    __swig_getmethods__["attry"] = _core.RemeshOp_attry_get
+    __swig_setmethods__["attrx"] = _core.RemeshOp_attrx_set
+    __swig_getmethods__["attrx"] = _core.RemeshOp_attrx_get
+    def Execute(self): return _core.RemeshOp_Execute(self)
+    def constructtree(self, *args): return _core.RemeshOp_constructtree(self, *args)
+    def point_inside_polygon(self, *args): return _core.RemeshOp_point_inside_polygon(self, *args)
+    def inside(self, *args): return _core.RemeshOp_inside(self, *args)
+    def clip(self, *args): return _core.RemeshOp_clip(self, *args)
+    def polyclip(self, *args): return _core.RemeshOp_polyclip(self, *args)
+    def intersect(self, *args): return _core.RemeshOp_intersect(self, *args)
+    def Remesh(self, *args): return _core.RemeshOp_Remesh(self, *args)
+    def constructintersection(self, *args): return _core.RemeshOp_constructintersection(self, *args)
+    __swig_destroy__ = _core.delete_RemeshOp
+    __del__ = lambda self : None;
+RemeshOp_swigregister = _core.RemeshOp_swigregister
+RemeshOp_swigregister(RemeshOp)
 
 class ApplyOp(UnaryGridFieldOperator):
     __swig_setmethods__ = {}
