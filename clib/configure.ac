@@ -6,6 +6,7 @@ AC_INIT([gridfields], [1.0.0], [Bill Howe <billhowe@cs.washington.edu>])
 AC_CONFIG_SRCDIR([src/abstractcellarray.h])
 AM_CONFIG_HEADER([config.h])
 
+
 # This provides a place to keep all the autotools stuff (m4 files, etc.)
 AC_CONFIG_AUX_DIR(conf)
 AC_CONFIG_MACRO_DIR([conf])
@@ -56,6 +57,10 @@ fi
 # FIXME: Replace `main' with a function in `-lwayne':
 # AC_CHECK_LIB([wayne], [main])
 
+AC_CHECK_LIB([lapack],[dgesv_])
+#save_LIBS="$LIBS"; LIBS="$BLAS_LIBS $LIBS"
+#AC_CHECK_LIB($lapack, $cheev,[ax_lapack_ok=yes; LAPACK_LIBS="-l$lapack"], [], [$FLIBS])
+#LIBS="$save_LIBS"
 AC_CHECK_NETCDF(
    [
    LIBS="$LIBS $NC_LIBS"
