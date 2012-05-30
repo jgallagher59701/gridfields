@@ -28,17 +28,31 @@ vtkincl = '/usr/include/vtk-5.2'
 swig_opts = ['-c++', '-I%s' % b, '-I%s' % vtkincl, '-classic']
 
 # c++ gridfield core extension
-csources = [c for c in allsources if op.splitext(c)[1]  in ['.cc', '.cpp', '.c++', '.c']]
-csources = [op.join(b,c) for c in csources]
-sources = [op.join(gfdir,'core.i')] + csources
-pygridfield = Extension('_core',
+try:
+ csources = [c for c in allsources if op.splitext(c)[1]  in ['.cc', '.cpp', '.c++', '.c']]
+ csources = [op.join(b,c) for c in csources]
+ sources = [op.join(gfdir,'core.i')] + csources
+ pygridfield = Extension('_core',
+                       sources, 
+                       include_dirs = [b],
+                       libraries = ['netcdf_c++', 'netcdf', 'lapack'],
+                       swig_opts = swig_opts
+                       )
+
+ ext_modules = [elio, pygridfield]
+
+except:
+ csources = [c for c in allsources if op.splitext(c)[1]  in ['.cc', '.cpp', '.c++', '.c']]
+ csources = [op.join(b,c) for c in csources]
+ sources = [op.join(gfdir,'core.i')] + csources
+ pygridfield = Extension('_core',
                        sources, 
                        include_dirs = [b],
                        libraries = ['netcdf_c++', 'netcdf'],
                        swig_opts = swig_opts
                        )
 
-ext_modules = [elio, pygridfield]
+ ext_modules = [elio, pygridfield]
 
 #try:
   # only build vtk if the vtk modules are installed

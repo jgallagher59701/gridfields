@@ -356,6 +356,25 @@ class Restrict(UnaryOperator):
   def init(self):
     if UnaryOperator.init(self):
       self._physicalop = gridfield.RestrictOp(self.condition, self.dim, self.previous._physicalop)
+
+class Remesh(UnaryOperator):
+  def __init__(self, attributex,attributey,grid, gf):
+    UnaryOperator.__init__(self, gf)
+    self.attributex = attributex
+    self.attributey = attributey
+    self.grid=grid
+    
+  def __repr__(self):
+    return "Remesh(%s, %s, %s, %s)" % (self.attributex, self.attributey,self.grid,self.previous._physicalop)
+
+
+  def opstr(self):
+    return "Remesh(%s)" % (self.attributex)
+
+  def init(self):
+    if UnaryOperator.init(self):
+      #try:
+      self._physicalop = gridfield.RemeshOp(self.attributex, self.attributey,  self.previous._physicalop,self.grid)
   
 class Bind2(UnaryOperator):
   def __init__(self, address, attr, dim, gf, ptrs=""):
@@ -386,6 +405,7 @@ class Bind2(UnaryOperator):
     #array = catalog.Reorder(gf, buffer)
     newarr = gridfield.Array(self.attr, gridfield.FLOAT)
     newarr.setVals(buffer, len(buffer))
+    newarr.thisown = False
     gf.Bind(newarr)
     self._Result = gf
    

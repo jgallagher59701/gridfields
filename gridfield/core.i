@@ -22,6 +22,7 @@
 #include "bindconstant.h"
 #include "cross.h"
 #include "restrict.h"
+#include "remesh.h"
 #include "apply.h"
 #include "accumulate.h"
 //#include "subapply.h"
@@ -64,6 +65,8 @@ namespace std {
    %template(vectori) vector<int>;
    %template(vectord) vector<double>;
    %template(vectorS) vector<string>;
+   %template(VecVecdouble) vector< vector<double> >;
+
 };
 
 %exception {
@@ -109,6 +112,16 @@ namespace std {
    }
 } 
 
+%typemap(out) vector<double> {
+   int i;
+   using namespace std;
+   int length = $1.size();
+   $result = PyList_New( length );
+   for (i = 0; i < length; i++) {
+     PyObject *o = PyFloat_FromDouble( $1[i] );
+     PyList_SetItem($result,i,o);
+   }
+} 
 
 %typemap(in) Node * {
   int i,sz;
@@ -272,6 +285,7 @@ void testsign(unsigned int size) {
 
 %include "cross.h";
 %include "restrict.h";
+%include "remesh.h";
 %include "apply.h";
 %include "bind.h";
 %include "bindconstant.h";
