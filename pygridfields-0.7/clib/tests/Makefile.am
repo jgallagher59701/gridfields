@@ -18,7 +18,7 @@ check_PROGRAMS = $(TESTS)
 
 # This determines what gets run by 'make check.'
 TESTS = testarrayreader testcross testaggregate	\
-testrestrict testmerge testbind testgridfield	\
+testrestrict testremesh testmerge testbind testgridfield	\
 testsift testdataset testcellarray testtuple testarray
 
 BROKEN_TESTS = testwrite63 testjoin testscan testgrid 
