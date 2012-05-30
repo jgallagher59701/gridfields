@@ -39,9 +39,10 @@ host_triplet = i686-pc-linux-gnu
 check_PROGRAMS = $(am__EXEEXT_3)
 TESTS = testarrayreader$(EXEEXT) testcross$(EXEEXT) \
 	testaggregate$(EXEEXT) testrestrict$(EXEEXT) \
-	testmerge$(EXEEXT) testbind$(EXEEXT) testgridfield$(EXEEXT) \
-	testsift$(EXEEXT) testdataset$(EXEEXT) testcellarray$(EXEEXT) \
-	testtuple$(EXEEXT) testarray$(EXEEXT) $(am__EXEEXT_2)
+	testremesh$(EXEEXT) testmerge$(EXEEXT) testbind$(EXEEXT) \
+	testgridfield$(EXEEXT) testsift$(EXEEXT) testdataset$(EXEEXT) \
+	testcellarray$(EXEEXT) testtuple$(EXEEXT) testarray$(EXEEXT) \
+	$(am__EXEEXT_2)
 # selfe2netcdf 
 am__append_1 = $(NETCDF_TESTS) 
 subdir = tests
@@ -63,9 +64,10 @@ am__EXEEXT_1 = testnetcdf$(EXEEXT) testoutput$(EXEEXT)
 am__EXEEXT_2 = $(am__EXEEXT_1)
 am__EXEEXT_3 = testarrayreader$(EXEEXT) testcross$(EXEEXT) \
 	testaggregate$(EXEEXT) testrestrict$(EXEEXT) \
-	testmerge$(EXEEXT) testbind$(EXEEXT) testgridfield$(EXEEXT) \
-	testsift$(EXEEXT) testdataset$(EXEEXT) testcellarray$(EXEEXT) \
-	testtuple$(EXEEXT) testarray$(EXEEXT) $(am__EXEEXT_2)
+	testremesh$(EXEEXT) testmerge$(EXEEXT) testbind$(EXEEXT) \
+	testgridfield$(EXEEXT) testsift$(EXEEXT) testdataset$(EXEEXT) \
+	testcellarray$(EXEEXT) testtuple$(EXEEXT) testarray$(EXEEXT) \
+	$(am__EXEEXT_2)
 am_testaggregate_OBJECTS = testaggregate.$(OBJEXT)
 testaggregate_OBJECTS = $(am_testaggregate_OBJECTS)
 testaggregate_DEPENDENCIES = ../libgridfields.la
@@ -101,6 +103,9 @@ am__testoutput_SOURCES_DIST = testoutput.cc
 am_testoutput_OBJECTS = testoutput.$(OBJEXT)
 testoutput_OBJECTS = $(am_testoutput_OBJECTS)
 testoutput_DEPENDENCIES = ../libgridfields.la
+testremesh_SOURCES = testremesh.c
+testremesh_OBJECTS = testremesh.$(OBJEXT)
+testremesh_LDADD = $(LDADD)
 am_testrestrict_OBJECTS = testrestrict.$(OBJEXT)
 testrestrict_OBJECTS = $(am_testrestrict_OBJECTS)
 testrestrict_DEPENDENCIES = ../libgridfields.la
@@ -114,6 +119,15 @@ DEFAULT_INCLUDES = -I. -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/conf/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
+	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
+	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
+CCLD = $(CC)
+LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
+	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
+	$(LDFLAGS) -o $@
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
 	$(AM_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS)
 LTCXXCOMPILE = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
@@ -128,27 +142,28 @@ SOURCES = $(testaggregate_SOURCES) $(testarray_SOURCES) \
 	$(testcellarray_SOURCES) $(testcross_SOURCES) \
 	$(testdataset_SOURCES) $(testgridfield_SOURCES) \
 	$(testmerge_SOURCES) $(testnetcdf_SOURCES) \
-	$(testoutput_SOURCES) $(testrestrict_SOURCES) \
+	$(testoutput_SOURCES) testremesh.c $(testrestrict_SOURCES) \
 	$(testsift_SOURCES) $(testtuple_SOURCES)
 DIST_SOURCES = $(testaggregate_SOURCES) $(testarray_SOURCES) \
 	$(testarrayreader_SOURCES) $(testbind_SOURCES) \
 	$(testcellarray_SOURCES) $(testcross_SOURCES) \
 	$(testdataset_SOURCES) $(testgridfield_SOURCES) \
 	$(testmerge_SOURCES) $(am__testnetcdf_SOURCES_DIST) \
-	$(am__testoutput_SOURCES_DIST) $(testrestrict_SOURCES) \
-	$(testsift_SOURCES) $(testtuple_SOURCES)
+	$(am__testoutput_SOURCES_DIST) testremesh.c \
+	$(testrestrict_SOURCES) $(testsift_SOURCES) \
+	$(testtuple_SOURCES)
 HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 am__tty_colors = \
 red=; grn=; lgn=; blu=; std=
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/scott/branches/clib/conf/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/scott/branches/clib/conf/missing --run tar
+ACLOCAL = ${SHELL} /home/scott/pygridfields/clib/conf/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/scott/pygridfields/clib/conf/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /home/scott/branches/clib/conf/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/scott/branches/clib/conf/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/scott/branches/clib/conf/missing --run automake-1.11
+AUTOCONF = ${SHELL} /home/scott/pygridfields/clib/conf/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/scott/pygridfields/clib/conf/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/scott/pygridfields/clib/conf/missing --run automake-1.11
 AWK = gawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -184,12 +199,12 @@ LD = /usr/bin/ld
 LDFLAGS =  -I/usr/local/include
 LIBGF_VERSION = 1:0:0
 LIBOBJS = 
-LIBS =  -L/usr/local/lib -lnetcdf -lnetcdf_c++
+LIBS = -llapack  -L/usr/local/lib -lnetcdf -lnetcdf_c++
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/scott/branches/clib/conf/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/scott/pygridfields/clib/conf/missing --run makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = /bin/mkdir -p
 NC_CONFIG = /usr/local/bin/nc-config
@@ -220,10 +235,10 @@ SHELL = /bin/bash
 STRIP = strip
 VERSION = 1.0.0
 XMKMF = 
-abs_builddir = /home/scott/branches/clib/tests
-abs_srcdir = /home/scott/branches/clib/tests
-abs_top_builddir = /home/scott/branches/clib
-abs_top_srcdir = /home/scott/branches/clib
+abs_builddir = /home/scott/pygridfields/clib/tests
+abs_srcdir = /home/scott/pygridfields/clib/tests
+abs_top_builddir = /home/scott/pygridfields/clib
+abs_top_srcdir = /home/scott/pygridfields/clib
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_CXX = g++
@@ -253,7 +268,7 @@ host_vendor = pc
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/scott/branches/clib/conf/install-sh
+install_sh = ${SHELL} /home/scott/pygridfields/clib/conf/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -372,7 +387,7 @@ testarray_LDADD = ../libgridfields.la
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .cc .lo .o .obj
+.SUFFIXES: .c .cc .lo .o .obj
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
@@ -445,6 +460,9 @@ testnetcdf$(EXEEXT): $(testnetcdf_OBJECTS) $(testnetcdf_DEPENDENCIES)
 testoutput$(EXEEXT): $(testoutput_OBJECTS) $(testoutput_DEPENDENCIES) 
 	@rm -f testoutput$(EXEEXT)
 	$(CXXLINK) $(testoutput_OBJECTS) $(testoutput_LDADD) $(LIBS)
+testremesh$(EXEEXT): $(testremesh_OBJECTS) $(testremesh_DEPENDENCIES) 
+	@rm -f testremesh$(EXEEXT)
+	$(LINK) $(testremesh_OBJECTS) $(testremesh_LDADD) $(LIBS)
 testrestrict$(EXEEXT): $(testrestrict_OBJECTS) $(testrestrict_DEPENDENCIES) 
 	@rm -f testrestrict$(EXEEXT)
 	$(CXXLINK) $(testrestrict_OBJECTS) $(testrestrict_LDADD) $(LIBS)
@@ -472,9 +490,31 @@ include ./$(DEPDIR)/testgridfield.Po
 include ./$(DEPDIR)/testmerge.Po
 include ./$(DEPDIR)/testnetcdf.Po
 include ./$(DEPDIR)/testoutput.Po
+include ./$(DEPDIR)/testremesh.Po
 include ./$(DEPDIR)/testrestrict.Po
 include ./$(DEPDIR)/testsift.Po
 include ./$(DEPDIR)/testtuple.Po
+
+.c.o:
+	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+#	source='$<' object='$@' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(COMPILE) -c $<
+
+.c.obj:
+	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
+	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
+#	source='$<' object='$@' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+
+.c.lo:
+	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
+	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
+#	source='$<' object='$@' libtool=yes \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(LTCOMPILE) -c -o $@ $<
 
 .cc.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
