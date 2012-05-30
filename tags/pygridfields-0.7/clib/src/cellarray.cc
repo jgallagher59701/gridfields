@@ -114,7 +114,28 @@ void CellArray::buildAdjacencyIndex() {
   this->UseAdjacencyIndex = true;
 }
 
-
+vector< vector<int> > CellArray::makeArrayInts(){
+  
+  CellArray *arr;
+  
+  arr = this;
+  int i;
+  vector <int> a;
+  //vector<int>* array=new vector<int>;
+  vector< vector<int> > array;
+  cout<<"this1 "<<arr->getsize()<<endl;
+  array.reserve(arr->getsize());
+ for(unsigned int j=0;j<(arr->getsize());j++)
+  {
+   a.reserve(arr->cells.at(j).getsize());
+    for (unsigned int l=0; l<arr->cells.at(j).getsize();l++){//(arr->cells.at(j).getsize()); i++) {
+      a.push_back(arr->cells.at(j).getnodes()[l]);
+    }
+    array.push_back(a);
+    a.clear();
+  }
+  return array;
+}
 
 void CellArray::getAdjacentCells(CellId cid, vector<CellId> &out) {
 
