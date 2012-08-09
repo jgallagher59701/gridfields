@@ -3,6 +3,8 @@
 
 #include "gridfieldoperator.h"
 
+namespace GF {
+
 class ScanOp : public ZeroaryGridFieldOperator {
 public:
   ScanOp(string filename, long offset)  :
@@ -17,5 +19,7 @@ public:
 private:
 
 };
+
+} // namespace GF
 
 #endif

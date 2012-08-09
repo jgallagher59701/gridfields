@@ -192,15 +192,17 @@ ginfo: ginfo.o
  ** 
  **/
 
+#include "config.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <math.h>
 #include <time.h>
-#include "elio.h"
+//#include "elio.h"
 #include <string.h>
 
+#include "elio.h"
 
 /*!
  * @def WIN32
@@ -1208,6 +1210,7 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
 {
     FILE *fp;
     int *itmp, i, j;// ss;
+    // FIXME type error sizeof() returns long unsigned int on 64-bit machines
     if (sizeof(int) != 4 || sizeof(char) != 1 || sizeof(float) != 4) {
 	fprintf(stderr, "Sizeof problems, please investigate: sizeof(char,int,float) = (%d,%d,%d)\n", sizeof(int), sizeof(char), sizeof(float));
 	exit(1);
@@ -2913,6 +2916,7 @@ double ElioGetSigmaDepthAtXY(double x, double y, int level, float e, ElcircHeade
     //H = eh->d[node] + e;
    // h = H * eh->zcor[level] + e;
    // return h;
+    //FIXME type error
     printf("error! ElioGetSigmaDepthAtXY broken %s\n",0.0);
     return 0.0;
 }

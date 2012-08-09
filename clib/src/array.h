@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 
+namespace GF {
+
 class Scheme;
 template <class T> class DatumIterator;
 class Array : public Object {
@@ -105,4 +107,7 @@ class ArrayOfVector : public Array, private vector<Tuple> {
  
 }
 */
+
+} // namespace GF
+
 #endif /* _ARRAY_H */

@@ -17,6 +17,8 @@
 #include <iostream>
 #endif
 
+namespace GF {
+
 class FunctionParser
 {
 public:
@@ -153,5 +155,7 @@ private:
 
     void MakeTree(void*) const;
 };
+
+} // namespace GF
 
 #endif

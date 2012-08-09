@@ -4,6 +4,8 @@
 #include "expr.h"
 #include "gridfieldoperator.h"
 
+namespace GF {
+
 class RestrictOp : public UnaryGridFieldOperator {
 public:
   RestrictOp(string expr, Dim_t k, GridFieldOperator *op);
@@ -17,5 +19,7 @@ protected:
 private:
  
 };
+
+} // namespace GF
 
 #endif

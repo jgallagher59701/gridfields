@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "gridfield.h"
 #include "array.h"
 #include "restrict.h"
@@ -5,6 +8,9 @@
 #include "timing.h"
 #include "bind.h"
 using namespace std;
+
+namespace GF {
+
 BindOp::BindOp(Array *arr, Dim_t k, GridFieldOperator *op) 
  : UnaryGridFieldOperator(op), array(arr), attr(arr->getName()), type(arr->type), 
    reader(NULL), _k(k)
@@ -105,3 +111,5 @@ GridField *BindOp::Bind(const string &attr, Type type,
   Out->ref();
   return Out;
 }
+
+} // namespace GF

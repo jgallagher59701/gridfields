@@ -4,7 +4,11 @@
 #include "type.h"
 #include "gridfield.h"
 #include "fparser.hh"
+
 #include <ext/hash_map>
+
+namespace GF {
+using namespace __gnu_cxx;  // for hash_map jhrg 4/16/12
 
 class TupleFunction {
   public:
@@ -36,6 +40,8 @@ class SpecializedTupleFunction : public TupleFunction {
     hash_map<int, pair<int, Type> > in_position_map;
     hash_map<int, pair<int, FunctionParser *> > out_position_map;
 };
+
+} // namespace GF
 
 #endif /* _EXPR_H */
     

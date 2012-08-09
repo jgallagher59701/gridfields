@@ -1,7 +1,11 @@
+
+#include "config.h"
+
 #include "gridfield.h"
-extern "C" {
-#include "stdio.h"
-}
+#include <stdio.h>
+//extern "C" {
+//#include "stdio.h"
+//}
 #include "expr.h"
 #include "timing.h"
 #include <iostream>
@@ -13,6 +17,8 @@ extern "C" {
 #include "arrayreader.h"
 
 using namespace std;
+
+namespace GF {
 
 ScanInternal::ScanInternal(string fn, long offset) : ScanOp(fn, offset) {
   this->bytestream = new ifstream(filename.c_str(), ios_base::binary | ios::in);
@@ -191,3 +197,6 @@ string ScanInternal::readName(istream &f) {
    delete [] name;
    return s;
 }
+
+} // namespace GF
+

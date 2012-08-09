@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -12,6 +15,7 @@ extern "C" {
 
 using namespace std;
 
+namespace GF {
 
 TupleFunction::TupleFunction() {
   SaveReservedWords();
@@ -245,4 +249,7 @@ void TupleFunction::SaveReservedWords() {
   vars.insert("tanh");
 
 }
+
+} // namespace GF
+
 

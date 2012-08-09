@@ -4,6 +4,8 @@
 #include "binarynodemap.h"
 #include "abstractcellarray.h"
 
+namespace GF {
+
 class CrossNodeMap : public BinaryNodeMap {
 
  public: 
@@ -41,5 +43,7 @@ class CrossNodeMap : public BinaryNodeMap {
   AbstractCellArray *Anodes;
   AbstractCellArray *Bnodes;
 };
+
+} // namespace GF
 
 #endif /* _CROSSNODEMAP_H */

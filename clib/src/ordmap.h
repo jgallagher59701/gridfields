@@ -1,6 +1,8 @@
 #ifndef _ORDMAP_H
 #define _ORDMAP_H
 
+namespace GF {
+
 class Cell;
 
 class OrdMap {
@@ -11,5 +13,7 @@ class OrdMap {
   virtual int getBaseOrd(Cell *c, int d) = 0;
  private:
 };
+
+} // namespace GF
 
 #endif /* _ORDMAP_H */

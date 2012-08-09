@@ -1,10 +1,15 @@
 
+#include "config.h"
+
 #include "timing.h"
 #include <iostream>
 #include "gridfieldoperator.h"
 #include "gridfield.h"
 #include "expr.h"
 using namespace std;
+
+namespace GF {
+
 ZeroaryGridFieldOperator::ZeroaryGridFieldOperator() {};
 
 UnaryGridFieldOperator::UnaryGridFieldOperator(GridFieldOperator *prev) 
@@ -130,3 +135,6 @@ void GridFieldOperator::clearResult() {
     this->Result->unref();
   }
 }
+
+} // namespace GF
+

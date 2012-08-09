@@ -1,7 +1,12 @@
+
+#include "config.h"
+
 #include "aggregate.h"
 #include "timing.h"
 #include <math.h>
 #include "array.h"
+
+namespace GF {
 
 void debug_set(UnTypedPtr p) {
   vector<Tuple *> *vec = (vector<Tuple *> *) p;
@@ -107,3 +112,4 @@ string AggregateOp::newName(string Tname, string Sname) {
   return gname;
 }
 
+} // namespace GF

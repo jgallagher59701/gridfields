@@ -1,8 +1,12 @@
+
+#include "config.h"
+
 #include "gridfield.h"
-extern "C" {
-#include "stdio.h"
+#include <stdio.h>
+//extern "C" {
+//#include "stdio.h"
 #include "elio.h"
-}
+//}
 #include "expr.h"
 #include "timing.h"
 #include <iostream>
@@ -17,6 +21,8 @@ extern "C" {
 //#include <netcdfcpp.h>
 
 using namespace std;
+
+namespace GF {
 
 OutputTuplesOp::OutputTuplesOp(string fn, GridFieldOperator *op)  
  : UnaryGridFieldOperator(op), offset(0), filename(fn) {
@@ -233,3 +239,6 @@ void OutputTuplesOp::writeName(string name, ofstream &f) {
    f.write((char *) &s, sizeof(int));
    f.write(name.c_str(), name.size());
 }
+
+} // namespace GF
+

@@ -3,10 +3,15 @@
 
 #include "type.h"
 
+namespace GF {
+
 class NodeMap {
 
  public:
  private:
 };
+
+
+} // namespace GF
 
 #endif /* _NODEMAP_H */

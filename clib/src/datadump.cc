@@ -1,10 +1,15 @@
+
+#include "config.h"
+
 #include "gridfield.h"
-extern "C" {
-#include "stdio.h"
+#include <stdio.h>
+//extern "C" {
+//#include "stdio.h"
 #include "elio.h"
-}
+//}
 #include "expr.h"
 #include "timing.h"
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -13,6 +18,8 @@ extern "C" {
 #include "arraywriter.h"
 
 using namespace std;
+
+namespace GF {
 
 DataDumpOp::DataDumpOp(Dim_t k, string fn, long off, GridFieldOperator *op) 
          : UnaryGridFieldOperator(op), _k(k), filename(fn), offset(off) 
@@ -44,3 +51,6 @@ void DataDumpOp::DataDump(GridField *GF, Dim_t k, string filename, long ) {
      aw.Write(GF->GetDataset(k), string(a->getName()));
    }
 }
+
+} // namespace GF
+

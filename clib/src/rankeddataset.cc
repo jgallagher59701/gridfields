@@ -1,9 +1,14 @@
+
+#include "config.h"
+
 #include "rankeddataset.h"
 #include "dataset.h"
 #include "array.h"
 #include <string>
 #include <sstream>
 #include <iostream>
+
+namespace GF {
 
 UnTypedPtr RankedDataset::GetVoidPointer(const string &attr, Dim_t d) const { 
    if (d<=MaxRank()) {
@@ -102,3 +107,6 @@ void RankedDataset::unref() {
     delete this;
   }
 }
+
+} // namespace GF
+
