@@ -8,6 +8,8 @@
  *
  */
 
+namespace GF {
+
 class OneGrid : public Grid {
 
  public:
@@ -35,4 +37,7 @@ class ZeroGrid : public Grid {
       this->ref();
     };
 };
+
+} // namespace GF
+
 #endif /*  _ONEGRID_H   */

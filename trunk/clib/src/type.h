@@ -3,6 +3,8 @@
 #include <string>
 #include <stdio.h>
 
+namespace GF {
+
 enum e_Tag {VAR=1, VAL};
 typedef enum e_Tag Tag;
 
@@ -41,5 +43,7 @@ inline
 void plusplus(UnTypedPtr *p, Type type) {
     *p = (UnTypedPtr) ((char *) (*p) + typesize(type));
 }; 
+
+} // namespace GF
 
 #endif

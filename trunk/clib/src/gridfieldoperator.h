@@ -3,6 +3,8 @@
 
 #include "object.h"
 
+namespace GF {
+
 class GridField;
 
 //class GridFieldOperator : public Object {
@@ -64,5 +66,6 @@ class BinaryGridFieldOperator : public GridFieldOperator {
     GridField *B;
 };
 
+} // namespace GF
 
 #endif

@@ -5,6 +5,8 @@
 #include "cellarray.h"
 #include "gridfield.h"
 
+namespace GF {
+
 class CrossOrdMap : public OrdMap {
 
  public: 
@@ -74,5 +76,7 @@ return -1;
   GridField *GF;
 
 };
+
+} // namespace GF
 
 #endif /* _CROSSORDMAP_H */

@@ -3,6 +3,8 @@
 
 #include "binarynodemap.h"
 
+namespace GF {
+
 class CrossNodeMap : public BinaryNodeMap {
 
  public: 
@@ -13,5 +15,7 @@ class CrossNodeMap : public BinaryNodeMap {
   
  private:
 };
+
+} // namespace GF
 
 #endif /* _LEFTNODEMAP_H */

@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <iostream>
 #include "array.h"
 #include "access.h"
@@ -7,6 +10,8 @@
 #include <string.h>
 #include <vector>
 using namespace std;
+
+namespace GF {
 
 //#define DEBUG 0
 /*
@@ -691,3 +696,6 @@ int *__dfi;
 CArrayIterator<int> __di(__dfi, 0);
 float *__dfp;
 CArrayIterator<float> __df(__dfp, 0);
+
+} // namespace GF
+

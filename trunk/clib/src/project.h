@@ -10,6 +10,7 @@
 #include <ext/functional>
 #include <string>
 
+namespace GF {
 
 class ProjectOp : public UnaryGridFieldOperator {
  public:
@@ -23,5 +24,7 @@ class ProjectOp : public UnaryGridFieldOperator {
   Dim_t _k;
   vector<string> keepers;
 };
+
+} // namespace GF
 
 #endif /* PROJECT_H */

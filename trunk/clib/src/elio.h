@@ -12,6 +12,10 @@
 #ifndef ELIO_H
 #define ELIO_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /*! Error codes. */
 /*! No errors */
 #define ELIO_OK 0 
@@ -295,5 +299,9 @@ double ElioInterpolateAtIndex(int n, double *z, double *s, int ind, double zp);
 double ElioGetDay(int mon, int day, int year, int h, int mi, double se);
 void ElioGetYearDay(double jd, int *y, int *yd, int *h, int *mi, double *sec);
 void ElioSetCorieTime(int b);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* ELIO_H */

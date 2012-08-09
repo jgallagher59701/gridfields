@@ -1,15 +1,21 @@
 #ifndef _CELLARRAY_H
 #define _CELLARRAY_H 
 
+#include <iostream>
+
 #include <vector>
 #include <set>
 #include <map>
 #include <ext/hash_map>
-#include <iostream>
+
+//TODO Switch to unordered_map? jhrg 4/16/12
 
 #include "cell.h"
 #include "abstractcellarray.h"
 
+namespace GF {
+using namespace std;
+using namespace __gnu_cxx;
 
 class CellArray : public AbstractCellArray {
  public:
@@ -90,5 +96,7 @@ class CellArray : public AbstractCellArray {
   vector<vector<CellId> > adj;
   bool UseAdjacencyIndex;
 };
+
+} // namespace GF
 
 #endif /* _CELLARRAY_H */

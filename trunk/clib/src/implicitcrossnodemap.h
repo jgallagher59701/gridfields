@@ -5,6 +5,8 @@
 #include "abstractcellarray.h"
 #include "implicit0cells.h"
 
+namespace GF {
+
 class ImplicitCrossNodeMap : public CrossNodeMap {
 
  public: 
@@ -38,5 +40,7 @@ class ImplicitCrossNodeMap : public CrossNodeMap {
   Implicit0Cells *Anodes;
   Implicit0Cells *Bnodes;
 };
+
+} // namespace GF
 
 #endif /* _CROSSNODEMAP_H */

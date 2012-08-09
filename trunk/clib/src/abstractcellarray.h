@@ -8,9 +8,9 @@
 #include "util.h"
 #include "object.h"
 
-
-using namespace __gnu_cxx;
 using namespace std;
+
+namespace GF {
 
 class UnaryNodeMap;
 class CrossNodeMap;
@@ -55,5 +55,7 @@ class AbstractCellArray : public Object {
   virtual void buildInvertedIndex()=0;
   virtual vector<Cell> *getCellVector()=0;
 };
+
+} // namespace GF
 
 #endif 

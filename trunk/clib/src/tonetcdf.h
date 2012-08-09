@@ -3,8 +3,10 @@
 
 #include "gridfieldoperator.h"
 //#include "elio.h"
-#include "netcdfcpp.h"
+#include <netcdfcpp.h>
 #include <iostream>
+
+namespace GF {
 
 class OutputNetCDFOp : public UnaryGridFieldOperator {
 public:
@@ -78,4 +80,7 @@ NcType mapType(Type t);
 bool HasDim(NcFile *ncdf, const string dimname);
 bool HasVar(NcFile *ncdf, const string varname);
 bool HasAttr(NcFile *ncdf, const string attr);
+
+} // namespace GF
+
 #endif

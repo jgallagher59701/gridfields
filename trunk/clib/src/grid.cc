@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <iostream>
 #include <assert.h>
 #include "grid.h"
@@ -12,6 +15,8 @@
 
 
 #include <string>
+
+namespace GF {
 
 string testString(const string &s)  { return s; }
 Grid::Grid(string nm, Dim_t d) {
@@ -417,3 +422,6 @@ Grid::~Grid() {
 
   delete ordmap;
 }
+
+} // namespace GF
+
