@@ -5,6 +5,8 @@
 #include "src/arraywriter.h"
 #include "src/tonetcdf.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
   CellArray *onecells;

@@ -3,6 +3,7 @@
 #include "expr.h"
 
 using namespace std;
+using namespace GF;
 
 int main(int argc, char **argv) {
   TupleFunction tf;

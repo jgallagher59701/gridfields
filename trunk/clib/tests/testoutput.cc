@@ -14,6 +14,7 @@
 #include "src/elcircfile.h"
 #include "src/tonetcdf.h"
 
+using namespace GF;
 
 int main(int argc, char **argv) {
 

@@ -2,6 +2,8 @@
 #include "src/gridfield.h"
 #include "src/array.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale, string name) {
   CellArray *twocells;
   CellArray *onecells;

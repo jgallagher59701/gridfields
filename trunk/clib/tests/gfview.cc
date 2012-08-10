@@ -10,6 +10,8 @@
 string filename;
 string attribute;
 
+using namespace GF;
+
 void View(string fn);
 void showhelp();
 void checkopts( int argc, char **argv );

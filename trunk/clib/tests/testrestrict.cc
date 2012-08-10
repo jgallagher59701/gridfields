@@ -7,6 +7,8 @@
 #include "src/arrayreader.h"
 #include "src/apply.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
   CellArray *onecells;

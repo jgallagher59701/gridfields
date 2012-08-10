@@ -1,6 +1,8 @@
 #ifndef _TESTARRAY_H
 #define _TESTARRAY_H
 
+using namespace GF;
+
 #include "src/array.h"
 Array *mkTestArray(string name, Type t, int size, int C=5) {
   Array *ca = new Array(name, t, size);

@@ -3,6 +3,8 @@
 #include "sift.h"
 #include "vtkUnstructuredGridWriter.h"
 
+using namespace GF;
+
 //defaults
 
 string filename("1_salt.63");
