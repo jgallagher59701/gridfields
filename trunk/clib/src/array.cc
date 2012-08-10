@@ -72,7 +72,7 @@ void Array::fill(DatumIterator<int> &d) {
   int i=0;
   while (i<this->size() && !d.Done()) {
     ints[i++] = d.Next();
-    cout << i << ", " << ints[i-1] << endl;
+   // cout << i << ", " << ints[i-1] << endl;
   }
 }
                                                                        
@@ -82,7 +82,7 @@ void Array::fill(DatumIterator<float> &d) {
   int i=0;
   while (i<size() && !d.Done()) {
     floats[i++] = d.Next();
-    cout << i << ", " << floats[i-1] << endl;
+   // cout << i << ", " << floats[i-1] << endl;
   }
 }
 
@@ -600,7 +600,7 @@ vector<int> Array::makeArray(){
   int i;
   //vector<int>* array=new vector<int>;
   vector<int> array;
-  cout<<"this "<<_size<<" "<<arr->type<<endl;
+ // cout<<"this "<<_size<<" "<<arr->type<<endl;
   array.reserve(_size);
   switch (arr->type) {
   case 1:
@@ -612,7 +612,7 @@ vector<int> Array::makeArray(){
     cout << "unknown type";
     i = _size;			// 'i' can be used uninitialized jhrg 10/5/11 
   }
-  cout<<array.at(_size-1)<<endl;
+ // cout<<array.at(_size-1)<<endl;
   return array;
 }
 
@@ -624,7 +624,7 @@ vector<double> Array::makeArrayf(){
   int i;
   //vector<int>* array=new vector<int>;
   vector<double> array;
-  cout<<"this "<<_size<<" "<<arr->type<<endl;
+ // cout<<"this "<<_size<<" "<<arr->type<<endl;
   array.reserve(_size);
   switch (arr->type) {
   case 2:
@@ -636,7 +636,7 @@ vector<double> Array::makeArrayf(){
     cout << "unknown type";
     i = _size;			// 'i' can be used uninitialized jhrg 10/5/11 
   }
-  cout<<array.at(_size-1)<<endl;
+ // cout<<array.at(_size-1)<<endl;
   return array;
 }
 
