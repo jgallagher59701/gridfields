@@ -4,8 +4,9 @@
 #include <string>
 #include "dataset.h"
 
+//using namespace std;
 
-using namespace std;
+namespace GF {
 
 class Array;
 class Grid;
@@ -27,5 +28,7 @@ class ArrayWriter {
   void prepFile();
   void setOffset(long off);
 };
+
+} // namespace GF
 
 #endif /* _ARRAYWRITER_H */

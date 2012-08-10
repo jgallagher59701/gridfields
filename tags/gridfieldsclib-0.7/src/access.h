@@ -4,9 +4,12 @@
 #include "object.h"
 #include "util.h"
 #include <fcntl.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
+
+namespace GF {
 
 typedef char Byte;
 
@@ -160,4 +163,7 @@ class ElcircSurfIterator : public DatumIterator<T> {
     MMapIterator &rdr;
 }
 */
+
+} // namespace GF
+
 #endif

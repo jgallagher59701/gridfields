@@ -1,8 +1,13 @@
+
+#include "config.h"
+
 #include "gridfield.h"
 #include "array.h"
 #include "util.h"
 #include "grid.h"
 #include <string>
+
+namespace GF {
 
 GridField::GridField(Grid *G) : grid(G) {
   this->init(G);
@@ -297,3 +302,6 @@ void UnitGridField::Bind(const string &name, UnTypedPtr val) {
   *aval = val;
   GridField::Bind(0, arr);
 }
+
+} // namespace GF
+

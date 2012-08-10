@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
@@ -5,6 +8,8 @@
 #include "tuple.h"
 #include "expr.h"
 #include "util.h"
+
+namespace GF {
 
 Scheme::Scheme() {}
 
@@ -365,3 +370,6 @@ void Tuple::printattr(ostream &os, int i) {
       break;
   }
 }
+
+} // namespace GF
+

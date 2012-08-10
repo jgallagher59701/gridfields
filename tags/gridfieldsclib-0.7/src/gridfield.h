@@ -9,6 +9,8 @@
 #include "rankeddataset.h"
 #include "tuple.h"
 
+namespace GF {
+
 class Array;
 
 class GridField : public RankedDataset, public GridFieldOperator {
@@ -73,5 +75,7 @@ class UnitGridField : public GridField {
     void Bind(const string &name, float val);
     void Bind(const string &name, UnTypedPtr val);
 };
+
+} // namespace GF
 
 #endif /*_GRIDFIELD_H */

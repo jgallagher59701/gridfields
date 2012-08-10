@@ -1,4 +1,6 @@
 
+#include "config.h"
+
 #include <math.h>
 #include "aggregations.h"
 
@@ -56,5 +58,4 @@ void Aggregate::interpolate3D::operator()(vector<Tuple> &tupset, Tuple &out)  {
       //out.set(attrs[j], &val[j]);
       //cout << "val: " << attrs[j] << "=" << *(float*) &val[j]    << endl;
     }
-    
 }

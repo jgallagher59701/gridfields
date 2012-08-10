@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "dataset.h"
 #include "array.h"
 #include "util.h"
@@ -5,7 +8,7 @@
 #include <sstream>
 #include <iostream>
 
-
+namespace GF {
 
 Dataset::Dataset(const Scheme &s, size_t N) : _size(N) {
   if (s.size() > 0) {
@@ -471,4 +474,7 @@ void Dataset::BindTuples(vector<CellId> &cs, vector<Tuple> &ts) {
   }
 }
 */
+
+} // namespace GF
+
 

@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "accumulate.h"
 #include "fparser.hh"
 #include "gridfield.h"
@@ -7,6 +10,8 @@
 #include <string>
 #include <vector>
 #include <math.h>
+
+namespace GF {
 
 AccumulateOp::AccumulateOp(GridFieldOperator *op, Dim_t k,
                            string acc,
@@ -200,3 +205,5 @@ vector<string> AccumulateOp::getVars(string expr) {
   return retval;
 }
 
+
+} // namespace GF

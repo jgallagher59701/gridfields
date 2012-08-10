@@ -6,6 +6,8 @@
 #include "gridfieldoperator.h"
 #include <string>
 
+namespace GF {
+
 class CrossOp : public BinaryGridFieldOperator {
  public:
   CrossOp(GridFieldOperator *A, GridFieldOperator *B);
@@ -19,5 +21,7 @@ class CrossOp : public BinaryGridFieldOperator {
   static void crossData(GridField *Gg, GridField *Aa, Dim_t i, GridField *Bb, Dim_t j);
 
 };
+
+} // namespace GF
 
 #endif /* CROSS_H */

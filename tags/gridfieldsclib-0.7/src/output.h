@@ -6,6 +6,8 @@
 //#include "netcdfcpp.h"
 #include <iostream>
 
+namespace GF {
+
 class OutputOp : public UnaryGridFieldOperator {
 public:
   OutputOp(string fn, long off, GridFieldOperator *Op);
@@ -44,4 +46,7 @@ private:
   //static NcVar *putData(Array *a, NcFile *ncdf, long *counts, NcDim **d, int dimcount);
 };
 */
+
+} // namespace GF
+
 #endif

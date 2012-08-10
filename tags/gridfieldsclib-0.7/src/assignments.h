@@ -11,6 +11,8 @@
 
 namespace Assign {
 
+using namespace GF;
+
 bool equal(Type t, UnTypedPtr p, UnTypedPtr q);
 bool TestCallback(long unsigned id, void *arg); 
 int pnpoly(int npol, float *xp, float *yp, float x, float y) ;

@@ -6,7 +6,9 @@
 #include <cmath>
 #include <vector>
 //using namespace __gnu_cxx;
-using namespace std;
+//using namespace std;
+
+namespace GF {
 
 class UnaryNodeMap;
 class CrossNodeMap;
@@ -102,5 +104,7 @@ class CellHash {
     return base;
   }
 };
+
+} // namespace GF
 
 #endif 
