@@ -1,14 +1,16 @@
 
 #include <cstdio>
 
-#include "src/grid.h"
-#include "src/gridfield.h"
-#include "src/bind.h"
-#include "src/array.h"
-#include "src/restrict.h"
-#include "src/refrestrict.h"
-#include "src/arrayreader.h"
-#include "src/accumulate.h"
+#include "../src/grid.h"
+#include "../src/gridfield.h"
+#include "../src/bind.h"
+#include "../src/array.h"
+#include "../src/restrict.h"
+#include "../src/refrestrict.h"
+#include "../src/arrayreader.h"
+#include "../src/accumulate.h"
+
+using namespace GF;
 
 Grid *makeGrid(int scale, string name) {
   CellArray *twocells;

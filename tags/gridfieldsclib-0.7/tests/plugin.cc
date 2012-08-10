@@ -17,6 +17,7 @@
 #include "corierecipes.h"
 
 using namespace std;
+using namespace GF;
 
 int main(int argc, char **argv) {
 

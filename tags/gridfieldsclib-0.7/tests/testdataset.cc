@@ -1,14 +1,15 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include "src/array.h"
-#include "src/dataset.h"
-#include "src/type.h"
-#include "src/expr.h"
+#include "../src/array.h"
+#include "../src/dataset.h"
+#include "../src/type.h"
+#include "../src/expr.h"
 
 #include "testdataset.h"
 
 using namespace std;
+using namespace GF;
 
 int main(int argc, char **argv) {
   

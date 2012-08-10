@@ -8,6 +8,8 @@ string filename("1_salt.63");
 string opid;
 string predicate;
 
+using namespace GF;
+
 int main( int argc, char *argv[] ) {
   
   cout << "gfRestrict..." << flush;
