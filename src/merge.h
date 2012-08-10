@@ -2,6 +2,8 @@
 #include "gridfield.h"
 #include "gridfieldoperator.h"
 
+namespace GF {
+
 class MergeOp : public BinaryGridFieldOperator {
  public:
   MergeOp(GridFieldOperator *left, GridFieldOperator *right);
@@ -12,3 +14,4 @@ class MergeOp : public BinaryGridFieldOperator {
 
 };
 
+} // namespace GF

@@ -12,6 +12,9 @@
 #include "util.h"
 #include "ordmap.h"
 
+namespace GF {
+using namespace std;
+
 class UnaryNodeMap;
 //class OrdMap;
 
@@ -159,5 +162,8 @@ class ProductGrid : public Grid {
  
 }
 */
+
+} // namespace GF
+
 #endif /* _GRID_H */
 

@@ -1,7 +1,11 @@
+
+#include "config.h"
+
 #include <cstdlib>
 #include "type.h"
 #include "iostream"
 
+namespace GF {
 
 
 char typeformat(Type t) {char nty='f';
@@ -31,3 +35,6 @@ Type typeval(std::string typestring) {Type nty=FLOAT;
   }
 return nty;
 }
+
+} // namespace GF
+

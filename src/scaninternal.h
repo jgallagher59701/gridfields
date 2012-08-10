@@ -6,6 +6,8 @@
 #include <iostream>
 #include <sstream>
 
+namespace GF {
+
 class ScanInternal : public ScanOp {
 public:
   ScanInternal(string fn, long off);
@@ -24,5 +26,7 @@ private:
   static string readName(istream &f);
   std::istream *bytestream;
 };
+
+} // namespace GF
 
 #endif

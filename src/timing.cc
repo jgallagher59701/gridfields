@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "timing.h"
 #include <math.h>
 #define DEC 10000

@@ -7,6 +7,8 @@
 #include <ext/functional>
 #include <string>
 
+namespace GF {
+
 class ApplyOp : public UnaryGridFieldOperator {
  public:
 //  ApplyOp(GridFieldOperator *op, string tupleexpr, Scheme *outscheme);
@@ -24,5 +26,7 @@ class ApplyOp : public UnaryGridFieldOperator {
   string unparsedExpr;
 
 };
+
+} // namespace GF
 
 #endif /* APPLY_H */

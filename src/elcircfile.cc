@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <fstream>
 #include <stdio.h>
 #include "array.h"
@@ -14,6 +17,8 @@
 #include <iostream>
 
 using namespace std;
+
+namespace GF {
 
 ElcircFile::ElcircFile(string fname) {
   this->filename = fname;
@@ -367,5 +372,8 @@ ElcircHeader *ElcircFile::makeHeader(GridField *GF, ElcircHeader *h) {
   //ElioPrintHeader(*h);
   return h; 
 }
+
+} // namespace GF
+
 
 

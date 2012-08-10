@@ -5,6 +5,8 @@
 #include "grid.h"
 #include "cellarray.h"
 
+namespace GF {
+
 class SubgridOrdMap : public OrdMap {
 
  public: 
@@ -23,5 +25,7 @@ class SubgridOrdMap : public OrdMap {
  private:
   Grid *Base;
 };
+
+} // namespace GF
 
 #endif /* _SUBGRIDORDMAP_H */

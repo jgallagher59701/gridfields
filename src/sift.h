@@ -2,6 +2,8 @@
 #include "gridfield.h"
 #include "gridfieldoperator.h"
 
+namespace GF {
+
 class SiftOp : public UnaryGridFieldOperator {
  public:
   SiftOp(Dim_t k, GridFieldOperator *prev);
@@ -13,3 +15,4 @@ class SiftOp : public UnaryGridFieldOperator {
 
 };
 
+} // namespace GF

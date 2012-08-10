@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <iostream>
 #include "expr.h"
 #include "tuple.h"
@@ -6,6 +9,7 @@
 
 using namespace std;
 
+namespace GF {
 
 ConstArray::ConstArray(string nm, int sz, Type t, UnTypedPtr constval) 
   : Array(nm.c_str(), t) 
@@ -236,5 +240,8 @@ UnTypedPtr ConstArray::getVals() {
       exit(1);      
   } 
 return vals;}
+
+} // namespace GF
+
 
 

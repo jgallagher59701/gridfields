@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "timing.h"
 #include "expr.h"
 #include <assert.h>
@@ -8,6 +11,7 @@
 #include "crossnodemap.h"
 #include "normnodemap.h"
 
+namespace GF {
 
 CellArray::CellArray(Node *celldata, int cellcount) :
             cells(cellcount, Cell(0)),
@@ -524,3 +528,6 @@ void CellArray::unref() {
     delete this;
   }
 }
+
+} // namespace GF
+

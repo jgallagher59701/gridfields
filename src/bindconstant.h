@@ -5,6 +5,8 @@
 #include "array.h"
 #include "gridfieldoperator.h"
 
+namespace GF {
+
 class BindConstantOp : public UnaryGridFieldOperator {
 public:
 //  BindConstantOp(const string &attr, int val, GridFieldOperator *op);
@@ -19,5 +21,7 @@ private:
   string attr;
   float val;
 };
+
+} // namespace GF
 
 #endif

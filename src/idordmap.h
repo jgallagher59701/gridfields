@@ -3,6 +3,8 @@
 
 #include "ordmap.h"
 
+namespace GF {
+
 class IdOrdMap : public OrdMap {
 
  public: 
@@ -18,5 +20,7 @@ class IdOrdMap : public OrdMap {
  private:
   Grid *G;
 };
+
+} // namespace GF
 
 #endif /* _IDORDMAP_H */

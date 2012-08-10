@@ -1,6 +1,10 @@
+
+#include "config.h"
+
 #include "sift.h"
 #include "timing.h"
 
+namespace GF {
 
 SiftOp::SiftOp(Dim_t k, GridFieldOperator *prev) 
   : UnaryGridFieldOperator(prev), _k(k)
@@ -55,3 +59,4 @@ GridField *SiftOp::Sift(Dim_t k, GridField *GF) {
   return Out;
 }
 
+} // namespace GF

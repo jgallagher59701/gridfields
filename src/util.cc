@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <string>
 #include <iostream>
 #include <sstream>
@@ -10,6 +13,8 @@ extern "C" {
 }
 
 using namespace std;
+
+namespace GF {
 
 string tab(int indent) {
   string s;
@@ -70,4 +75,7 @@ string remove_whitespace(const string &text) {
     out += buf;
   return out;
 }
+
+} // namespace GF
+
 

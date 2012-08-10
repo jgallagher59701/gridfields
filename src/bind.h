@@ -5,6 +5,8 @@
 #include "array.h"
 #include "gridfieldoperator.h"
 
+namespace GF {
+
 class BindOp : public UnaryGridFieldOperator {
 public:
   BindOp(Array *arr, Dim_t k, GridFieldOperator *op);
@@ -35,5 +37,7 @@ private:
   Dim_t _k;
 
 };
+
+} // namespace GF
 
 #endif

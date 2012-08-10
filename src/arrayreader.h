@@ -6,7 +6,9 @@
 
 #include <fstream>
 
-using namespace std;
+//using namespace std;
+
+namespace GF {
 
 class Array;
 class Grid;
@@ -104,4 +106,7 @@ class TextFileArrayReader : public FileArrayReader {
   TextFileArrayReader(string fn, long off)
       : FileArrayReader(fn, off) {};
 };
+
+} // namespace GF
+
 #endif /* _ARRAYREADER_H */
