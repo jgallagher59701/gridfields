@@ -1,8 +1,13 @@
+
+#include "config.h"
+
 #include "netcdfadaptor.h"
 #include "util.h"
 #include "cellarray.h"
 #include "array.h"
 using namespace std;
+
+namespace GF {
 
 Type NetCDFAdaptor::mapType(NcType t) {Type nty=INT;
   switch (t) {
@@ -284,3 +289,6 @@ void NetCDFAdaptor::VarFromIncidence(const string &name, GridField *gf, Dim_t c,
   var->put(ids, var->edges());
   delete [] ids;
 }
+
+} // namespace GF
+

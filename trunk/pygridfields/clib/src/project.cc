@@ -1,8 +1,13 @@
+
+#include "config.h"
+
 #include "apply.h"
 #include "timing.h"
 #include "project.h"
 #include "expr.h"
 #include <math.h>
+
+namespace GF {
 
 ProjectOp::ProjectOp(GridFieldOperator *op, Dim_t k, string attribute_list) 
          :  UnaryGridFieldOperator(op),_k(k) 
@@ -39,3 +44,6 @@ GridField *ProjectOp::Project(GridField *Gg, Dim_t k,
   }
   return Out;
 }
+
+} // namespace GF
+

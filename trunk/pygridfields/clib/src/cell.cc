@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "timing.h"
 #include <assert.h>
 #include <iterator>
@@ -6,6 +9,7 @@
 #include "crossnodemap.h"
 #include "normnodemap.h"
 
+namespace GF {
 
 void Cell::print() const {
   print(0);
@@ -237,3 +241,6 @@ bool Cell::eq(Cell *c2) {
   }
   return true;
 }
+
+} // namespace GF
+

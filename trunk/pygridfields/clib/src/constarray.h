@@ -5,10 +5,11 @@
 #include "object.h"
 #include "array.h"
 
-
 #include <string>
 
-using namespace std;
+//using namespace std;
+
+namespace GF {
 
 class Scheme;
 
@@ -75,5 +76,7 @@ class ConstArray : public Array {
   UnTypedPtr obj_constant;
   Scheme *_sch;
 };
+
+} // namespace GF
 
 #endif /* _ARRAY_H */

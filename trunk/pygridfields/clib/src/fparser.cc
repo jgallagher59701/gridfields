@@ -2,6 +2,9 @@
 // Function parser v2.8 by Warp
 //==============================
 
+
+#include "config.h"
+
 #include "fparser.hh"
 #include "fpconfig.hh"
 #include "fptypes.hh"
@@ -14,6 +17,8 @@ using namespace FUNCTIONPARSERTYPES;
 #include <cmath>
 
 using namespace std;
+
+namespace GF {
 
 #ifndef M_PI
 #define M_PI 3.1415926535897932384626433832795
@@ -1356,3 +1361,6 @@ void FunctionParser::Optimize()
     // Do nothing if no optimizations are supported.
 }
 #endif
+
+} // namespace GF
+

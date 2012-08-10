@@ -9,7 +9,9 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
+//using namespace std;
+
+namespace GF {
 
 typedef vector<size_t> Shape;
 
@@ -99,5 +101,7 @@ class RankedDataset : public Object {
    Dataset empty;
    vector<Dataset> ranks;
 };
+
+} // namespace GF
 
 #endif /*_RANKEDDATASET_H */

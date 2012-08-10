@@ -4,6 +4,8 @@
 #include "restrict.h"
 #include "merge.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale, char *name) {
   CellArray *twocells;
   CellArray *onecells;

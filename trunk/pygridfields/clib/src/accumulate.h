@@ -7,6 +7,8 @@
 #include <ext/functional>
 #include "cell.h"
 
+namespace GF {
+
 class FunctionParser;
 class GridField;
 
@@ -37,5 +39,7 @@ class AccumulateOp : public UnaryGridFieldOperator {
   static std::string getVarStr(std::vector<std::string> varlist);
   static double bindVar(GridField *Gg, Dim_t k, std::string var, int i);
 };
+
+} // namespace GF
 
 #endif /* ACCUMULATE_H */

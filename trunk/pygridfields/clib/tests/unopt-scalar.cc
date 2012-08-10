@@ -10,6 +10,8 @@
 #include "visualize.h"
 #include "vtkGridField.h"
 
+using namespace GF;
+
 int main( int argc, char *argv[] ) {
 
   float secs;

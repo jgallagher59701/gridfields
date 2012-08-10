@@ -16,6 +16,7 @@
 #define TEST_DATA "data/1_flsu.61"
 
 using namespace std;
+using namespace GF;
 
 Grid *makeGrid(int scale, string name);
 

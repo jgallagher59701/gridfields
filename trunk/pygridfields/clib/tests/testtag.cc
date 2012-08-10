@@ -32,6 +32,7 @@
 #include "vtkSphereSource.h"
 
 //#include "vmon.h"
+using namespace GF;
 
 GridField *makeMesh() {
   Grid *grid;

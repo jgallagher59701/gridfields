@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <iostream>
 #include "array.h"
 #include "access.h"
@@ -7,6 +10,8 @@
 #include <string.h>
 #include <vector>
 using namespace std;
+
+namespace GF {
 
 //#define DEBUG 0
 /*
@@ -513,6 +518,23 @@ int Array::getValInt(int i) {
   return NULL;  
 }
 
+
+float Array::getValfloat(int i) {
+//  assert(i<_size);
+  Array *arr;
+  arr = this;
+
+  switch (arr->type) {
+  case FLOAT:
+    return arr->floats[i];
+    break;
+  default:
+    break;
+  }
+
+  return NULL;  
+}
+
 UnTypedPtr Array::getVals() {
   Array *arr;
   arr = this;
@@ -691,3 +713,6 @@ int *__dfi;
 CArrayIterator<int> __di(__dfi, 0);
 float *__dfp;
 CArrayIterator<float> __df(__dfp, 0);
+
+} // namespace GF
+

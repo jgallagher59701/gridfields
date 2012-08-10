@@ -8,6 +8,8 @@
 #include <ext/functional>
 #include <string>
 
+namespace GF {
+
 //typedef pointer_to_unary_function<Cell, Tuple *> GridFunction;
 
 void debug_set(UnTypedPtr p);
@@ -80,5 +82,7 @@ class AggregateOp : public BinaryGridFieldOperator {
   static string newName(string Aname, string Bname);
 
 };
+
+} // namespace GF
 
 #endif /* AGGREGATE_H */

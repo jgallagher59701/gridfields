@@ -1,6 +1,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
+namespace GF {
+
 // manual reference counting for shared objects
 // We can replace this with a smart pointer implementation at some point.
 class Object {
@@ -47,5 +49,6 @@ class Object {
   protected:
 };
 
+} // namespace GF
 
 #endif

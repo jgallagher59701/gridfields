@@ -6,6 +6,8 @@
 #include "gridfieldoperator.h"
 #include <string>
 
+namespace GF {
+
 class Stencil {
   /*
   pattern of cells forming an atomic unit for partitioning
@@ -77,5 +79,7 @@ class PartitionOp : public UnaryGridFieldOperator {
   string unparsedExpr;
 
 };
+
+} // namespace GF
 
 #endif /* APPLY_H */

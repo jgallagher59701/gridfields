@@ -1,9 +1,13 @@
 #ifndef _NORMNODEMAP_H
 #define _NORMNODEMAP_H
 
+#include <ext/hash_map>
+
 #include "unarynodemap.h"
 #include "cellarray.h"
 #include "assert.h"
+
+namespace GF {
 
 class NormNodeMap : public UnaryNodeMap {
 
@@ -35,5 +39,7 @@ class NormNodeMap : public UnaryNodeMap {
   //std::map<int, int> nodemap;
   AbstractCellArray *zerocells;
 };
+
+} // namespace GF
 
 #endif /* _CROSSNODEMAP_H */

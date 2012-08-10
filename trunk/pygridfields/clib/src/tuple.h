@@ -9,6 +9,8 @@
 
 using namespace std;
 
+namespace GF {
+
 class Scheme {
  public:
   Scheme();
@@ -98,5 +100,6 @@ typedef vector<UnTypedPtr> TupleData;
   TupleData tupledata;
 };
 
+} // namespace GF
 
 #endif /*_TUPLE_H */

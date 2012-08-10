@@ -1,8 +1,12 @@
+
+#include "config.h"
+
 #include "gridfield.h"
-extern "C" {
-#include "stdio.h"
+#include <stdio.h>
+//extern "C" {
+// #include "stdio.h"
 #include "elio.h"
-}
+//}
 #include "expr.h"
 #include "timing.h"
 #include <iostream>
@@ -17,6 +21,8 @@ extern "C" {
 //#include <netcdfcpp.h>
 
 using namespace std;
+
+namespace GF {
 
 OutputOp::OutputOp(string fn, GridFieldOperator *op)  
  : UnaryGridFieldOperator(op), offset(0), filename(fn) {
@@ -264,3 +270,6 @@ void OutputElcircOp::Output(GridField *GF, string filename, long offset) {
   f.write((char *) &(h.i23d), sizeof(int));
 }
   */
+
+} // namespace GF
+

@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <fstream>
 #include <stdio.h>
 #include <map>
@@ -8,6 +11,8 @@
 #include "expr.h"
 
 using namespace std;
+
+namespace GF {
 
 ArrayWriter::ArrayWriter(string fn, long off) {
   filename = fn;
@@ -151,3 +156,5 @@ void ArrayWriter::Write(const Dataset &ds, string attr) {
   */
   delete [] positions;
 }
+
+} // namespace GF

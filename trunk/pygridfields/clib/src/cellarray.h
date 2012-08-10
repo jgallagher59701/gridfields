@@ -1,15 +1,21 @@
 #ifndef _CELLARRAY_H
 #define _CELLARRAY_H 
 
+#include <iostream>
+
 #include <vector>
 #include <set>
 #include <map>
 #include <ext/hash_map>
-#include <iostream>
+
+//TODO Switch to unordered_map? jhrg 4/16/12
 
 #include "cell.h"
 #include "abstractcellarray.h"
 
+namespace GF {
+using namespace std;
+using namespace __gnu_cxx;
 
 class CellArray : public AbstractCellArray {
  public:
@@ -38,7 +44,7 @@ class CellArray : public AbstractCellArray {
   void addCell(Cell &c);
   void addCell(Cell *c);
   Cell *addCellNodes(Node *nodes, int size);
-
+  vector< vector<int> > makeArrayInts();
   Cell *getCell(idx i);
   Cell getCellCopy(idx i);
   Node *getCellNodes(idx i);
@@ -70,7 +76,6 @@ class CellArray : public AbstractCellArray {
 
   void mapNodes(UnaryNodeMap &h);
   CrossNodeMap makeCrossNodeMap(AbstractCellArray *other);
-
   void buildInvertedIndex();
   void buildIncidenceIndex();
   void buildAdjacencyIndex();
@@ -90,5 +95,7 @@ class CellArray : public AbstractCellArray {
   vector<vector<CellId> > adj;
   bool UseAdjacencyIndex;
 };
+
+} // namespace GF
 
 #endif /* _CELLARRAY_H */

@@ -1,7 +1,11 @@
+
+#include "config.h"
+
 #include "merge.h"
 #include "array.h"
 #include "timing.h"
 
+namespace GF {
 
 MergeOp::MergeOp(GridFieldOperator *left, GridFieldOperator *right) {
   this->A = NULL;
@@ -57,3 +61,6 @@ string MergeOp::newName(string Aname, string Bname) {
   string gname = "m(" + Aname + ", " + Bname + ")";
   return gname;
 }
+
+} // namespace GF
+

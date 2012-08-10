@@ -7,6 +7,8 @@
 #include "restrict.h"
 #include "elcircfile.h"
 
+using namespace GF;
+
 void testSmallRestrict() {
    ElcircFile ef("/home/workspace/ccalmr/hindcasts/2000-01-16/run/1_salt.63");
    GridField *H = ef.readHGrid();

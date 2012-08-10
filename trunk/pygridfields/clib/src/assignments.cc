@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "assignments.h"
 
 int Assign::pnpoly(int npol, float *xp, float *yp, float x, float y) {
@@ -18,25 +21,27 @@ bool Assign::TestCallback(long unsigned id, void *arg) {
   return true;
 }
 
-bool Assign::equal(Type t, UnTypedPtr p, UnTypedPtr q) {bool ret;
-      switch (t) {
+bool Assign::equal(Type t, UnTypedPtr p, UnTypedPtr q)
+{
+    bool ret;
+    switch (t) {
         case FLOAT:
-          ret= *(float *)p == *(float *)q;
-          break;
+            ret = *(float *) p == *(float *) q;
+            break;
         case INT:
-          ret= *(int *)p == *(int *)q;
-          break;
+            ret = *(int *) p == *(int *) q;
+            break;
         case OBJ:
-          ret= p == q;
+            ret = p == q;
         case TUPLE:
-          ret= p == q;
-          exit(1);
+            ret = p == q;
+            exit(1);
         case GRIDFIELD:
-          ret= p == q;
-          exit(1);
+            ret = p == q;
+            exit(1);
         default:
-          ret= p==q;
-          exit(1);
-      }
-return ret;}
-
+            ret = p == q;
+            exit(1);
+    }
+    return ret;
+}

@@ -30,6 +30,8 @@
 void CaptureImage(vtkRenderWindow *);
 void ShowCamera(vtkRenderWindow *renWin);
 
+using namespace GF;
+
 class vtkMyCallback : public vtkCommand {
   public:
   static vtkMyCallback *New() { return new vtkMyCallback; }

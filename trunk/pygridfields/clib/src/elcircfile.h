@@ -4,16 +4,18 @@
 #include <string>
 #include "expr.h"
 #include <stdio.h>
-extern "C" {
+//extern "C" {
 #include "elio.h"
-}
+//}
 #include "arrayreader.h"
 #include "access.h"
 
+//using namespace std;
+
+namespace GF {
+
 class Array;
 class GridField;
-
-using namespace std;
 
 class FileArrayReader;
 
@@ -51,5 +53,7 @@ class ElcircFile {
   bool valid;
   int newid(int node, int *map, int size);
 };
+
+} // namespace GF
 
 #endif /* _ELCIRCFILE_H */

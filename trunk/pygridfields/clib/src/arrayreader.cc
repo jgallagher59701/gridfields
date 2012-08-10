@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include <fstream>
 #include <stdio.h>
 #include "arrayreader.h"
@@ -8,6 +11,8 @@
 #include "unistd.h"
 #include <sstream>
 using namespace std;
+
+namespace GF {
 
 ArrayReader::~ArrayReader() {
 }
@@ -385,3 +390,5 @@ ArrayReader *ArrayReader::makeArrayReader(double *array, int size) {
  pbuf->sputn((char *) array, 32*size);
  return new ArrayReader(ss);
 }
+
+} // namespace GF

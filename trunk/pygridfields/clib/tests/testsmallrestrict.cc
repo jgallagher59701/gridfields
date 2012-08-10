@@ -31,6 +31,7 @@
 #include "vtkGlyph3D.h"
 #include "vtkSphereSource.h"
 
+using namespace GF;
 
 main(int argc, char *argv[]) {
 

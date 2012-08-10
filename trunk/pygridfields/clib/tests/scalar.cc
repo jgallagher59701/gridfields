@@ -12,6 +12,8 @@
 #include "visualize.h"
 #include "vtkGridField.h"
 
+using namespace GF;
+
 void computeColumnPositions(GridField *H,GridField*V); 
 int scalar3D( GridField *H, GridField *V, const char *filename, 
               int addr, string region, string dataprod);

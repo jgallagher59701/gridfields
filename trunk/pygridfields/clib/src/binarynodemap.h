@@ -3,6 +3,8 @@
 
 #include "nodemap.h"
 
+namespace GF {
+
 class BinaryNodeMap {
 
  public:
@@ -11,5 +13,7 @@ class BinaryNodeMap {
   //virtual ~BinaryNodeMap()=0; 
  private:
 };
+
+} // namespace GF
 
 #endif /* _BINARYNODEMAP_H */

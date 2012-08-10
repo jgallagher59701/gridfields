@@ -134,6 +134,7 @@
 #include "src/util.h"
 
 using namespace std ;
+using namespace GF;
 
 // handy little container for our argument vector
 struct CCmdParam
