@@ -5,11 +5,11 @@
 #include <fstream>
 #include <sstream>
 
-#include "src/array.h"
-#include "src/grid.h"
-#include "src/elcircfile.h"
-#include "src/arrayreader.h"
-#include "src/gridfield.h"
+#include "../src/array.h"
+#include "../src/grid.h"
+#include "../src/elcircfile.h"
+#include "../src/arrayreader.h"
+#include "../src/gridfield.h"
 
 // Was originally used explicitly in the code
 // "/home/workspace/ccalmr/forecasts/2003-25-RWKoo/run/1_hvel.64"
