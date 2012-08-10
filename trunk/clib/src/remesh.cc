@@ -9,7 +9,7 @@
 #include "triangulate.h"
 using namespace std;
 using namespace Assign;
- 
+using namepsace GF { 
 
 RemeshOp::RemeshOp(string attrx,string attry,GridField * Gnew, GridFieldOperator *op) 
  : UnaryGridFieldOperator(op),Gnew(Gnew),attry(attry),attrx(attrx) 
@@ -572,3 +572,5 @@ GridField* RemeshOp::Remesh(const string &attrx,const string &attry,GridField *G
   return Gnew;
 }
 
+
+}
