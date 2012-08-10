@@ -127,7 +127,7 @@ vector< vector<int> > CellArray::makeArrayInts(){
   vector <int> a;
   //vector<int>* array=new vector<int>;
   vector< vector<int> > array;
-  cout<<"this1 "<<arr->getsize()<<endl;
+
   array.reserve(arr->getsize());
  for(unsigned int j=0;j<(arr->getsize());j++)
   {
