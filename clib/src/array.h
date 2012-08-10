@@ -58,6 +58,7 @@ class Array : public Object {
   virtual UnTypedPtr getVals();
   virtual UnTypedPtr getValPtr(int i);
   virtual int getValInt(int i);
+  virtual float getValfloat(int i);
 
   virtual inline void next(UnTypedPtr *p) { 
     plusplus(p, type);

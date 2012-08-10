@@ -518,6 +518,23 @@ int Array::getValInt(int i) {
   return NULL;  
 }
 
+
+float Array::getValfloat(int i) {
+//  assert(i<_size);
+  Array *arr;
+  arr = this;
+
+  switch (arr->type) {
+  case FLOAT:
+    return arr->floats[i];
+    break;
+  default:
+    break;
+  }
+
+  return NULL;  
+}
+
 UnTypedPtr Array::getVals() {
   Array *arr;
   arr = this;

@@ -44,7 +44,7 @@ class CellArray : public AbstractCellArray {
   void addCell(Cell &c);
   void addCell(Cell *c);
   Cell *addCellNodes(Node *nodes, int size);
-
+  vector< vector<int> > makeArrayInts();
   Cell *getCell(idx i);
   Cell getCellCopy(idx i);
   Node *getCellNodes(idx i);
@@ -76,7 +76,6 @@ class CellArray : public AbstractCellArray {
 
   void mapNodes(UnaryNodeMap &h);
   CrossNodeMap makeCrossNodeMap(AbstractCellArray *other);
-
   void buildInvertedIndex();
   void buildIncidenceIndex();
   void buildAdjacencyIndex();
