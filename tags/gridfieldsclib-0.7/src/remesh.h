@@ -6,6 +6,8 @@
 #include "assignments.h"
 #include "RTree.h"
 
+using namespace GF {
+
 class RemeshOp : public UnaryGridFieldOperator {
 public:
   RemeshOp(string attrx,string attry, GridField * Gnew,GridFieldOperator *op);
@@ -141,4 +143,5 @@ private:
  
 };
 
+}
 #endif
