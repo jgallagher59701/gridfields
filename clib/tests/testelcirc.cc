@@ -32,6 +32,8 @@
 #include "vtkGlyph3D.h"
 #include "vtkSphereSource.h"
 
+using namespace GF;
+
 void testTime() {
   ElcircFile ef("/home/bill/testbed/data/1_salt.63");
   GridField *T = ef.readTGrid();

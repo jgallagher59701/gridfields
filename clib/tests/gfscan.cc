@@ -10,6 +10,8 @@ string opid;
 
 char gridLetter;
 
+using namespace GF;
+
 int main( int argc, char *argv[] ) {
   
   cout << "gfScan..." << flush;

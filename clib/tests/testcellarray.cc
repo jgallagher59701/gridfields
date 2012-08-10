@@ -3,6 +3,8 @@
 #include "src/util.h"
 #include "src/implicitcrossnodemap.h"
 
+using namespace GF;
+
 int main(int argc, char **argv) {
   
   bool verbose = false;

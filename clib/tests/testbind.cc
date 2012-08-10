@@ -10,6 +10,8 @@
 #include "src/arrayreader.h"
 #include "src/accumulate.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale, string name) {
   CellArray *twocells;
   CellArray *onecells;

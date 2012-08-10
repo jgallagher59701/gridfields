@@ -3,6 +3,8 @@
 #include "src/array.h"
 #include "src/sift.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
   CellArray *onecells;

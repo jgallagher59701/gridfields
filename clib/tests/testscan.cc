@@ -6,6 +6,7 @@
 #include "scanvgrid.h"
 #include "scaninternal.h"
 
+using namespace GF;
 
 int main(int argc, char **argv) {
   //GridField *H = ScanHGridOp::Scan("../../../1_salt.63");

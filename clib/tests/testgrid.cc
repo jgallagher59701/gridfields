@@ -1,6 +1,8 @@
 #include <cstdlib>
 #include "grid.h"
 
+using namespace GF;
+
 Grid *makeGrid(int start, int stop, char *name);
 int main(int argc, char **argv) {
 

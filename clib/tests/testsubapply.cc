@@ -7,6 +7,8 @@
 #include "accumulate.h"
 #include "bind.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale, char *name) {
   CellArray *twocells;
   CellArray *onecells;

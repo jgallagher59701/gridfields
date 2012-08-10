@@ -5,6 +5,8 @@
 #include "arrayreader.h"
 #include "join.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale, char *name) {
   CellArray *twocells;
   CellArray *onecells;
