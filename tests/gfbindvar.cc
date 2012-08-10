@@ -12,6 +12,8 @@ string posattr;
 string sourcefilename;
 int timestep;
 
+using namespace GF;
+
 int main( int argc, char *argv[] ) {
   
   cout << "gfBind..." << flush;

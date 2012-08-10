@@ -19,6 +19,7 @@
 #include "dataprods.h"
 #include "corierecipes.h"
 
+using namespace GF;
 
 int main( int argc, char *argv[] ) {
   cout << setprecision(3);

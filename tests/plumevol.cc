@@ -1,4 +1,5 @@
 
+using namespace GF;
 
 int plumevol( GridField *H, GridField *V, const char *filename, 
               int addr, string region, string dataprod ) {

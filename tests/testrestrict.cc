@@ -1,11 +1,13 @@
 #include <cstring>
-#include "src/grid.h"
-#include "src/gridfield.h"
-#include "src/array.h"
-#include "src/restrict.h"
-#include "src/refrestrict.h"
-#include "src/arrayreader.h"
-#include "src/apply.h"
+#include "../src/grid.h"
+#include "../src/gridfield.h"
+#include "../src/array.h"
+#include "../src/restrict.h"
+#include "../src/refrestrict.h"
+#include "../src/arrayreader.h"
+#include "../src/apply.h"
+
+using namespace GF;
 
 Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;

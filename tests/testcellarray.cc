@@ -1,7 +1,9 @@
-#include "src/cellarray.h"
-#include "src/implicit0cells.h"
-#include "src/util.h"
-#include "src/implicitcrossnodemap.h"
+#include "../src/cellarray.h"
+#include "../src/implicit0cells.h"
+#include "../src/util.h"
+#include "../src/implicitcrossnodemap.h"
+
+using namespace GF;
 
 int main(int argc, char **argv) {
   

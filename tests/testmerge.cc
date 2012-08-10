@@ -1,9 +1,11 @@
-#include "src/grid.h"
-#include "src/gridfield.h"
-#include "src/array.h"
-#include "src/restrict.h"
-#include "src/merge.h"
+#include "../src/grid.h"
+#include "../src/gridfield.h"
+#include "../src/array.h"
+#include "../src/restrict.h"
+#include "../src/merge.h"
 #include<cstring>
+
+using namespace GF;
 
 Grid *makeGrid(int scale,const char *name) {
   CellArray *twocells;
