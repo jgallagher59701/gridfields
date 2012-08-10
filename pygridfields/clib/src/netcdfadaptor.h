@@ -9,6 +9,8 @@
 #include <string>
 #include <vector>
 
+namespace GF {
+
 class NetCDFAdaptor {
 public:
   NetCDFAdaptor(string fn) : filename(fn), ncdf(NULL) {};
@@ -41,4 +43,7 @@ private:
   string filename;
   NcFile *ncdf;
 };
+
+} // namespace GF
+
 #endif

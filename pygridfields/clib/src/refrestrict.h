@@ -1,6 +1,8 @@
 
 #include "restrict.h"
 
+namespace GF {
+
 class RefRestrictOp : public RestrictOp {
 public:
   RefRestrictOp(const string &expr, Dim_t k, GridFieldOperator *GF) : RestrictOp(expr, k, GF) {};
@@ -9,3 +11,4 @@ public:
 
 };
 
+} // namespace GF

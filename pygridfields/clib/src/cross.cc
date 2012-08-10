@@ -1,8 +1,13 @@
+
+#include "config.h"
+
 #include "cross.h"
 #include "crossordmap.h"
 #include "timing.h"
 #include "array.h"
 
+
+namespace GF {
 
 CrossOp::CrossOp(GridFieldOperator *left, GridFieldOperator *right) {
   this->A = NULL;
@@ -90,4 +95,7 @@ string CrossOp::newName(string Tname, string Sname) {
   string gname = "a(" + Tname + ", " + Sname + ")";
   return gname;
 }
+
+} // namespace GF
+
 

@@ -1,8 +1,11 @@
+
+#include "config.h"
+
 #include "gridfield.h"
-extern "C" {
-#include "stdio.h"
+//extern "C" {
+#include <stdio.h>
 #include "elio.h"
-}
+//}
 #include "expr.h"
 #include "timing.h"
 #include <iostream>
@@ -22,6 +25,8 @@ extern "C" {
 //#define DEBUG cout
 
 using namespace std;
+
+namespace GF {
 
 OutputNetCDFOp::OutputNetCDFOp(string fn, GridFieldOperator *op, 
 		               const Scheme f, const Scheme t)  
@@ -689,3 +694,6 @@ void OutputNetCDFVars::SetDate(string ds) {
   DEBUG << "Setting Date to " << ds << endl;
   this->datestr = ds;
 }
+
+} // namespace GF
+

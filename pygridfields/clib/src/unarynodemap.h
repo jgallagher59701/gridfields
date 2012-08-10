@@ -3,6 +3,8 @@
 
 #include "nodemap.h"
 
+namespace GF {
+
 class UnaryNodeMap : public NodeMap {
 
  public:
@@ -10,5 +12,7 @@ class UnaryNodeMap : public NodeMap {
   //virtual ~UnaryNodeMap()=0;
  private:
 };
+
+} // namespace GF
 
 #endif /* _UNARYNODEMAP_H */

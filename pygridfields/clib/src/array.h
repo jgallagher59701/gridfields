@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 
+namespace GF {
+
 class Scheme;
 template <class T> class DatumIterator;
 class Array : public Object {
@@ -56,6 +58,7 @@ class Array : public Object {
   virtual UnTypedPtr getVals();
   virtual UnTypedPtr getValPtr(int i);
   virtual int getValInt(int i);
+  virtual float getValfloat(int i);
 
   virtual inline void next(UnTypedPtr *p) { 
     plusplus(p, type);
@@ -105,4 +108,7 @@ class ArrayOfVector : public Array, private vector<Tuple> {
  
 }
 */
+
+} // namespace GF
+
 #endif /* _ARRAY_H */

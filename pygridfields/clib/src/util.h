@@ -1,10 +1,13 @@
 #ifndef _UTIL_H
 #define _UTIL_H
 
-#include <ext/hash_map>
+#include <stdio.h>
+
+#include <iostream>
 #include <vector>
 #include <string>
-#include <stdio.h>
+
+namespace GF {
 
 #define MAX(a,b) ((a)>(b)?(a):(b))
 #define MIN(a,b) ((a)<(b)?(a):(b))
@@ -23,9 +26,11 @@
         copy(from.begin(), from.end(), ii);
 
 
-struct nullstream:
-std::ostream {
-nullstream(): std::ios(0), std::ostream(0) {}
+struct nullstream: std::ostream {
+    nullstream() :
+        std::ios(0), std::ostream(0)
+    {
+    }
 };
 
 #define DEBUG nullstream()
@@ -41,6 +46,9 @@ void Warning(const char *fmt, ...);
 
 std::string tab(int indent);
 typedef size_t idx;
+
+} // namespace GF
+
 #endif /* _UTIL_H */
     
 

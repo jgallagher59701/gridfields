@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "gridfield.h"
 #include "array.h"
 #include "restrict.h"
@@ -5,6 +8,7 @@
 #include "expr.h"
 #include "timing.h"
 
+namespace GF {
 
 RestrictOp::RestrictOp(string expr, Dim_t k, GridFieldOperator *op) 
  : UnaryGridFieldOperator(op), k(k), expr(expr) 
@@ -73,3 +77,4 @@ GridField *RestrictOp::Restrict(string expr, Dim_t k, GridField *GF) {
   return Out;
 }
 
+} // namespace GF

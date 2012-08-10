@@ -4,6 +4,8 @@
 #include "gridfieldoperator.h"
 #include <iostream>
 
+namespace GF {
+
 class DataDumpOp : public UnaryGridFieldOperator {
 public:
   DataDumpOp(Dim_t k, string fn, long off, GridFieldOperator *Op);
@@ -18,5 +20,7 @@ private:
 
   static void writeGridField(GridField *GF, ofstream &f);
 };
+
+} // namespace GF
 
 #endif

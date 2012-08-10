@@ -3,6 +3,7 @@
 #include <string>
 
 using namespace std;
+using namespace GF;
 
 Agg::Agg(Big *b) {
   this->bigs.push_back(b);

@@ -1,8 +1,13 @@
+
+#include "config.h"
+
 #include "gridfield.h"
 #include "refrestrict.h"
 #include "expr.h"
 #include "ordmap.h"
 #include "subgridordmap.h"
+
+namespace GF {
 
 void RefRestrictOp::Execute() {
   this->PrepareForExecution();
@@ -19,5 +24,4 @@ GridField *RefRestrictOp::Restrict(const string &expr, Dim_t k, GridField *GF) {
   return result;
 }
 
-
-
+} // namespace GF

@@ -10,6 +10,8 @@ string expr;
 string filename;
 string outattr;
 
+using namespace GF;
+
 int main( int argc, char *argv[] ) {
   
   cout << "gfApply..." << flush;

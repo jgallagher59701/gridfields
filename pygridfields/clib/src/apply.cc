@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "apply.h"
 #include "timing.h"
 #include "gridfield.h"
@@ -6,6 +9,8 @@
 #include "expr.h"
 #include <sstream>
 #include <math.h>
+
+namespace GF {
 
 /*
 ApplyOp::ApplyOp(GridFieldOperator *op, string tupleexpr, Scheme *outscheme) 
@@ -42,4 +47,7 @@ GridField *ApplyOp::Apply(string expr, Dim_t k, GridField *Gg) {
   //Gg->ref();
   return Out;
 }
+
+} // namespace GF
+
 

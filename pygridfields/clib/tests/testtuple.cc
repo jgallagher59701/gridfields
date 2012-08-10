@@ -2,6 +2,8 @@
 #include "src/tuple.h"
 #include "src/expr.h"
 
+using namespace GF;
+
 int main(int argc, char **argv) {
 
   bool verbose = false;

@@ -1,6 +1,8 @@
 #ifndef _TESTDATASET_H
 #define _TESTDATASET_H
 
+using namespace GF;
+
 #include "testarray.h"
 
 void mkTestDataset(Dataset &D, string sch, int size) {

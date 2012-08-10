@@ -4,7 +4,7 @@
 #include <vector>
 #include <set>
 #include <map>
-#include <ext/hash_map>
+
 #include <iostream>
 #include "cellarray.h"
 #include "cell.h"
@@ -14,6 +14,7 @@
 #define BLOCKSIZ 100
 #define DIGITS 6
 
+namespace GF {
 
 class Implicit0Cells : public AbstractCellArray {
  public:
@@ -30,7 +31,7 @@ class Implicit0Cells : public AbstractCellArray {
   Cell *getCell(idx i);
   Cell getCellCopy(idx i);
   Node *getCellNodes(idx i) { 
-    // Calling this method effetcively destroys the benefits of the implicit array.
+    // Calling this method effectively destroys the benefits of the implicit array.
     // CellArray should inherit from Implicit0Cells, or this method should be removed
     if (materializednodes == NULL) {
       materializednodes = new Node[this->size];
@@ -86,5 +87,7 @@ class Implicit0Cells : public AbstractCellArray {
   Node *materializednodes;
   unsigned int size;
 };
+
+} // namespace GF
 
 #endif /* _CELLARRAY_H */

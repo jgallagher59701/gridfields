@@ -1,7 +1,12 @@
+
+#include "config.h"
+
 #include "gridfield.h"
 #include "constarray.h"
 #include "timing.h"
 #include "bindconstant.h"
+
+namespace GF {
 
 BindConstantOp::BindConstantOp(Dim_t k, const string &attr, float val, 
                                GridFieldOperator *op) 
@@ -35,3 +40,5 @@ GridField *BindConstantOp::BindConstant(Dim_t k, const string &attr, float val,
   
   return Out;
 }
+
+} // namespace GF

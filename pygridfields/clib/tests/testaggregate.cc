@@ -10,6 +10,8 @@
 #include "src/project.h"
 #include "src/assignments.h"
 
+using namespace GF;
+
 Grid *makeGrid(int scale,const string name) {
   CellArray *twocells;
   CellArray *onecells;

@@ -1,3 +1,6 @@
+
+#include "config.h"
+
 #include "implicit0cells.h"
 #include "implicitcrossnodemap.h"
 #include "crossnodemap.h"
@@ -7,6 +10,8 @@
 #include <assert.h>
 #include <iterator>
 #include <ext/algorithm> 
+
+namespace GF {
 
 void Implicit0Cells::print() {
   this->print(0);
@@ -166,5 +171,8 @@ void Implicit0Cells::ref() {
   //cout << "cellarray ref" << endl;
   Object::ref();
 }
+
+} // namespace GF
+
 
 

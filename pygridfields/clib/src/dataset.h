@@ -5,9 +5,11 @@
 #include "tuple.h"
 #include "util.h"
 
-class Array;
+//using namespace std;
 
-using namespace std;
+namespace GF {
+
+class Array;
 
 class RankedDataset;
 
@@ -73,5 +75,6 @@ class Dataset {
   vector<Array *> attributes;
 };
 
+} // namespace GF
 
 #endif /*_DATASET_H */
