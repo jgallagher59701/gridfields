@@ -76,7 +76,7 @@ HDRS = CmdLine.h src/RTree.h src/abstractcellarray.h src/access.h src/accumulate
 src/aggregate.h src/aggregations.h src/apply.h src/array.h src/arrayreader.h src/arraywriter.h	\
 src/assignments.h src/binarynodemap.h src/bind.h src/bindconstant.h src/cell.h src/cellarray.h	\
 config.h src/constarray.h src/counted_ptr.h src/cross.h src/crossnodemap.h		\
-src/crossordmap.h src/datadump.h src/dataset.h src/elcircfile.h src/elio.h src/expr.h src/grid.h	\
+src/crossordmap.h src/datadump.h src/dataset.h src/elcircfile.h src/elio.h src/expr.h src/fparser.hh src/grid.h	\
 src/gridfield.h src/gridfieldoperator.h src/idnodemap.h src/idordmap.h			\
 src/implicit0cells.h src/implicitcrossnodemap.h src/leftnodemap.h src/merge.h		\
 src/nodemap.h src/normnodemap.h src/object.h src/onegrid.h src/ordmap.h	\
