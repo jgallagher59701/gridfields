@@ -19,9 +19,9 @@ endif
 CXXFLAGS_DEBUG = -g3 -O0 -fno-defer-pop -Wall -W -Wcast-align -Werror
 TEST_COV_FLAGS = -ftest-coverage -fprofile-arcs
 
-SUBDIRS = tests 
+SUBDIRS = . tests 
 # vis
-DIST_SUBDIRS = tests
+# DIST_SUBDIRS = tests
 # vis
 
 # noinst_LTLIBRARIES = libparsers.la
@@ -58,32 +58,36 @@ dist-hook:
 
 # MAINTAINERCLEANFILE
 
-SRCS = CmdLine.cpp src/accumulate.cc src/aggregate.cc src/aggregations.cc src/apply.cc	\
-src/array.cc src/arrayreader.cc src/arraywriter.cc src/assignments.cc src/bind.cc		\
-src/bindconstant.cc src/cell.cc src/cellarray.cc src/constarray.cc src/cross.cc		\
-src/datadump.cc src/dataset.cc src/elcircfile.cc src/elio.c src/expr.cc src/fparser.cc src/grid.cc	\
-src/gridfield.cc src/gridfieldoperator.cc src/implicit0cells.cc 		\
-src/merge.cc src/output.cc src/outputtuples.cc src/project.cc		\
-src/rankeddataset.cc src/refrestrict.cc src/restrict.cc src/scaninternal.cc src/sift.cc	\
-src/timing.cc src/tuple.cc src/type.cc src/unarynodemap.cc	\
-src/util.cc 
+SRCS = CmdLine.cpp src/accumulate.cc src/aggregate.cc			\
+src/aggregations.cc src/apply.cc src/array.cc src/arrayreader.cc	\
+src/arraywriter.cc src/assignments.cc src/bind.cc src/bindconstant.cc	\
+src/cell.cc src/cellarray.cc src/constarray.cc src/cross.cc		\
+src/datadump.cc src/dataset.cc src/elcircfile.cc src/elio.c		\
+src/expr.cc src/fparser.cc src/grid.cc src/gridfield.cc			\
+src/gridfieldoperator.cc src/implicit0cells.cc src/merge.cc		\
+src/output.cc src/outputtuples.cc src/project.cc src/rankeddataset.cc	\
+src/refrestrict.cc src/restrict.cc src/scaninternal.cc src/sift.cc	\
+src/timing.cc src/tuple.cc src/type.cc src/unarynodemap.cc src/util.cc
 
 if NETCDF_FOUND
 SRCS += src/tonetcdf.cc src/netcdfadaptor.cc 
 endif
 
-HDRS = CmdLine.h src/RTree.h src/abstractcellarray.h src/access.h src/accumulate.h	\
-src/aggregate.h src/aggregations.h src/apply.h src/array.h src/arrayreader.h src/arraywriter.h	\
-src/assignments.h src/binarynodemap.h src/bind.h src/bindconstant.h src/cell.h src/cellarray.h	\
-config.h src/constarray.h src/counted_ptr.h src/cross.h src/crossnodemap.h		\
-src/crossordmap.h src/datadump.h src/dataset.h src/elcircfile.h src/elio.h src/expr.h src/fparser.hh src/grid.h	\
-src/gridfield.h src/gridfieldoperator.h src/idnodemap.h src/idordmap.h			\
-src/implicit0cells.h src/implicitcrossnodemap.h src/leftnodemap.h src/merge.h		\
-src/nodemap.h src/normnodemap.h src/object.h src/onegrid.h src/ordmap.h	\
-src/output.h src/outputtuples.h src/partition.h src/project.h src/rankeddataset.h		\
-src/refrestrict.h src/restrict.h src/scan.h src/scaninternal.h src/sift.h		\
-src/subgridordmap.h src/timing.h src/tuple.h src/type.h src/unarynodemap.h	\
-src/util.h
+HDRS = CmdLine.h src/RTree.h src/abstractcellarray.h src/access.h	\
+src/accumulate.h src/aggregate.h src/aggregations.h src/apply.h		\
+src/array.h src/arrayreader.h src/arraywriter.h src/assignments.h	\
+src/binarynodemap.h src/bind.h src/bindconstant.h src/cell.h		\
+src/cellarray.h config.h src/constarray.h src/counted_ptr.h		\
+src/cross.h src/crossnodemap.h src/crossordmap.h src/datadump.h		\
+src/dataset.h src/elcircfile.h src/elio.h src/expr.h src/fparser.hh	\
+src/fptypes.hh src/fpconfig.hh src/grid.h src/gridfield.h		\
+src/gridfieldoperator.h src/idnodemap.h src/idordmap.h			\
+src/implicit0cells.h src/implicitcrossnodemap.h src/leftnodemap.h	\
+src/merge.h src/nodemap.h src/normnodemap.h src/object.h src/onegrid.h	\
+src/ordmap.h src/output.h src/outputtuples.h src/partition.h		\
+src/project.h src/rankeddataset.h src/refrestrict.h src/restrict.h	\
+src/scan.h src/scaninternal.h src/sift.h src/subgridordmap.h		\
+src/timing.h src/tuple.h src/type.h src/unarynodemap.h src/util.h
 
 if NETCDF_FOUND
 HDRS += src/tonetcdf.h src/netcdfadaptor.h

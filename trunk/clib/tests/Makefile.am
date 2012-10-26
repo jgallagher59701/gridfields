@@ -35,7 +35,7 @@ endif
 
 noinst_HEADERS = test.h	testarray.h testdataset.h transect.h
 
-# EXTRA_DIST = 
+EXTRA_DIST = data.nc dat data
 
 # CLEANFILES = 
 
