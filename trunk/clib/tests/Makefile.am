@@ -1,12 +1,12 @@
+
 # Tests
 
 AUTOMAKE_OPTIONS = foreign
 
 # I think that if there are things in scratch that we need they should
 # move back out to the src directory (or here)
-#AM_CPPFLAGS = -I$(top_srcdir) -I$(top_srcdir)/experimental \
-#-I$(top_srcdir)/scratch
-AM_CXXFLAGS =  
+AM_CPPFLAGS = 
+AM_CXXFLAGS = -I$(top_srcdir)
 
 # These are not used by automake but are often useful for certain types of
 # debugging. 
@@ -21,17 +21,14 @@ TESTS = testarrayreader testcross testaggregate	\
 testrestrict testmerge testbind testgridfield	\
 testsift testdataset testcellarray testtuple testarray
 
-BROKEN_TESTS = testwrite63 testjoin testscan testgrid 
-
-VTK_TESTS= testvtk wedgetest testtag testvis testsmallrestrict	\
-testelcirc testsubapply
-
-NETCDF_TESTS = testnetcdf testoutput #testnetcdfadaptor  
-# selfe2netcdf 
+NETCDF_TESTS = testnetcdf testoutput 
 
 if NETCDF_FOUND
 TESTS += $(NETCDF_TESTS) 
 endif
+
+VTK_TESTS= testvtk wedgetest testtag testvis testsmallrestrict	\
+testelcirc testsubapply
 
 noinst_HEADERS = test.h	testarray.h testdataset.h transect.h
 
@@ -57,20 +54,54 @@ collect-coverage-data:
 #############################
 
 if NETCDF_FOUND
-#testnetcdfadaptor_SOURCES = testnetcdfadaptor.cc
-#testnetcdfadaptor_LDADD = -lnetcdf_c++ -lnetcdf ../libgridfields.la 
-
 testnetcdf_SOURCES = testnetcdf.cc
 testnetcdf_LDADD = -lnetcdf ../libgridfields.la 
-
-#selfe2netcdf_SOURCES = selfe2netcdf.cc
-#elfe2netcdf_LDADD = -lnetcdf ../libgridfields.la 
 
 testoutput_SOURCES = testoutput.cc
 testoutput_LDADD = ../libgridfields.la 
 endif
 
-if VTK_FOUND
+# io unit tests
+
+testarrayreader_SOURCES = testarrayreader.cc
+testarrayreader_LDADD = ../libgridfields.la 
+
+testcross_SOURCES = testcross.cc
+testcross_LDADD = ../libgridfields.la 
+
+testaggregate_SOURCES = testaggregate.cc
+testaggregate_LDADD = ../libgridfields.la 
+
+testrestrict_SOURCES = testrestrict.cc
+testrestrict_LDADD = ../libgridfields.la 
+
+testmerge_SOURCES = testmerge.cc
+testmerge_LDADD = ../libgridfields.la 
+
+testbind_SOURCES = testbind.cc
+testbind_LDADD = ../libgridfields.la 
+
+# gridfield component unit tests
+
+testgridfield_SOURCES = testgridfield.cc
+testgridfield_LDADD = ../libgridfields.la 
+
+testsift_SOURCES = testsift.cc
+testsift_LDADD = ../libgridfields.la 
+
+testdataset_SOURCES = testdataset.cc
+testdataset_LDADD = ../libgridfields.la 
+
+testcellarray_SOURCES = testcellarray.cc
+testcellarray_LDADD = ../libgridfields.la 
+
+testtuple_SOURCES = testtuple.cc
+testtuple_LDADD = ../libgridfields.la 
+
+testarray_SOURCES = testarray.cc
+testarray_LDADD = ../libgridfields.la 
+
+# if VTK_FOUND
 # testsmallrestrict_SOURCES = testsmallrestrict.cc
 # testsmallrestrict_LDADD = testsmallrestrict.cc -L$(VTKLIBPATH) \
 # 	$(VTKLIBS) ../libgridfields.la 
@@ -93,12 +124,13 @@ if VTK_FOUND
 
 # testvis_SOURCES = testvis.o
 # testvis_LDADD = testvis.cc -L$(VTKLIBPATH) $(VTKLIBS) ../libgridfields.la 
-endif
+# endif
 
-# io unit tests
+#selfe2netcdf_SOURCES = selfe2netcdf.cc
+#elfe2netcdf_LDADD = -lnetcdf ../libgridfields.la 
 
-testarrayreader_SOURCES = testarrayreader.cc
-testarrayreader_LDADD = ../libgridfields.la 
+#testnetcdfadaptor_SOURCES = testnetcdfadaptor.cc
+#testnetcdfadaptor_LDADD = -lnetcdf_c++ -lnetcdf ../libgridfields.la 
 
 # testwrite63_SOURCES = testwrite63.cc
 # testwrite63_LDADD = ../libgridfields.la 
@@ -109,46 +141,11 @@ testarrayreader_LDADD = ../libgridfields.la
 # testjoin_LDADD = ../libgridfields.la 
 # LDADD originally included -lefence
 
-testcross_SOURCES = testcross.cc
-testcross_LDADD = ../libgridfields.la 
-
-testaggregate_SOURCES = testaggregate.cc
-testaggregate_LDADD = ../libgridfields.la 
-
-testrestrict_SOURCES = testrestrict.cc
-testrestrict_LDADD = ../libgridfields.la 
-
-testmerge_SOURCES = testmerge.cc
-testmerge_LDADD = ../libgridfields.la 
-
 # testscan_SOURCES = testscan.cc
 # testscan_LDADD = ../libgridfields.la 
 
-testbind_SOURCES = testbind.cc
-testbind_LDADD = ../libgridfields.la 
-
-# gridfield component unit tests
-
-testgridfield_SOURCES = testgridfield.cc
-testgridfield_LDADD = ../libgridfields.la 
-
-testsift_SOURCES = testsift.cc
-testsift_LDADD = ../libgridfields.la 
-
-testdataset_SOURCES = testdataset.cc
-testdataset_LDADD = ../libgridfields.la 
-
 # testgrid_SOURCES = testgrid.cc
 # testgrid_LDADD = ../libgridfields.la 
-
-testcellarray_SOURCES = testcellarray.cc
-testcellarray_LDADD = ../libgridfields.la 
-
-testtuple_SOURCES = testtuple.cc
-testtuple_LDADD = ../libgridfields.la 
-
-testarray_SOURCES = testarray.cc
-testarray_LDADD = ../libgridfields.la 
 
 # testexpr : testexpr.cc expr.o tuple.o fparser.o type.o
 #	g++ -g testexpr.cc expr.o tuple.o -lwayne fparser.o -o testexpr

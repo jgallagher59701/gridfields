@@ -94,7 +94,6 @@ HDRS += src/tonetcdf.h src/netcdfadaptor.h
 endif
 
 OLD_REMOVED_SRCS = stuebe.cc
-
 OLD_REMOVED_HDRS = stuebe.h
 
 ###########################################################################

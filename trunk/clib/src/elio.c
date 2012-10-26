@@ -1212,7 +1212,7 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
     int *itmp, i, j;// ss;
     // FIXME type error sizeof() returns long unsigned int on 64-bit machines
     if (sizeof(int) != 4 || sizeof(char) != 1 || sizeof(float) != 4) {
-	fprintf(stderr, "Sizeof problems, please investigate: sizeof(char,int,float) = (%d,%d,%d)\n", sizeof(int), sizeof(char), sizeof(float));
+	fprintf(stderr, "Sizeof problems, please investigate: sizeof(char,int,float) = (%ld,%ld,%ld)\n", sizeof(int), sizeof(char), sizeof(float));
 	exit(1);
     }
     fp = fopen(fname, "rb");
@@ -2917,7 +2917,7 @@ double ElioGetSigmaDepthAtXY(double x, double y, int level, float e, ElcircHeade
    // h = H * eh->zcor[level] + e;
    // return h;
     //FIXME type error
-    printf("error! ElioGetSigmaDepthAtXY broken %s\n",0.0);
+    printf("error! ElioGetSigmaDepthAtXY broken %g\n",0.0);
     return 0.0;
 }
 
