@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([gridfields], [1.0.0], [Bill Howe <billhowe@cs.washington.edu>])
+AC_INIT([gridfields], [1.0.1], [Bill Howe <billhowe@cs.washington.edu>])
 AC_CONFIG_SRCDIR([src/abstractcellarray.h])
 AM_CONFIG_HEADER([config.h])
 
@@ -39,23 +39,15 @@ else
     AM_CONDITIONAL([COMPILER_IS_GCC],[false])
 fi
 
-# Checks for libraries.
-# These appear to be used by test code
-# FIXME: Replace `main' with a function in `-lefence':
-# AC_CHECK_LIB([efence], [main])
-# FIXME: Replace `main' with a function in `-lnetcdf':
-# AC_CHECK_LIB([netcdf], [main])
-# FIXME: Replace `main' with a function in `-lvtkCommon':
-# AC_CHECK_LIB([vtkCommon], [main])
-# FIXME: Replace `main' with a function in `-lvtkFiltering':
-# AC_CHECK_LIB([vtkFiltering], [main])
-# FIXME: Replace `main' with a function in `-lvtkIO':
-# AC_CHECK_LIB([vtkIO], [main])
-# FIXME: Replace `main' with a function in `-lvtkRendering':
-# AC_CHECK_LIB([vtkRendering], [main])
-# FIXME: Replace `main' with a function in `-lwayne':
-# AC_CHECK_LIB([wayne], [main])
+AC_ARG_ENABLE([netcdf], [AS_HELP_STRING([--enable/disable-netcdf],
+					[use netcdf (default is yes)])])
+# $enable_netcdf will be 'no' if --disable-netcdf is used, 'yes' if
+# --enable-netcdf is used and '' if neither is used
 
+netcdf_found_ac=false
+
+if test -z "$enable_netcdf" -o "$enable_netcdf" = "yes"
+then
 AC_CHECK_NETCDF(
    [
    LIBS="$LIBS $NC_LIBS"
@@ -67,10 +59,10 @@ AC_CHECK_NETCDF(
    echo "*** Use --with-netcdf for the root netcdf directory."
    echo "*** Otherwise use --with-netcdf-include switch for includes directory"
    echo "*** and --with-netcdf-libdir switch for libraries directory."
-   netcdf_found_ac=false
    AC_MSG_WARN([netcdf library and netcdf headers not found.])
    ],[3]
 )
+fi
 
 AM_CONDITIONAL([NETCDF_FOUND], [$netcdf_found_ac])
 
