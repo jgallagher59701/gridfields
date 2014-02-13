@@ -150,7 +150,7 @@ void SpecializedTupleFunction::Eval(Tuple &intup, Tuple &outtup) {
   double answer=0;
   float *valptr;
     
-  hash_map<int, pair<int, Type> >::iterator p;
+  HASH_MAP<int, pair<int, Type> >::iterator p;
   
    // cout << endl;
   for (int i=0; i<in_tup_size; i++) {
@@ -168,7 +168,7 @@ void SpecializedTupleFunction::Eval(Tuple &intup, Tuple &outtup) {
     }
   }
 
-  hash_map<int, pair<int, FunctionParser *> >::iterator q;
+  HASH_MAP<int, pair<int, FunctionParser *> >::iterator q;
   for (q=out_position_map.begin(); q!=out_position_map.end(); q++) { 
     valptr = (float *) outtup.tupledata[q->second.first];
     answer = q->second.second->Eval(bindings);

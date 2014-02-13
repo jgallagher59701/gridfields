@@ -5,7 +5,8 @@
 #include "expr.h"
 #include <assert.h>
 #include <iterator>
-#include <ext/algorithm> 
+#include <algorithm> 
+//#include <ext/algorithm> 
 #include "cellarray.h"
 #include "implicitcrossnodemap.h"
 #include "crossnodemap.h"
@@ -208,7 +209,12 @@ void CellArray::buildIncidenceIndex(){
   set<Node> nodeset; 
   toNodeSet(nodeset);
   incidence.clear();
+  // jhrg 2/13/14
+#ifdef HAVE_UNORDERED_MAP
+  incidence.rehash(nodeset.size());
+#else
   incidence.resize(nodeset.size());
+#endif
   int i = 0;
   for (p=cells.begin(); p!=cells.end(); ++p) {
     for (unsigned int j=0; j<(*p).getsize(); j++) {

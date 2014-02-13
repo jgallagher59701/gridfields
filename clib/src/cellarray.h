@@ -1,12 +1,20 @@
 #ifndef _CELLARRAY_H
 #define _CELLARRAY_H 
 
+#include "config.h"
+
 #include <iostream>
 
 #include <vector>
 #include <set>
 #include <map>
+#ifdef HAVE_UNORDERED_MAP
+#include <unordered_map>
+#define HASH_MAP std::unordered_map
+#else
 #include <ext/hash_map>
+#define HASH_MAP hash_map
+#endif
 
 //TODO Switch to unordered_map? jhrg 4/16/12
 
@@ -15,14 +23,23 @@
 
 namespace GF {
 using namespace std;
+
+#ifndef HAVE_UNORDERED_MAP
+// The new unordered_map class, the replacement for hash_map, is in
+// std. jhrg 2/13/14
 using namespace __gnu_cxx;
+#endif
 
 class CellArray : public AbstractCellArray {
  public:
   typedef map<Cell, int, ltCell> SortedCellIndex;
-  typedef hash_map<Cell, int, SimpleCellHash> InvertedCellIndex;
+  typedef HASH_MAP<Cell, int, SimpleCellHash> InvertedCellIndex;
+  // typedef hash_map<Cell, int, SimpleCellHash> InvertedCellIndex;
+  // jhrg 2/13/14 
   //typedef map<Cell, int> InvertedCellIndex;
-  typedef hash_map<Node, set<CellId> > IncidenceIndex;
+  // typedef hash_map<Node, set<CellId> > IncidenceIndex;
+  // jhrg 2/13/14
+  typedef HASH_MAP<Node, set<CellId> > IncidenceIndex;
   
   CellArray() : cleanup_node_array(false), 
                 nodecount(0),

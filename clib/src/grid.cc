@@ -278,7 +278,7 @@ void Grid::nodeFilter(Grid *Out, bool *filter) {
   }
 
   zerocells = In->cellsets[0];
-  hash_map<int, int> nodemap(zerocells->getsize());
+  HASH_MAP<int, int> nodemap(zerocells->getsize());
   for (unsigned int n=0; n<zerocells->getsize(); n++) {
     Cell c(zerocells->getCellCopy(n));
     Node x = c.getnodes()[0];

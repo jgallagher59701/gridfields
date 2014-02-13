@@ -5,10 +5,19 @@
 #include "gridfield.h"
 #include "fparser.hh"
 
+#ifdef HAVE_UNORDERED_MAP
+#include <unordered_map>
+#define HASH_MAP std::unordered_map
+#else
 #include <ext/hash_map>
+#define HASH_MAP hash_map
+#endif
 
 namespace GF {
+
+#ifndef HAVE_UNORDERED_MAP
 using namespace __gnu_cxx;  // for hash_map jhrg 4/16/12
+#endif
 
 class TupleFunction {
   public:
@@ -37,8 +46,8 @@ class SpecializedTupleFunction : public TupleFunction {
     void Eval(Tuple &in, Tuple &out);
   private:
     int in_tup_size;
-    hash_map<int, pair<int, Type> > in_position_map;
-    hash_map<int, pair<int, FunctionParser *> > out_position_map;
+    HASH_MAP<int, pair<int, Type> > in_position_map;
+    HASH_MAP<int, pair<int, FunctionParser *> > out_position_map;
 };
 
 } // namespace GF

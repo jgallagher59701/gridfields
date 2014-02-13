@@ -9,6 +9,7 @@ ACLOCAL_AMFLAGS = -I conf
 AM_CPPFLAGS = 
 AM_CXXFLAGS = 
 if COMPILER_IS_GCC
+# jhrg 2/13/14
 AM_CXXFLAGS += -Wall -W -Wcast-align
 endif
 
