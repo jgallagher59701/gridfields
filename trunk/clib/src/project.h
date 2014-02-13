@@ -1,13 +1,18 @@
 #ifndef _PROJECT_H
 #define _PROJECT_H
 
+#include "config.h"
+
 #include <iostream>
 #include "tuple.h"
 #include "array.h"
 #include "gridfield.h"
 #include "fparser.hh"
 #include "gridfieldoperator.h"
-#include <ext/functional>
+#if HAVE_TR1_FUNCTIONAL
+#include <tr1/functional>
+#endif
+// old code jhrg #include <ext/functional>
 #include <string>
 
 namespace GF {

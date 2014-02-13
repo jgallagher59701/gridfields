@@ -5,7 +5,8 @@
 #include <assert.h>
 #include <iterator>
 #include <iostream>
-#include <ext/algorithm> 
+#include <algorithm>
+// jhrg 2/13/14 #include <ext/algorithm> 
 #include "crossnodemap.h"
 #include "normnodemap.h"
 

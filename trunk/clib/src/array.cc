@@ -515,7 +515,7 @@ int Array::getValInt(int i) {
     break;
   }
 
-  return NULL;  
+  return 0; // jhrg 2/13/14 NULL;  
 }
 
 
@@ -532,7 +532,7 @@ float Array::getValfloat(int i) {
     break;
   }
 
-  return NULL;  
+  return 0; // jhrg 2/13/14 NULL;  
 }
 
 UnTypedPtr Array::getVals() {

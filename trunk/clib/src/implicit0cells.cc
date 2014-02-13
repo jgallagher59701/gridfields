@@ -9,7 +9,8 @@
 #include "util.h"
 #include <assert.h>
 #include <iterator>
-#include <ext/algorithm> 
+#include <algorithm> 
+// jhrg 2/13/14 #include <ext/algorithm> 
 
 namespace GF {
 

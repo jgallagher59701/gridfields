@@ -30,7 +30,9 @@ class Grid : public Object {
   Grid(string nm, Dim_t d, OrdMap *om);
   void ref();
   void unref();
-  ~Grid();
+  // Added virtual to dtor since delete is called and Grid is abstract
+  // jhrg 2/13/14
+  virtual ~Grid();
 
   std::string getName() { return this->name; }
   void init(string nm, Dim_t d, OrdMap *om);

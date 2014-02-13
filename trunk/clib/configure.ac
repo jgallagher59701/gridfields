@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([gridfields], [1.0.1], [Bill Howe <billhowe@cs.washington.edu>])
+AC_INIT([gridfields], [1.0.2], [Bill Howe <billhowe@cs.washington.edu>])
 AC_CONFIG_SRCDIR([src/abstractcellarray.h])
 AM_CONFIG_HEADER([config.h])
 
@@ -89,6 +89,9 @@ AC_CHECK_HEADERS([fcntl.h float.h stdlib.h string.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
+AC_HEADER_TR1_FUNCTIONAL
+AC_HEADER_UNORDERED_MAP
+
 AC_C_INLINE
 AC_TYPE_OFF_T
 AC_C_RESTRICT

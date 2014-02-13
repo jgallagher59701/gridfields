@@ -1,10 +1,15 @@
 #ifndef _ACCUMULATE_H
 #define _ACCUMULATE_H
 
+#include "config.h"
+
 #include "gridfieldoperator.h"
 #include <string>
 #include <vector>
-#include <ext/functional>
+#if HAVE_TR1_FUNCTIONAL
+#include <tr1/functional>
+#endif
+// old code jhrg #include <ext/functional>
 #include "cell.h"
 
 namespace GF {

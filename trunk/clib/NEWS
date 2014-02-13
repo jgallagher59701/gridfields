@@ -1,3 +1,15 @@
+Version 1.0.2
+
+Updated a handful of files so that a C++-11 compiler won't gag. This
+mostly means adding a compiler check for tr1/functional or functional.
+There is still a problem with etc/hash_map versus the new
+unordered_map. I added a test for unordered_map and use it if
+available. It appears that unordered_map::rehash() is the same as
+hash_map::resize(). the Grid class is abstract but did not declare its
+destructor 'virtual'. All but one test pass and that test fails
+without these changes (testaggregate) with an odd message from the
+linking loader.
+
 Version 1.0.1
 
 Fixed configure.ac so it's possible to suppress building/linking with
