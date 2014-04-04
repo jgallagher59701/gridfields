@@ -8,14 +8,21 @@
 namespace GF {
 
 
-char typeformat(Type t) {char nty='f';
+char typeformat(Type t) {
+	char nty='f';
+	// Added break statements. Added a default: case. jhrg 4/4/1/4
   switch (t) {
     case FLOAT:
       nty= 'f';
+      break;
     case INT:
       nty= 'i';
+      break;
     case OBJ:
       nty= 'p';
+      break;
+    default:
+    	break;
   }
 return nty;
 };

@@ -44,7 +44,7 @@ else
 fi
 
 AC_ARG_ENABLE([netcdf], [AS_HELP_STRING([--enable/disable-netcdf],
-					[use netcdf (default is yes)])])
+					[use netcdf (default is yes)])], [], [])
 # $enable_netcdf will be 'no' if --disable-netcdf is used, 'yes' if
 # --enable-netcdf is used and '' if neither is used
 
@@ -95,7 +95,9 @@ AC_CHECK_HEADERS([fcntl.h float.h stdlib.h string.h sys/time.h unistd.h])
 AC_HEADER_STDBOOL
 # <functional> is not needed...
 # AC_HEADER_TR1_FUNCTIONAL
-AC_HEADER_UNORDERED_MAP
+# AC_HEADER_UNORDERED_MAP
+AC_CHECK_HEADER(tr1/unordered_map,[AC_DEFINE([HAVE_TR1_UNORDERED_MAP],[],["Have tr1"])],[])
+AC_CHECK_HEADER(unordered_map,[AC_DEFINE([HAVE_UNORDERED_MAP],[],["Have C++0x"])],[])
 
 AC_C_INLINE
 AC_TYPE_OFF_T

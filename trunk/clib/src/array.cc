@@ -75,7 +75,7 @@ void Array::fill(DatumIterator<int> &d) {
    // cout << i << ", " << ints[i-1] << endl;
   }
 }
-                                                                       
+
 void Array::fill(DatumIterator<float> &d) {
   assert(type==FLOAT);
   d.Open();
@@ -88,7 +88,7 @@ void Array::fill(DatumIterator<float> &d) {
 
 
 Array::Array(Array *a, string nm) {
-  // If 'a' is a tuple-valued array, this method copies 
+  // If 'a' is a tuple-valued array, this method copies
   // the given attribute out of the tuples and creates a new array
   Type t=TUPLE;
   if (a->type == OBJ) {
@@ -190,8 +190,8 @@ void Array::copyIntData(int *data, int s) {
   Array *arr = this;
   arr->clear();
   arr->setType(INT);
-  arr->_size = s;  
-  if (data == NULL) return; 
+  arr->_size = s;
+  if (data == NULL) return;
   arr->ints = new int[s];
   arr->share = false;
   memcpy(arr->ints, data, sizeof(int)*s);
@@ -203,8 +203,8 @@ void Array::shareIntData(int *data, int s) {
   arr->share = true;
   arr->clear();
   arr->setType(INT);
-  arr->_size = s;  
-  if (data == NULL) return; 
+  arr->_size = s;
+  if (data == NULL) return;
   arr->ints = data;
   arr->full = 1;
 }
@@ -215,7 +215,7 @@ void Array::copyFloatData(float *data, int s) {
   arr->clear();
   arr->setType(FLOAT);
   arr->_size = s;
-  if (data == NULL) return; 
+  if (data == NULL) return;
   arr->floats = new float[s];
   memcpy(arr->floats, data, sizeof(float)*s);
   arr->share = false;
@@ -247,13 +247,13 @@ void Array::copyObjData(UnTypedPtr *data, int s) {
     arr->ints[0] = -1;
     for (int i=0; i<s; i++) {
       arr->ints[i] = *(int *)data[i];
-    }    
+    }
   } else if (type == OBJ) {
     arr->objs = new UnTypedPtr[s];
     for (int i=0; i<s; i++) {
       arr->objs[i] = data[i];
-    }    
-  } 
+    }
+  }
   arr->_size = s;
   arr->share = false;
   if (data==NULL) return;
@@ -281,7 +281,7 @@ Array *Array::copy() {
   UnTypedPtr newvals = (UnTypedPtr) new UnTypedVal[_size];
 
   newarr = new Array(arr->name, arr->type);
-  memcpy(newvals, vals, arr->_size*sizeof(UnTypedPtr));    
+  memcpy(newvals, vals, arr->_size*sizeof(UnTypedPtr));
   newarr->setVals(newvals, _size);
 
   return newarr;
@@ -347,7 +347,7 @@ Array *Array::copyAndFilter(bool *filter) {
 	if (filter[i]) {
 	  newvals[j++] = vals[i];
 	}
-      }    
+      }
       newarr->setVals(newvals, new_size);
       break;
     }
@@ -358,7 +358,7 @@ Array *Array::copyAndFilter(bool *filter) {
 	if (filter[i]) {
 	  newvals[j++] = vals[i];
 	}
-      }   
+      }
       newarr->setVals(newvals, new_size);
       break;
     }
@@ -369,16 +369,16 @@ Array *Array::copyAndFilter(bool *filter) {
 	if (filter[i]) {
 	  newvals[j++] = vals[i];
 	}
-      }   
+      }
       newarr->setVals(newvals, new_size);
       break;
     }
     default:
       Warning("unknown Type.");
     }
-    
+
   }
-  
+
   assert(newarr->share == false);
   return newarr;
 };
@@ -414,7 +414,7 @@ void Array::cast(Type t) {
     return;
   }
   Array *arr = this;
-  
+
   switch (arr->type) {
   case INT:
     if (t==INT) return;
@@ -425,7 +425,7 @@ void Array::cast(Type t) {
     arr->type = t;
     if (arr->share) {
       ints = NULL;
-    } else { 
+    } else {
       delete [] ints;
     }
     break;
@@ -438,7 +438,7 @@ void Array::cast(Type t) {
     arr->type = t;
     if (arr->share) {
       floats = NULL;
-    } else { 
+    } else {
       delete [] floats;
     }
     break;
@@ -474,11 +474,11 @@ void Array::setType(Type type) {
   Array *arr = this;
   if (arr->type != type)
     Warning("Changing array type from %i to %i",arr->type, type);
-  
+
   arr->type = type;
 }
 
- 
+
 UnTypedPtr Array::getValPtr(int i) {
 //  assert(i<_size);
   Array *arr;
@@ -493,13 +493,13 @@ UnTypedPtr Array::getValPtr(int i) {
     break;
   case OBJ:
     return (UnTypedPtr) &arr->objs[i];
-    break; 
+    break;
   default:
     Warning("Unknown type: %i", arr->type);
     break;
   }
 
-  return NULL;  
+  return NULL;
 }
 
 int Array::getValInt(int i) {
@@ -515,7 +515,7 @@ int Array::getValInt(int i) {
     break;
   }
 
-  return 0; // jhrg 2/13/14 NULL;  
+  return 0; // jhrg 2/13/14 NULL;
 }
 
 
@@ -532,7 +532,7 @@ float Array::getValfloat(int i) {
     break;
   }
 
-  return 0; // jhrg 2/13/14 NULL;  
+  return 0; // jhrg 2/13/14 NULL;
 }
 
 UnTypedPtr Array::getVals() {
@@ -565,13 +565,13 @@ Array *Array::expand(int n) {
   char *oldvals = (char *) getVals();
   for (int j=0; j<_size; j++) {
     for (int i=0; i<n; i++) {
-      for (int k=0; k<tsize; k++) { 
+      for (int k=0; k<tsize; k++) {
         char c = oldvals[j*tsize + k];
         newvals[i*tsize + j*n*tsize + k] = c;
       }
     }
   }
-  out->setVals((UnTypedPtr *) newvals, n*_size);
+  out->setVals((UnTypedPtr) newvals, n*_size);
   out->share = false;
   return out;
 }
@@ -587,7 +587,7 @@ Array *Array::repeat(int n) {
       newvals[i*arraysize + j] = oldvals[j];
     }
   }
-  out->setVals((UnTypedPtr *) newvals, n*_size);
+  out->setVals((UnTypedPtr) newvals, n*_size);
   out->share = false;
   return out;
 }
@@ -610,7 +610,7 @@ vector<int> Array::makeArray(){
     break;
   default:
     cout << "unknown type";
-    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11 
+    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11
   }
  // cout<<array.at(_size-1)<<endl;
   return array;
@@ -634,7 +634,7 @@ vector<double> Array::makeArrayf(){
     break;
   default:
     cout << "unknown type";
-    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11 
+    i = _size;			// 'i' can be used uninitialized jhrg 10/5/11
   }
  // cout<<array.at(_size-1)<<endl;
   return array;
@@ -650,7 +650,7 @@ void Array::print() {
   cout << "_size: " << arr->_size << "\n";
   cout << "type: " << arr->type << "\n";
   cout << "data: " << "\n";
-  
+
   switch (arr->type) {
   case INT:
     for (i=0; i<MIN(_size,100); i++) {

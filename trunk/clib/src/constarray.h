@@ -40,33 +40,33 @@ class ConstArray : public Array {
 
   void setVals(UnTypedPtr vals, int s);
   UnTypedPtr getVals();
-  
+
   UnTypedPtr getValPtr(int i);
   inline void next(UnTypedPtr *) { };
 
   long getConst();
   void setConst(UnTypedPtr newconst);
-  
+
   ConstArray *expand(int n);
   ConstArray *repeat(int n);
 
   ConstArray *resize(int newsize);
-  
+
   void cast(Type t);
 
-  void print() { 
+  void print() {
     cout << "name: " << this->getName() << endl;
     cout << "ConstArray: " << this->_size << ", " << type << ", " << this->float_constant << ":" << this->int_constant << ":" << this->obj_constant << endl;
   };
 
   void clear();
 
-  void SetConst(float val) { 
-    float_constant = val; 
+  void SetConst(float val) {
+    float_constant = val;
     type = FLOAT;
   };
-  void SetConst(int val) { 
-    int_constant = val; 
+  void SetConst(int val) {
+    int_constant = val;
     type = INT;
   };
 
@@ -74,7 +74,7 @@ class ConstArray : public Array {
   float float_constant;
   int int_constant;
   UnTypedPtr obj_constant;
-  Scheme *_sch;
+  // Unused. jhrg 4/4/14 Scheme *_sch;
 };
 
 } // namespace GF

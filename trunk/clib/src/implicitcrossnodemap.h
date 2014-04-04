@@ -9,11 +9,15 @@ namespace GF {
 
 class ImplicitCrossNodeMap : public CrossNodeMap {
 
- public: 
-  ImplicitCrossNodeMap(Implicit0Cells *An, Implicit0Cells *Bn) 
-          : CrossNodeMap(An, Bn), Anodes(An), Bnodes(Bn) { };
-  
-  inline virtual Node map(Node a, Node b) { 
+ public:
+  ImplicitCrossNodeMap(Implicit0Cells *An, Implicit0Cells *Bn)
+          : CrossNodeMap(An, Bn), /* Unused. jhrg 4/4/14 Anodes(An),*/ Bnodes(Bn) { };
+
+  // Added because of complaints from gcc about missing virtual dtor
+  // in a class with virtual methods. jhrg 4/4/14
+  virtual ~ImplicitCrossNodeMap() {}
+
+  inline virtual Node map(Node a, Node b) {
     //return Anodes->getOrd(a) * Bnodes->getsize() + Bnodes->getOrd(b) ;
     return a * Bnodes->getsize() + b ;
   };
@@ -22,22 +26,22 @@ class ImplicitCrossNodeMap : public CrossNodeMap {
     return ((*cells == *Anodes) || (*cells == *Bnodes))
   }
 */
-  Node inv_b(Node o, Node ) { 
+  Node inv_b(Node o, Node ) {
     Cell *c;
     int i = o % Bnodes->getsize();
     c = Bnodes->getCell(i);
     return c->getnodes()[0];
   };
-  
-  Node inv_a(Node o, Node ) { 
+
+  Node inv_a(Node o, Node ) {
     Cell *c;
     int i = o / Bnodes->getsize();
     c = Bnodes->getCell(i);
     return c->getnodes()[0];
   };
-  
+
  private:
-  Implicit0Cells *Anodes;
+  // Anodes Unused. jhrg 4/4/14 Implicit0Cells *Anodes;
   Implicit0Cells *Bnodes;
 };
 
