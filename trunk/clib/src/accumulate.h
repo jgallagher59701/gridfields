@@ -1,14 +1,15 @@
 #ifndef _ACCUMULATE_H
 #define _ACCUMULATE_H
 
-#include "config.h"
-
 #include "gridfieldoperator.h"
 #include <string>
 #include <vector>
-#if HAVE_TR1_FUNCTIONAL
-#include <tr1/functional>
-#endif
+// #include <functional>
+// Replaced tr1 functional. Removed include of config.h in a header.
+// jhrg 4/3/14
+// #ifdef HAVE_TR1_FUNCTIONAL
+// #include <tr1/functional>
+// #endif
 // old code jhrg #include <ext/functional>
 #include "cell.h"
 

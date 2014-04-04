@@ -52,7 +52,7 @@ class SliceIterator : public DatumIterator<T> {
       T d = base.Next();
       
       // advance to just before first element
-      idx next = MIN(_start+i*_step, _stop);
+      // Unused. jhrg 4/4/14 idx next = MIN(_start+i*_step, _stop);
       for (int j=_step-1; j>0; j--) base.Next();
       i++; 
       return d;

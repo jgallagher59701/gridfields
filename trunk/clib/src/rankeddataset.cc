@@ -1,5 +1,5 @@
 
-#include "config.h"
+#include "config_gridfields.h"
 
 #include "rankeddataset.h"
 #include "dataset.h"
@@ -62,7 +62,9 @@ void RankedDataset::GetDataset(Dim_t d, const string &attrs, Dataset &ds) {
   FOR(vector<string>, w, words) {
     Array *arr = this->GetAttribute(d, *w);
     ds.AddAttribute(arr);
-    
+
+    // TODO Look at this and make sure it doesn't result in an invalid
+    // iterator. jhrg 4/3/14
     this->RemoveAttribute(d, *w);
   }
 }

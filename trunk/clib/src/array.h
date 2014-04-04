@@ -86,7 +86,7 @@ class Array : public Object {
   int full;
   int *ints;
   float *floats;
-  short *bytes;
+  // unused. jhrg 4/4/14 short *bytes;
   void **objs;
 
   void setType(Type type);

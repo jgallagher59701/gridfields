@@ -1,15 +1,16 @@
 #ifndef _AGGREGATE_H
 #define _AGGREGATE_H
 
-#include "config.h"
+// #include "config.h"
 
 #include <iostream>
+//#include <functional>
 #include "tuple.h"
 #include "gridfield.h"
 #include "gridfieldoperator.h"
-#if HAVE_TR1_FUNCTIONAL
-#include <tr1/functional>
-#endif
+// #ifdef HAVE_TR1_FUNCTIONAL
+// #include <tr1/functional>
+// #endif
 // old code jhrg #include <ext/functional>
 #include <string>
 

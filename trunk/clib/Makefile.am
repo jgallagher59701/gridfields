@@ -10,14 +10,16 @@ AM_CPPFLAGS =
 AM_CXXFLAGS = 
 if COMPILER_IS_GCC
 # jhrg 2/13/14
-AM_CXXFLAGS += -Wall -W -Wcast-align
+# I got tired of the sign compare warnings, but they should be
+# addressed. jhrg 4/3/14
+AM_CXXFLAGS += -Wall -Wcast-align -Wno-deprecated -Wno-sign-compare
 endif
 
 # These are not used by automake but are often useful for certain types of
 # debugging. The best way to use these is to run configure as:
 #     export CXXFLAGS='...'; ./configure --disable-shared
 # the --disable-shared is not required, but it seems to help with debuggers.
-CXXFLAGS_DEBUG = -g3 -O0 -fno-defer-pop -Wall -W -Wcast-align -Werror
+CXXFLAGS_DEBUG = -g3 -O0 -fno-defer-pop -Wall -Wcast-align
 TEST_COV_FLAGS = -ftest-coverage -fprofile-arcs
 
 SUBDIRS = . tests 
@@ -38,9 +40,9 @@ libgridfields_la_CPPFLAGS = $(AM_CPPFLAGS)
 libgridfields_la_LIBADD = 
 
 # really?
-pkginclude_HEADERS = src/$(HDRS)
+pkginclude_HEADERS = $(HDRS)
 
-noinst_HEADERS = config.h
+# noinst_HEADERS = config.h
 
 # EXTRA_DIST = 
 
@@ -74,15 +76,15 @@ if NETCDF_FOUND
 SRCS += src/tonetcdf.cc src/netcdfadaptor.cc 
 endif
 
-HDRS = CmdLine.h src/RTree.h src/abstractcellarray.h src/access.h	\
-src/accumulate.h src/aggregate.h src/aggregations.h src/apply.h		\
-src/array.h src/arrayreader.h src/arraywriter.h src/assignments.h	\
-src/binarynodemap.h src/bind.h src/bindconstant.h src/cell.h		\
-src/cellarray.h config.h src/constarray.h src/counted_ptr.h		\
-src/cross.h src/crossnodemap.h src/crossordmap.h src/datadump.h		\
-src/dataset.h src/elcircfile.h src/elio.h src/expr.h src/fparser.hh	\
-src/fptypes.hh src/fpconfig.hh src/grid.h src/gridfield.h		\
-src/gridfieldoperator.h src/idnodemap.h src/idordmap.h			\
+HDRS = config_gridfields.h src/CmdLine.h src/RTree.h			\
+src/abstractcellarray.h src/access.h src/accumulate.h src/aggregate.h	\
+src/aggregations.h src/apply.h src/array.h src/arrayreader.h		\
+src/arraywriter.h src/assignments.h src/binarynodemap.h src/bind.h	\
+src/bindconstant.h src/cell.h src/cellarray.h src/constarray.h		\
+src/counted_ptr.h src/cross.h src/crossnodemap.h src/crossordmap.h	\
+src/datadump.h src/dataset.h src/elcircfile.h src/elio.h src/expr.h	\
+src/fparser.hh src/fptypes.hh src/fpconfig.hh src/grid.h		\
+src/gridfield.h src/gridfieldoperator.h src/idnodemap.h src/idordmap.h	\
 src/implicit0cells.h src/implicitcrossnodemap.h src/leftnodemap.h	\
 src/merge.h src/nodemap.h src/normnodemap.h src/object.h src/onegrid.h	\
 src/ordmap.h src/output.h src/outputtuples.h src/partition.h		\

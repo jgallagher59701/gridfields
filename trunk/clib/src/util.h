@@ -33,6 +33,8 @@ struct nullstream: std::ostream {
     }
 };
 
+// FIXME Use DBG(x) --> cerr << x or --> nothing instead.
+// jhrg 4/3/14
 #define DEBUG nullstream()
 //#define DEBUG cout
 

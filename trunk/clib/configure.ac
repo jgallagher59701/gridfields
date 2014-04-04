@@ -2,9 +2,13 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.68])
-AC_INIT([gridfields], [1.0.2], [Bill Howe <billhowe@cs.washington.edu>])
+AC_INIT([gridfields], [1.0.3], [Bill Howe <billhowe@cs.washington.edu>])
 AC_CONFIG_SRCDIR([src/abstractcellarray.h])
-AM_CONFIG_HEADER([config.h])
+# This has to be named specially since it's included in headers that
+# are installed. The config header defines compile-time switches that 
+# select between older (deprecated) versions of hash map and C++'s new
+# unordered_map. jhrg 4/4/14
+AM_CONFIG_HEADER([config_gridfields.h])
 
 # This provides a place to keep all the autotools stuff (m4 files, etc.)
 AC_CONFIG_AUX_DIR(conf)
@@ -32,7 +36,7 @@ AC_PROG_MAKE_SET
 AC_PROG_LIBTOOL
 
 dnl echo "CC = $CC"
-if test "$CC" = "g++"
+if test "$CC" = "g++" -o "$CC" == "gcc"
 then
     AM_CONDITIONAL([COMPILER_IS_GCC],[true])
 else
@@ -89,7 +93,8 @@ AC_CHECK_HEADERS([fcntl.h float.h stdlib.h string.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
-AC_HEADER_TR1_FUNCTIONAL
+# <functional> is not needed...
+# AC_HEADER_TR1_FUNCTIONAL
 AC_HEADER_UNORDERED_MAP
 
 AC_C_INLINE
