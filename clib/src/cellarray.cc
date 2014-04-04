@@ -1,13 +1,15 @@
 
-#include "config.h"
+#include "config_gridfields.h"
 
-#include "timing.h"
-#include "expr.h"
 #include <assert.h>
+
+#include <set>
 #include <iterator>
 #include <algorithm> 
-//#include <ext/algorithm> 
+
 #include "cellarray.h"
+#include "timing.h"
+#include "expr.h"
 #include "implicitcrossnodemap.h"
 #include "crossnodemap.h"
 #include "normnodemap.h"
@@ -124,7 +126,7 @@ vector< vector<int> > CellArray::makeArrayInts(){
   CellArray *arr;
   
   arr = this;
-  int i;
+  // unused jhrg 4/3/14 int i;
   vector <int> a;
   //vector<int>* array=new vector<int>;
   vector< vector<int> > array;
@@ -175,26 +177,33 @@ void CellArray::getAdjacentCells(CellId cid, vector<CellId> &out) {
     out.insert(out.end(), cellset.begin(), cellset.end());
   //}
 }
+
 void CellArray::getIncidentCells(const Cell &c, set<CellId> &out) {
   if (incidence.empty()) buildIncidenceIndex();
-/*
-  c.print();
-  cout 
-  << c.getnodes()[0]
-  << ": "
-  << incidence[c.getnodes()[0]].size()
-  << "->"
-  << *(incidence[c.getnodes()[0]].begin())
-  << ":"
-  << *(incidence[c.getnodes()[0]].end())
-  << endl;
-*/
+
   for (unsigned int i=0; i<c.getsize(); i++) {
     out.insert(incidence[c.getnodes()[i]].begin(), incidence[c.getnodes()[i]].end());
   }
+
+  // Cannot use the FOR macro here beause erase invalidates the 
+  // iterator (and then the loop increments it). jhrg 4/3/14
+#if 0
   FOR (set<CellId>, x, out) { 
     if (!c.IncidentTo(*this->getCell(*x))) {
       out.erase(*x);
+    }
+  }
+#endif
+
+  // This trick is from Meyers, Effective STL, p.45.
+  // erase() invalidates the the iterator but the post increment 
+  // operator works on the initial value. jhrg 4/3/14
+  for (set<CellId>::iterator i = out.begin(), e = out.end(); i != e; /* incr i in body */) {
+    if (!c.IncidentTo(*this->getCell(*i))) {
+      out.erase(i++);
+    }
+    else {
+      ++i;
     }
   }
 }

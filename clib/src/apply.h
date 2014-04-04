@@ -1,14 +1,15 @@
 #ifndef _APPLY_H
 #define _APPLY_H
 
-#include "config.h"
+//#include "config.h"
 
 #include <iostream>
+// #include <functional>
 #include "gridfield.h"
 #include "gridfieldoperator.h"
-#if HAVE_TR1_FUNCTIONAL
-#include <tr1/functional>
-#endif
+//#ifdef HAVE_TR1_FUNCTIONAL
+//#include <tr1/functional>
+//#endif
 // old code jhrg #include <ext/functional>
 #include <string>
 

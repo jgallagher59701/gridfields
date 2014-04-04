@@ -23,6 +23,7 @@ class ArrayReader {
     ArrayReader(istream *is, long offset) : s(is), offset(offset) {};
     ArrayReader * makeArrayReader(int *array, int size);
     ArrayReader * makeArrayReader(double *array, int size);
+
     virtual void ReadTuples(istream &f, int *positions, 
                           int size, Scheme *sch, UnTypedPtr *_data);
     virtual void ReadPrimitives(istream &f, int *positions, 
@@ -81,9 +82,9 @@ class ProjectArrayReader : public FileArrayReader {
     Scheme GetScheme() { return sch; };
     void   SetScheme(Scheme s) { sch = s; };
 
-    void ReadPrimitives(istream &f, int *positions, 
+    virtual void ReadPrimitives(istream &f, int *positions, 
                           int size, Type t, char *data);
-    void ReadTuples(istream &f, int *positions, 
+    virtual void ReadTuples(istream &f, int *positions, 
                           int size, Scheme *sch, UnTypedPtr *_data);
   
   private:
@@ -95,9 +96,12 @@ class ProjectArrayReader : public FileArrayReader {
 class TextFileArrayReader : public FileArrayReader {
 
  private:
-  void ReadTuples(ifstream &f, int *positions, 
+    // Added 'virtual' to these two function declarations because they
+    // hide virtual methods of the same name in the parent class. jhrg
+    // 4/4/14 
+  virtual void ReadTuples(ifstream &f, int *positions, 
                   int size, Scheme *sch, UnTypedPtr *_data);
-  void ReadPrimitives(ifstream &f, int *positions, 
+  virtual void ReadPrimitives(ifstream &f, int *positions, 
                       int size, Type t, char *data);
   
  public:

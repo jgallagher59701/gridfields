@@ -1,5 +1,5 @@
 
-#include "config.h"
+#include "config_gridfields.h"
 
 #include <iostream>
 #include <fstream>

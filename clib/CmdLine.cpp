@@ -81,7 +81,7 @@ int CCmdLine::SplitLine(int argc, char **argv)
          cmd.m_strings.push_back(arg);
 
          // add the CCmdParam to 'this'
-         pair<CCmdLine::iterator, bool> res = insert(CCmdLine::value_type(curParam, cmd));
+         // Unused. jhrg 4/4/14 pair<CCmdLine::iterator, bool> res = insert(CCmdLine::value_type(curParam, cmd));
 
       }
       else

@@ -1,7 +1,7 @@
 #ifndef _CELLARRAY_H
 #define _CELLARRAY_H 
 
-#include "config.h"
+#include "config_gridfields.h"
 
 #include <iostream>
 

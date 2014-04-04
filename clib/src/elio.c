@@ -192,7 +192,7 @@ ginfo: ginfo.o
  ** 
  **/
 
-#include "config.h"
+#include "config_gridfields.h"
 
 #include <stdio.h>
 #include <stdlib.h>
