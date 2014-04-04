@@ -42,12 +42,12 @@ void Scheme::rebuildPositions() {
 Scheme::Scheme(string scheme_string) {
   vector<string> attrs;
   vector<string> a;
-  
+
   split(scheme_string, ";, ", attrs);
 
   vector<string>::iterator p;
 
-  for (p=attrs.begin(); p!=attrs.end(); p++) { 
+  for (p=attrs.begin(); p!=attrs.end(); p++) {
     split(*p, ":", a);
     if (a.size() == 1) {
 //      cout << "SCHEME: " << a[0] << endl;
@@ -111,7 +111,7 @@ size_t Scheme::byteposition(const string &attr) {
   if (ord == -1) {
     Fatal("Scheme::byteposition : Attribute '%s' not found.", attr.c_str() );
   }
-  
+
   int bytes = 0;
   for (int i=0; i<ord; i++) {
     bytes += typesize(this->getType(i));
@@ -145,7 +145,7 @@ int Scheme::getPosition(const string &attr) const {
   i = pos.find(attr);
   if (i == pos.end()) {
     stringstream ss;
-    Scheme *s = (Scheme *) this; 
+    Scheme *s = (Scheme *) this;
     s->PrintTo(ss,0);
     Fatal("Attribute '%s' not found in scheme:\n %s", attr.c_str(), ss.str().c_str());
     return -1;
@@ -161,7 +161,7 @@ string Scheme::formatOf(int position) {
 }
 
 bool Scheme::isAttribute(const string &nm) const {
-  if (pos.find(nm) != pos.end()) 
+  if (pos.find(nm) != pos.end())
     return true;
   return false;
 }
@@ -174,7 +174,7 @@ string Scheme::getAttribute(int position) const {
 void Scheme::print() { print(0); }
 void Scheme::print(int ) { PrintTo(cout,0); }
 
-void Scheme::PrintTo(ostream &os, int indent) { 
+void Scheme::PrintTo(ostream &os, int indent) {
   int i;
   vector<pair<string, Type> >::iterator pos;
   for (i=0; i<indent; i++) os << " ";
@@ -199,7 +199,7 @@ Tuple::Tuple(Scheme *sch) {
 void Tuple::Next() {
   vector<UnTypedPtr>::iterator it;
   Scheme::FieldIterator fi;
-  fi=this->scheme->begin();  
+  fi=this->scheme->begin();
   for (it=tupledata.begin(); it!=tupledata.end(); it++) {
     plusplus(&(*it), fi->second);
     fi++;
@@ -239,8 +239,8 @@ UnTypedPtr Tuple::operator[](size_t i) {
   if (i > tupledata.size()) {
     this->print();
     Fatal("Tuple: Index out of range %i", i);
-  }    
-  return tupledata[i];  
+  }
+  return tupledata[i];
 }
 
 int Tuple::bytesize() {
@@ -252,13 +252,13 @@ int Tuple::bytesize() {
   return bytes;
 }
 
-void Tuple::Read(ifstream &f) {
+void Tuple::Read(istream &f) {
   // arbitrary limit...
   char textline[256];
   f.getline(textline, 256);
   this->Parse(textline);
 }
- 
+
 void Tuple::Parse(char *text) {
 
   stringstream ss(text);
@@ -278,6 +278,7 @@ void Tuple::Parse(char *text) {
       default:
          this->print();
          Fatal("Tuple::Parse: only ints an floats right now...");
+         break;
     }
   }
 }
@@ -310,7 +311,7 @@ void Tuple::copy(Tuple &t) {
 
 string Tuple::asString(const string &delim) {
   stringstream os;
-  if (scheme->size() != 0) { 
+  if (scheme->size() != 0) {
     printattr(os, 0);
     for (size_t i=1; i<scheme->size(); i++) {
       os << delim;
@@ -338,17 +339,17 @@ void Tuple::PrintTo(ostream &os, int indent) {
   os << tab(indent) << scheme->size() << ", " << tupledata.size() << ": ";
   assert(scheme->size() == tupledata.size());
   if (scheme->size() == 0) { os << "(empty tuple)"; }
-  
+
   os << "<" << scheme->getAttribute(0) << "=";
   os << tupledata[0] << "->";
-  printattr(os, 0);    
+  printattr(os, 0);
   for (size_t i=1; i<scheme->size(); i++) {
     os << ", " << scheme->getAttribute(i) << "=";
     os << tupledata[i] << "->";
     printattr(os, i);
   }
   os << ">" << endl;
-  
+
 }
 
 void Tuple::printattr(ostream &os, int i) {

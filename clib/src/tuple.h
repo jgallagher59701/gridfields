@@ -24,7 +24,7 @@ class Scheme {
   bool Subsumes(const Scheme &sch) const;
   FieldIterator begin() { return sort.begin(); }
   FieldIterator end() { return sort.end(); }
-  
+
   size_t size() const;
   size_t bytesize() ;
   size_t byteposition(const string &attr);
@@ -34,7 +34,7 @@ class Scheme {
   int getPosition(const string &attr) const;
   string getAttribute(int position) const ;
   bool isAttribute(const string &nm) const ;
-  
+
   bool operator==(const Scheme &s);
   bool operator>=(const Scheme &s);
   bool operator<=(const Scheme &s);
@@ -62,7 +62,7 @@ typedef vector<UnTypedPtr> TupleData;
 
   UnTypedPtr get(int pos) { return tupledata[pos]; };
   void set(int pos, UnTypedPtr val) { tupledata[pos] = val; };
-  
+
   UnTypedPtr get(string attr);
   void set(string attr, UnTypedPtr val);
 
@@ -76,21 +76,21 @@ typedef vector<UnTypedPtr> TupleData;
 
   int bytesize();
   void Next();
-  char *Allocate() { 
-    char *data = new char[this->bytesize()]; 
-    this->assign(data); 
-    return data; 
+  char *Allocate() {
+    char *data = new char[this->bytesize()];
+    this->assign(data);
+    return data;
   };
   void assign(char *rawbytes);
   void copy(Tuple &t);
   bool isNull();
-  void Read(ifstream &f);
+  void Read(/* ifstream: changed to istream to mesh with changes in arrayreader. jhrg 4/4/14 */ istream &f);
   void Parse(char *text);
   bool Covers(Scheme &sch);
   bool CoveredBy(Scheme &sch);
-  
+
   UnTypedPtr operator[](size_t i);
-  
+
   friend class Dataset;
   friend class TupleFunction;
   friend class SpecializedTupleFunction;

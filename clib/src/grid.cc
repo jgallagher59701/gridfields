@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <assert.h>
+
 #include "grid.h"
 #include "unarynodemap.h"
 #include "crossnodemap.h"
@@ -12,7 +13,6 @@
 #include "cellarray.h"
 #include "implicit0cells.h"
 #include "util.h"
-
 
 #include <string>
 
@@ -35,7 +35,7 @@ int g_instances=0;
 
 void Grid::init(string nm, Dim_t d, OrdMap *om) {
 // cout << g_instances++ << endl;
-   
+
   //dim = d;
   name = nm;
 
@@ -85,18 +85,18 @@ void Grid::setKCells(AbstractCellArray *cells, Dim_t d) {
   if (d >= s) {
     cellsets.resize(d+1);
     for (int i=s; i<d; i++) {
-      cellsets[i] = new CellArray(); 
+      cellsets[i] = new CellArray();
     }
   } else {
     cellsets[d]->unref();
   }
   //cout << cellsets.size() << endl;
-  cellsets[d] = cells; 
+  cellsets[d] = cells;
 }
 
 Grid *Grid::Intersection(Grid *Other){
   string outname = "(" + name + "-i-" + Other->name + ")";
-  
+
   Grid *Out = new Grid(outname);
   AbstractCellArray *caOut, *ca1, *ca2;
   Dim_t d = MIN(Other->getdim(), getdim());
@@ -131,9 +131,9 @@ Grid *Grid::Cross(Grid *Other) {
   ca2 = Other->getKCells(0);
 
   Dim_t SIFTDIM = d;
-  
+
   //cout << "crossing 0-cells" << endl;
-  newnodes = ca1->Cross(ca2, h); 
+  newnodes = ca1->Cross(ca2, h);
   //    cout << gettime() - tpost << " ( Cross(0-cells) ) " << endl;
 
   //tpost = gettime();
@@ -151,27 +151,27 @@ Grid *Grid::Cross(Grid *Other) {
   //ca1 = this->getKCells(getdim());
   //ca2 = Other->getKCells(Other->getdim());
   //cout << "crossing d-cells" << endl;
-  //c = ca1->Cross( ca2, h ); 
+  //c = ca1->Cross( ca2, h );
   //cout << this->name << ": " << this->getdim() << ", " << Other->name << ", " << Other->getdim() << endl;
   //if (Other->getdim() == 0) {
     //Other->print();
   //}
-    
+
     //    cout << gettime() - tpost << " ( Cross(d-cells) ) " << endl;
-    
+
   tpost = gettime();
-  //kcellsout->Append( c );     
+  //kcellsout->Append( c );
     //    cout << gettime() - tpost << " ( Append(d-cells) ) " << endl;
-  
+
   //tpost = gettime();
     //kcellsout->buildInvertedIndex();
 //   cout << gettime() - tpost << " ( BuildIndex(d-cells) ) " << endl;
-  
+
 
    //Out->setKCells( kcellsout, d );
    //Out->setKCells( c, d );
- 
-   
+
+
   AbstractCellArray *foo;
   CellArray *caOut;
   for ( int k=1; k<=d; k++ ) {
@@ -189,24 +189,24 @@ Grid *Grid::Cross(Grid *Other) {
       //      ca2->print(11);
 //      cout << "Cross..." << flush;
       tpost = gettime();
-      foo = ca1->Cross( ca2, h ); 
-      
+      foo = ca1->Cross( ca2, h );
+
       //cout << (gettime() - tpost) << "\n";
       //cout << "Append..." << flush;
       tpost = gettime();
       caOut->Append( foo );
       foo->unref();
-      //cout << (gettime() - tpost) << "\n"; 
-    }  
-    
+      //cout << (gettime() - tpost) << "\n";
+    }
+
 //    cout << "buildInvertedIndex...." << flush;
 
 //    tpost = gettime();
 //    caOut->buildInvertedIndex();
-//    cout << (gettime() - tpost) << "\n"; 
+//    cout << (gettime() - tpost) << "\n";
     Out->setKCells( caOut, k );
   }
-   
+
   return Out;
 }
 
@@ -216,7 +216,7 @@ void Grid::setImplicit0Cells(int count) {
   Grid *G = this;
   /*
   CellArray *cells = new CellArray();
-  
+
   for (int i=0; i<count; i++)
     cells->addCellNodes(&i, 1);
   */
@@ -225,7 +225,7 @@ void Grid::setImplicit0Cells(int count) {
 
 void Grid::shareCells(Grid *Out, Dim_t d) {
   Grid *In = this;
-  
+
   In->cellsets[d]->ref();
   Out->setKCells(In->cellsets[d], d);
 }
@@ -237,7 +237,7 @@ void Grid::copyCells(Grid *Out, bool *filter, Dim_t i) {
   AbstractCellArray *kcells;
   CellArray *newkcells = new CellArray();
   unsigned int j=0;
-  
+
   kcells = In->cellsets[i];
   for (j=0; j<kcells->getsize(); j++) {
     if (filter[j]) {
@@ -262,7 +262,7 @@ void Grid::IncidentTo(CellId cid, Dim_t i, vector<CellId> &out, Dim_t j) {
 
 void Grid::nodeFilter(Grid *Out, bool *filter) {
   Grid *In = this;
-  
+
   AbstractCellArray *kcells;
   AbstractCellArray *zerocells;
   CellArray *newkcells;
@@ -284,11 +284,11 @@ void Grid::nodeFilter(Grid *Out, bool *filter) {
     Node x = c.getnodes()[0];
     nodemap[x] = n;
   }
- 
+
   for (k=0; k<=d; k++) {
     newkcells = (CellArray *) Out->getKCells(k);
     kcells = In->cellsets[k];
-    
+
     for (j=0; j<kcells->getsize(); j++) {
       Cell c(kcells->getCellCopy(j));
       nodes = c.getnodes();
@@ -299,7 +299,7 @@ void Grid::nodeFilter(Grid *Out, bool *filter) {
 	  break;
 	}
       }
- 
+
       if (copy) { newkcells->addCell(&c); }
       copy = true;
     } //cells
@@ -310,9 +310,9 @@ int Grid::cellCount(int d) {
   return cellsets[d]->getsize();
 }
 /*
-unsigned int Grid::Size(Dim_t k) { 
+unsigned int Grid::Size(Dim_t k) {
   //cout << "Size: " << k << ", " << cellsets.size() << endl;
-  assert(k<cellsets.size()); 
+  assert(k<cellsets.size());
   return cellsets[k]->getsize();
 };
 */
@@ -340,7 +340,7 @@ void Grid::setReferent(OrdMap *om) {
 
 bool Grid::checkWellFormed() {
   Grid *G = this;
-  int i, d,s; 
+  int i, d,s;
   set<Node> A;
   set<Node> B;
   set<Node>::iterator iter;
@@ -392,7 +392,7 @@ void Grid::print(int indent) {
 
 void Grid::ref() {
   int old = refcount;
-  Object::ref(); 
+  Object::ref();
   DEBUG << "grid " << this << ", " << this->name << ", ref: " << old << " -> " << this->refcount << endl;
 }
 
@@ -414,9 +414,9 @@ Grid::~Grid() {
   int i;
   for (i=0; i<(signed)cellsets.size(); i++) {
     AbstractCellArray *ca = this->cellsets[i];
-    DEBUG << " unreffing cellarray " << i << flush; 
+    DEBUG << " unreffing cellarray " << i << flush;
     ca->unref();
-    DEBUG << "...done" << endl; 
+    DEBUG << "...done" << endl;
   }
 
 
