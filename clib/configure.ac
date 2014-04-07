@@ -93,11 +93,37 @@ AC_CHECK_HEADERS([fcntl.h float.h stdlib.h string.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
+
+AC_LANG_PUSH([C++])
+dnl # Do the checks for C++ headers
+
 # <functional> is not needed...
 # AC_HEADER_TR1_FUNCTIONAL
-# AC_HEADER_UNORDERED_MAP
-AC_CHECK_HEADER(tr1/unordered_map,[AC_DEFINE([HAVE_TR1_UNORDERED_MAP],[],["Have tr1"])],[])
-AC_CHECK_HEADER(unordered_map,[AC_DEFINE([HAVE_UNORDERED_MAP],[],["Have C++0x"])],[])
+
+AC_CHECK_HEADER(tr1/unordered_map, [AC_DEFINE([HAVE_TR1_UNORDERED_MAP],[],["Have tr1"])
+                                    have_tr1_unordered_map="yes"], [], [])
+                                    
+AC_CHECK_HEADER(unordered_map, [AC_DEFINE([HAVE_UNORDERED_MAP],[],["Have C++0x"])
+                                have_unordered_map="yes"], [], [])
+
+AC_LANG_POP([C++])
+
+# These AC_DEFINE calls set values used by a 'glue' header. See 
+# gridfields_hash_map.h.in
+if test "x$have_unordered_map" == "xyes"
+then
+    AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<unordered_map>"])
+    AC_SUBST([GF_HASH_MAP], ["std::unordered_map"])
+elif test "x$have_tr1_unordered_map" == "xyes"
+then
+    AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<tr1/unordered_map>"])
+    AC_SUBST([GF_HASH_MAP], ["std::unordered_map"])
+else
+    AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<ext/hash_map>"])
+    AC_SUBST([GF_HASH_MAP], ["hash_map"])
+    AC_SUBST([GF_HASH_MAP_NAMESPACE], ["namespace GF { using namespace __gnu_cxx; }"])
+    AC_SUBST([GF_USE_REHASH], ["#define USE_HASH_MAP_RESIZE"])
+fi
 
 AC_C_INLINE
 AC_TYPE_OFF_T
@@ -112,5 +138,5 @@ AC_FUNC_MMAP
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([floor gettimeofday pow putenv sqrt strtol])
 
-AC_CONFIG_FILES([Makefile tests/Makefile])
+AC_CONFIG_FILES([Makefile tests/Makefile src/gridfields_hash_map.h])
 AC_OUTPUT

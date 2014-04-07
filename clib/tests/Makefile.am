@@ -10,7 +10,7 @@ AM_CXXFLAGS = -I$(top_srcdir)
 
 # These are not used by automake but are often useful for certain types of
 # debugging. 
-CXXFLAGS_DEBUG = -g3 -O0 -fno-defer-pop -Wall -W -Wcast-align -Werror
+CXXFLAGS_DEBUG = -g3 -O0 -Wall -Wcast-align
 TEST_COV_FLAGS = -ftest-coverage -fprofile-arcs
 
 # This determines what gets built by make check
