@@ -1,5 +1,5 @@
 #ifndef _CELL_H
-#define _CELL_H 
+#define _CELL_H
 
 //#define __USE_MALLOC
 #include "type.h"
@@ -15,7 +15,10 @@ class CrossNodeMap;
 
 typedef unsigned long CellId;
 typedef std::vector<CellId> CellVector;
-// Changed 'short' to 'unsigned short'. jhrg 10/5/11
+// Change 'short' to 'unsigned short'? jhrg 10/5/11
+// NO. There must be places where the signed-ness of Dim_t variables
+// is used. Changing Dim_t to an unsigned short breaks a test and
+// makes some dimensions that are '3' normally become '65536'. 4/7/14 jhrg
 typedef short Dim_t;
 
 class Cell {
@@ -50,21 +53,21 @@ class Cell {
     return false;
   }
 
-  /* Return True if the nodes of the rhs Cell are 
-   * a subset of this cell's nodes.  This property is 
-   * a proxy for true incidence in this node-oriented 
+  /* Return True if the nodes of the rhs Cell are
+   * a subset of this cell's nodes.  This property is
+   * a proxy for true incidence in this node-oriented
    * representation.  See dissertation.
    */
   bool IncidentTo(const Cell &rhs) const;
 
   void setsize(int sz) { size = sz; }
   void setnodes(Node *p);
-  
+
   unsigned int getsize() const {return size; };
   Node *getnodes() const { return nodes; };
   Node getnode(unsigned int i) const { return nodes[i]; };
- 
-  //void Guess2DEdges(CellArray *onecells); 
+
+  //void Guess2DEdges(CellArray *onecells);
  private:
   Node *nodes;
   bool deletenodes;
@@ -76,12 +79,12 @@ struct eqCell {
       if (c1.getsize() != c2.getsize()) return false;
       for (unsigned int i=0; i<c1.getsize(); i++)
 	if (c1.getnodes()[i] != c2.getnodes()[i]) return false;
-      
+
       return true;
     }
 };
 
-struct ltCell { 
+struct ltCell {
     bool operator()(const Cell &c1, const Cell &c2) const {
       return (c1 < c2);
     }
@@ -107,4 +110,4 @@ class CellHash {
 
 } // namespace GF
 
-#endif 
+#endif

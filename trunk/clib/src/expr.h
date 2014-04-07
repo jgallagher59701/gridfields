@@ -5,6 +5,9 @@
 #include "gridfield.h"
 #include "fparser.hh"
 
+#include "gridfields_hash_map.h"
+
+#if 0
 #ifdef HAVE_UNORDERED_MAP
 #include <unordered_map>
 #define HASH_MAP std::unordered_map
@@ -12,11 +15,14 @@
 #include <ext/hash_map>
 #define HASH_MAP hash_map
 #endif
+#endif
 
 namespace GF {
 
+#if 0
 #ifndef HAVE_UNORDERED_MAP
 using namespace __gnu_cxx;  // for hash_map jhrg 4/16/12
+#endif
 #endif
 
 class TupleFunction {
@@ -53,5 +59,5 @@ class SpecializedTupleFunction : public TupleFunction {
 } // namespace GF
 
 #endif /* _EXPR_H */
-    
+
 

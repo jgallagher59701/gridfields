@@ -1,0 +1,23 @@
+
+#ifndef _gridfields_hash_map_h
+#define _gridfields_hash_map_h
+
+// This header is built by configure. We need to be able to use either
+// ext/hash_map, tr1/unordered_map or unordered_map to define the
+// type of the map used by cellarray.h/.cc but we do not want to use
+// #defines in config.h since we would have to include that header in
+// cellarray.h which means that when other code uses this library symbol
+// name conflicts will occur (since autoconf uses the same symbol names
+// the 'client' code's #define VERSION ... will result in a noisy 
+// compiler warning.
+
+#include @GF_UNORDERED_MAP_HEADER@  // typical value: <unordered_map>
+#define HASH_MAP @GF_HASH_MAP@      // typically: std::unordered_map
+
+// if we are still working with the GNU 'hash_map'? If so, make sure
+// to set the namespace
+@GF_HASH_MAP_NAMESPACE@             // namespace GF { using namespace __gnu_cxx } or null
+
+@GF_USE_REHASH@                     // '#define USE_REHASH' or not
+
+#endif // _gridfields_hash_map_h

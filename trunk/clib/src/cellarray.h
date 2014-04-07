@@ -1,7 +1,7 @@
 #ifndef _CELLARRAY_H
 #define _CELLARRAY_H
 
-#include "config_gridfields.h"
+//#include "config_gridfields.h"
 
 #include <iostream>
 
@@ -9,29 +9,13 @@
 #include <set>
 #include <map>
 
-#ifdef HAVE_UNORDERED_MAP
-#include <unordered_map>
-#define HASH_MAP std::unordered_map
-#elif defined(HAVE_TR1_UNORDERED_MAP)
-#include <tr1/unordered_map>
-#define HASH_MAP std::unordered_map
-#else
-#include <ext/hash_map>
-#define HASH_MAP hash_map
-
-#endif
+#include "gridfields_hash_map.h"
 
 #include "cell.h"
 #include "abstractcellarray.h"
 
 namespace GF {
 using namespace std;
-
-#if !defined(HAVE_UNORDERED_MAP) && !defined(HAVE_TR1_UNORDERED_MAP)
-// The new unordered_map class, the replacement for hash_map, is in
-// std. jhrg 2/13/14
-using namespace __gnu_cxx;
-#endif
 
 class CellArray : public AbstractCellArray {
  public:

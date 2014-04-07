@@ -12,14 +12,17 @@ if COMPILER_IS_GCC
 # jhrg 2/13/14
 # I got tired of the sign compare warnings, but they should be
 # addressed. jhrg 4/3/14
-AM_CXXFLAGS += -Wall -Wno-cast-align -Wno-deprecated -Wno-sign-compare
+AM_CXXFLAGS += -Wall 
+# -Wno-cast-align 
+# -Wno-deprecated 
+# -Wno-sign-compare
 endif
 
 # These are not used by automake but are often useful for certain types of
 # debugging. The best way to use these is to run configure as:
 #     export CXXFLAGS='...'; ./configure --disable-shared
 # the --disable-shared is not required, but it seems to help with debuggers.
-CXXFLAGS_DEBUG = -g3 -O0 -fno-defer-pop -Wall -Wcast-align
+CXXFLAGS_DEBUG = -g3 -O0 -Wall -Wcast-align
 TEST_COV_FLAGS = -ftest-coverage -fprofile-arcs
 
 SUBDIRS = . tests 
@@ -32,7 +35,7 @@ lib_LTLIBRARIES = libgridfields.la
 
 # bin_PROGRAMS =
 
-# BUILT_SOURCES = 
+BUILT_SOURCES = src/gridfields_hash_map.h
 
 libgridfields_la_SOURCES = $(SRCS)
 libgridfields_la_LDFLAGS = -version-info $(LIBGF_VERSION)
@@ -90,7 +93,8 @@ src/merge.h src/nodemap.h src/normnodemap.h src/object.h src/onegrid.h	\
 src/ordmap.h src/output.h src/outputtuples.h src/partition.h		\
 src/project.h src/rankeddataset.h src/refrestrict.h src/restrict.h	\
 src/scan.h src/scaninternal.h src/sift.h src/subgridordmap.h		\
-src/timing.h src/tuple.h src/type.h src/unarynodemap.h src/util.h
+src/timing.h src/tuple.h src/type.h src/unarynodemap.h src/util.h   \
+src/gridfields_hash_map.h
 
 if NETCDF_FOUND
 HDRS += src/tonetcdf.h src/netcdfadaptor.h

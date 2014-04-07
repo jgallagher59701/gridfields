@@ -39,8 +39,8 @@ class Grid : public Object {
 
   Dim_t getdim();
   unsigned int Size(Dim_t k) {
-// cerr << "Grid::Size: k = " << k << endl;
-    assert((unsigned)k<cellsets.size()); 
+	  // cerr << "Grid::Size: k = " << k << ", cellsets.size() = " << cellsets.size() << endl;
+    assert((unsigned)k<cellsets.size());
     return cellsets[k]->getsize();
   };
   void setKCells(AbstractCellArray *cells, Dim_t k);
@@ -78,7 +78,7 @@ class Grid : public Object {
   void normalize();
   void mapNodes(UnaryNodeMap &h);
   void setReferent(OrdMap *om);
-  
+
   Grid *Intersection(Grid *Other);
   Grid *Cross(Grid *Other);
 
@@ -105,7 +105,7 @@ class UnitGrid : public Grid {
     this->setKCells(nodes, 0);
     this->ref();
   };
-  
+
 };
 /*
 class ProductGrid : public Grid {
@@ -117,7 +117,7 @@ class ProductGrid : public Grid {
   ~Grid();
 
   std::string getName() { return this->name; }
- 
+
   Dim_t getdim() { return ;
   unsigned int Size(Dim_t k) {
     assert(k<cellsets.size());
@@ -127,9 +127,9 @@ class ProductGrid : public Grid {
   AbstractCellArray *getKCells(Dim_t k);
   void setImplicit0Cells(int count);
   unsigned int countKCells(Dim_t k);
- 
+
   bool Grid::empty();
- 
+
   // Out grid references In's k-cells
   void shareCells(Grid *Out, Dim_t k);
   // Copy In's k-cells to Out, subject to the bitmap filter
@@ -138,30 +138,30 @@ class ProductGrid : public Grid {
   void nodeFilter(Grid *Out, bool *filter);
   bool checkWellFormed();
   int cellCount(int d);
- 
+
   void IncidentTo(CellId cid, Dim_t i, vector<CellId> &out, Dim_t j) {
     AbstractCellArray *ci = this->getKCells(i);
     AbstractCellArray *cj = this->getKCells(j);
     Cell *c = ci->getCell(cid);
- 
+
     set<CellId> incis;
     cj->getIncidentCells(*c, incis);
- 
+
     COPY(vector<CellId>, incis, out, ii)
   }
- 
+
   void normalize();
   void mapNodes(UnaryNodeMap &h);
   void setReferent(OrdMap *om);
-   
+
   Grid *Intersection(Grid *Other);
   Grid *Cross(Grid *Other);
- 
+
   void print(int indent);
   void print();
   friend class GridField;
   OrdMap *ordmap;
- 
+
 }
 */
 

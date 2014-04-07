@@ -1,5 +1,16 @@
 Version 1.0.3
 
+Fixed the warnings (many many) that were issued when code used this
+library. Because the library had headers that included the library's
+private 'config.h' header - and many other programs/libraries also
+have a similarly named header with the same symbols defined
+(differently), including that in an installed header often results in
+warnings. I fixed this by adding a special 'glue' header the defined
+just what was needed by the installed header and thus avoided
+including the config.h header in it.
+
+I fixed a number of other 'warning' problems.
+
 Fixed a bug in cellarray.cc where an iterator was used after it was 
 invalidated (by calling erase()).
 
