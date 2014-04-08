@@ -219,10 +219,10 @@ void CellArray::buildIncidenceIndex(){
   toNodeSet(nodeset);
   incidence.clear();
   // jhrg 2/13/14
-#ifdef HAVE_UNORDERED_MAP
-  incidence.rehash(nodeset.size());
-#else
+#ifdef USE_HASH_MAP_RESIZE
   incidence.resize(nodeset.size());
+#else
+  incidence.rehash(nodeset.size());
 #endif
   int i = 0;
   for (p=cells.begin(); p!=cells.end(); ++p) {

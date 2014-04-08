@@ -100,12 +100,14 @@ dnl # Do the checks for C++ headers
 # <functional> is not needed...
 # AC_HEADER_TR1_FUNCTIONAL
 
-AC_CHECK_HEADER(tr1/unordered_map, [AC_DEFINE([HAVE_TR1_UNORDERED_MAP],[],["Have tr1"])
-                                    have_tr1_unordered_map="yes"], [], [])
-                                    
 AC_CHECK_HEADER(unordered_map, [AC_DEFINE([HAVE_UNORDERED_MAP],[],["Have C++0x"])
-                                have_unordered_map="yes"], [], [])
+                                have_unordered_map="yes"
+				AC_MSG_WARN([Found plain unordered map])], [], [])
 
+AC_CHECK_HEADER(tr1/unordered_map, [AC_DEFINE([HAVE_TR1_UNORDERED_MAP],[],["Have tr1"])
+                                    have_tr1_unordered_map="yes"
+				    AC_MSG_WARN([Found tr1/unordered map])], [], [])
+                                    
 AC_LANG_POP([C++])
 
 # These AC_DEFINE calls set values used by a 'glue' header. See 
@@ -117,7 +119,7 @@ then
 elif test "x$have_tr1_unordered_map" == "xyes"
 then
     AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<tr1/unordered_map>"])
-    AC_SUBST([GF_HASH_MAP], ["std::unordered_map"])
+    AC_SUBST([GF_HASH_MAP], ["std::tr1::unordered_map"])
 else
     AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<ext/hash_map>"])
     AC_SUBST([GF_HASH_MAP], ["hash_map"])

@@ -42,7 +42,7 @@ class RankedDataset : public Object {
 
    void Clear() { ranks.clear(); }
 
-   void CoerceScheme(Dim_t k, Scheme *sch, size_t sz=0) { assert(k<ranks.size()); return ranks[k].CoerceScheme(*sch, sz);};
+   void CoerceScheme(Dim_t k, Scheme *sch, size_t sz=0) { assert((unsigned)k<ranks.size()); return ranks[k].CoerceScheme(*sch, sz);};
   
    void AddAttribute(Dim_t k, Array *data) { 
      if (k>=(Dim_t)ranks.size()) {
