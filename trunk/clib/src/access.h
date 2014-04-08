@@ -21,6 +21,7 @@ class DatumIterator {
   virtual Datum_t Next()=0;
   virtual bool Done()=0;
   //virtual ~DatumIterator()=0;
+  virtual ~DatumIterator() { } // jhrg 4/8/14
 };
 
 template<class T>
@@ -99,10 +100,12 @@ class ProjectIterator : public DatumIterator<Byte *> {
 class MMapIterator : public DatumIterator<Byte> {
   public:
     MMapIterator(const std::string &fname, int off, int len) 
-        : i(off), end(len), filename(fname) {};
+        : i(off), end(len), filename(fname) {}
         
     MMapIterator(const std::string &fname, int off=0) 
         : i(off), end(-1), filename(fname) {}
+
+    ~MMapIterator() { }
 
     void Open() { 
 
@@ -140,7 +143,7 @@ class MMapIterator : public DatumIterator<Byte> {
     idx end;
     const std::string filename;
     int fd;
-    Byte *data;
+    Byte *data; // Assuming this is a weak pointer and should not be freed. jhrg 4/8/14
 };
 /*
 template<class T>

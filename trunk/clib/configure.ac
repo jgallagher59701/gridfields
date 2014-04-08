@@ -100,14 +100,22 @@ dnl # Do the checks for C++ headers
 # <functional> is not needed...
 # AC_HEADER_TR1_FUNCTIONAL
 
-AC_CHECK_HEADER(unordered_map, [AC_DEFINE([HAVE_UNORDERED_MAP],[],["Have C++0x"])
-                                have_unordered_map="yes"
-				AC_MSG_WARN([Found plain unordered map])], [], [])
-
+# Look for the old versions, then the new ones and use them in roughly
+# that order. It seems that older compiers include the tr1 or standard
+# headers but they don't always work. It might be that explicitly using 
+# C++ 2011 is needed to get the  standard headers.
+AC_CHECK_HEADER(ext/hash_map, [AC_DEFINE([HAVE_EXT_HASH_MAP],[],["Have ext"])
+                                    have_ext_hash_map="yes"
+				    AC_MSG_WARN([Found ext/hash map])], [], [])
+                                    
 AC_CHECK_HEADER(tr1/unordered_map, [AC_DEFINE([HAVE_TR1_UNORDERED_MAP],[],["Have tr1"])
                                     have_tr1_unordered_map="yes"
 				    AC_MSG_WARN([Found tr1/unordered map])], [], [])
                                     
+AC_CHECK_HEADER(unordered_map, [AC_DEFINE([HAVE_UNORDERED_MAP],[],["Have C++0x"])
+                                have_unordered_map="yes"
+				AC_MSG_WARN([Found plain unordered map])], [], [])
+
 AC_LANG_POP([C++])
 
 # These AC_DEFINE calls set values used by a 'glue' header. See 
@@ -116,15 +124,18 @@ if test "x$have_unordered_map" == "xyes"
 then
     AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<unordered_map>"])
     AC_SUBST([GF_HASH_MAP], ["std::unordered_map"])
+elif test "x$have_ext_hash_map" == "xyes"
+then
+    AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<ext/hash_map>"])
+    AC_SUBST([GF_HASH_MAP], ["hash_map"])
+    AC_SUBST([GF_HASH_MAP_NAMESPACE], ["namespace GF { using namespace __gnu_cxx; }"])
+    AC_SUBST([GF_USE_REHASH], ["#define USE_HASH_MAP_RESIZE"])
 elif test "x$have_tr1_unordered_map" == "xyes"
 then
     AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<tr1/unordered_map>"])
     AC_SUBST([GF_HASH_MAP], ["std::tr1::unordered_map"])
 else
-    AC_SUBST([GF_UNORDERED_MAP_HEADER], ["<ext/hash_map>"])
-    AC_SUBST([GF_HASH_MAP], ["hash_map"])
-    AC_SUBST([GF_HASH_MAP_NAMESPACE], ["namespace GF { using namespace __gnu_cxx; }"])
-    AC_SUBST([GF_USE_REHASH], ["#define USE_HASH_MAP_RESIZE"])
+    AC_MSG_ERROR([Could not find a suitable 'unordered map' c++ class.])
 fi
 
 AC_C_INLINE
