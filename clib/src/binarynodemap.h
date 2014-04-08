@@ -10,7 +10,10 @@ class BinaryNodeMap {
  public:
 
   virtual Node map(Node, Node)=0;
+
   //virtual ~BinaryNodeMap()=0; 
+  // This class should have a destructor. jhrg 4//8/14
+  virtual ~BinaryNodeMap() { }
  private:
 };
 

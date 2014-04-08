@@ -10,6 +10,8 @@ class UnaryNodeMap : public NodeMap {
  public:
   virtual Node map(Node)=0;
   //virtual ~UnaryNodeMap()=0;
+  // This class should have a destructor. jhrg 4/8/14
+  virtual ~UnaryNodeMap() { }
  private:
 };
 
