@@ -268,7 +268,7 @@ void Grid::nodeFilter(Grid *Out, bool *filter) {
   CellArray *newkcells;
   Node *nodes;
 
-  unsigned int i,j,k;
+  // Moved below. jhrg 4/8/14  unsigned int i,j,k;
   Dim_t d = In->getdim();
   bool copy = true;
 
@@ -285,14 +285,14 @@ void Grid::nodeFilter(Grid *Out, bool *filter) {
     nodemap[x] = n;
   }
 
-  for (k=0; k<=d; k++) {
+  for (int k=0; k<=d; k++) {
     newkcells = (CellArray *) Out->getKCells(k);
     kcells = In->cellsets[k];
 
-    for (j=0; j<kcells->getsize(); j++) {
+    for (unsigned int j=0; j<kcells->getsize(); j++) {
       Cell c(kcells->getCellCopy(j));
       nodes = c.getnodes();
-      i=0;
+      unsigned int i=0;
       while (i<c.getsize() && copy) {
 	if (!filter[nodemap[nodes[i++]]]) {
 	  copy = false;

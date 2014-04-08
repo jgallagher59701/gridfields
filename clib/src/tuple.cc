@@ -4,7 +4,10 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <assert.h>
+
+#include <cassert>
+#include <cstdlib>
+
 #include "tuple.h"
 #include "expr.h"
 #include "util.h"

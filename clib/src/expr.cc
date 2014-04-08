@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <algorithm>
+
 #include "expr.h"
 #include "gridfield.h"
 #include "tuple.h"
