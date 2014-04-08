@@ -5,7 +5,7 @@ AUTOMAKE_OPTIONS = foreign
 
 # I think that if there are things in scratch that we need they should
 # move back out to the src directory (or here)
-AM_CPPFLAGS = 
+AM_CPPFLAGS = -Wno-deprecated
 AM_CXXFLAGS = -I$(top_srcdir)
 
 # These are not used by automake but are often useful for certain types of

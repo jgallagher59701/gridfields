@@ -12,7 +12,7 @@ if COMPILER_IS_GCC
 # jhrg 2/13/14
 # I got tired of the sign compare warnings, but they should be
 # addressed. jhrg 4/3/14
-AM_CXXFLAGS += -Wall 
+AM_CXXFLAGS += -Wall -Wno-deprecated 
 # -Wno-cast-align 
 # -Wno-deprecated 
 # -Wno-sign-compare
