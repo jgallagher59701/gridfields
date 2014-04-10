@@ -1257,7 +1257,11 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
 		fprintf(stderr, "GetElioHeader(): Unable to open file %s\n", fname);
 		return 1;
 	}
-	if (fread(h->magic, sizeof(char), 48, fp) != 48) return ELIO_FREAD_ERR;
+	if (fread(h->magic, sizeof(char), 48, fp) != 48) {
+		fclose(fp);
+		return ELIO_FREAD_ERR;
+	}
+
 	h->magic[48] = 0;
 	/* DataFormat v3.0 */
 	if (strncmp(h->magic, "DataFormat v5.0", 15) == 0) {
@@ -1278,62 +1282,64 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
 	}
 	else {
 		fprintf(stderr, "GetElioHeader(): Unknown version identifier %s\n", h->magic);
+		fclose(fp);		// 4/10/14 jhrg
 		return (3);
 	}
-	if (fread(h->version, sizeof(char), 48, fp) != 48) return ELIO_FREAD_ERR;
+
+	if (fread(h->version, sizeof(char), 48, fp) != 48) goto elio_fread_error;
 	h->version[48] = 0;
-	if (fread(h->start_time, sizeof(char), 48, fp) != 48) return ELIO_FREAD_ERR;
+	if (fread(h->start_time, sizeof(char), 48, fp) != 48) goto elio_fread_error;
 	h->start_time[48] = 0;
-	if (fread(h->variable_nm, sizeof(char), 48, fp) != 48) return ELIO_FREAD_ERR;
+	if (fread(h->variable_nm, sizeof(char), 48, fp) != 48) goto elio_fread_error;
 	h->variable_nm[48] = 0;
-	if (fread(h->variable_dim, sizeof(char), 48, fp) != 48) return ELIO_FREAD_ERR;
+	if (fread(h->variable_dim, sizeof(char), 48, fp) != 48) goto elio_fread_error;
 	h->variable_dim[48] = 0;
-	if (fread(&h->nsteps, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
-	if (fread(&h->timestep, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-	if (fread(&h->skip, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
-	if (fread(&h->ivs, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
-	if (fread(&h->i23d, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+	if (fread(&h->nsteps, sizeof(int), 1, fp) != 1) goto elio_fread_error;
+	if (fread(&h->timestep, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+	if (fread(&h->skip, sizeof(int), 1, fp) != 1) goto elio_fread_error;
+	if (fread(&h->ivs, sizeof(int), 1, fp) != 1) goto elio_fread_error;
+	if (fread(&h->i23d, sizeof(int), 1, fp) != 1) goto elio_fread_error;
 
 	if (h->v == 2 || h->v == 3) {
-		if (fread(&h->vpos, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->zmsl, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->nvrt, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+		if (fread(&h->vpos, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->zmsl, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->nvrt, sizeof(int), 1, fp) != 1) goto elio_fread_error;
 	}
 	else if (h->v == 4) {
-		if (fread(&h->ivcor, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->h0, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->hc, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->thetab, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->thetaf, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->nvrt, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+		if (fread(&h->ivcor, sizeof(int), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->h0, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->hc, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->thetab, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->thetaf, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->nvrt, sizeof(int), 1, fp) != 1) goto elio_fread_error;
 	}
 	else if (h->v == 5) {
-		if (fread(&h->nvrt, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->kz, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+		if (fread(&h->nvrt, sizeof(int), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->kz, sizeof(int), 1, fp) != 1) goto elio_fread_error;
 		h->ks = h->nvrt - h->kz;
-		if (fread(&h->h0, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->hs, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->hc, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->thetab, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(&h->thetaf, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
+		if (fread(&h->h0, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->hs, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->hc, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->thetab, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(&h->thetaf, sizeof(float), 1, fp) != 1) goto elio_fread_error;
 	}
 	h->zcor = (float *) malloc(h->nvrt * sizeof(float));
-	if (fread(h->zcor, sizeof(float), h->nvrt, fp) != h->nvrt) return ELIO_FREAD_ERR;
+	if (fread(h->zcor, sizeof(float), h->nvrt, fp) != h->nvrt) goto elio_fread_error;
 
-	if (fread(&h->np, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
-	if (fread(&h->ne, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+	if (fread(&h->np, sizeof(int), 1, fp) != 1) goto elio_fread_error;
+	if (fread(&h->ne, sizeof(int), 1, fp) != 1) goto elio_fread_error;
 	h->x = (float *) malloc(h->np * sizeof(float));
 	h->y = (float *) malloc(h->np * sizeof(float));
 	h->d = (float *) malloc(h->np * sizeof(float));
 	h->bi = (int *) malloc(h->np * sizeof(int));
 	h->no = (int *) malloc(h->np * sizeof(int)); /* offset into data for each node */
 	for (i = 0; i < h->np; i++) {
-		if (fread(h->x + i, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(h->y + i, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
-		if (fread(h->d + i, sizeof(float), 1, fp) != 1) return ELIO_FREAD_ERR;
+		if (fread(h->x + i, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(h->y + i, sizeof(float), 1, fp) != 1) goto elio_fread_error;
+		if (fread(h->d + i, sizeof(float), 1, fp) != 1) goto elio_fread_error;
 
 		if (h->v != 4) {
-			if (fread(h->bi + i, sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+			if (fread(h->bi + i, sizeof(int), 1, fp) != 1) goto elio_fread_error;
 		}
 		else {
 			h->bi[i] = 1;
@@ -1345,7 +1351,7 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
 	h->etype = (int *) malloc(h->ne * sizeof(int));
 	if (h->v == 2) { /* format version 2 */
 		itmp = (int *) malloc(h->ne * 3 * sizeof(int));
-		if (fread(itmp, sizeof(int), h->ne * 3, fp) != h->ne * 3) return ELIO_FREAD_ERR;
+		if (fread(itmp, sizeof(int), h->ne * 3, fp) != h->ne * 3) goto elio_fread_error;
 		for (i = 0; i < h->ne; i++) {
 			h->etype[i] = 3;
 			h->icon[0][i] = itmp[i * 3] - 1;
@@ -1357,18 +1363,18 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
 	else if (h->v == 3) { /* format version 3 support for quads */
 		h->icon[3] = (int *) malloc(h->ne * sizeof(int));
 		for (i = 0; i < h->ne; i++) {
-			if (fread(&h->etype[i], sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+			if (fread(&h->etype[i], sizeof(int), 1, fp) != 1) goto elio_fread_error;
 			for (j = 0; j < h->etype[i]; j++) {
-				if (fread(&h->icon[j][i], sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+				if (fread(&h->icon[j][i], sizeof(int), 1, fp) != 1) goto elio_fread_error;
 				h->icon[j][i]--;
 			}
 		}
 	}
 	else if (h->v == 4 || h->v == 5) { /* format version 4 no support for quads */
 		for (i = 0; i < h->ne; i++) {
-			if (fread(&h->etype[i], sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+			if (fread(&h->etype[i], sizeof(int), 1, fp) != 1) goto elio_fread_error;
 			for (j = 0; j < h->etype[i]; j++) {
-				if (fread(&h->icon[j][i], sizeof(int), 1, fp) != 1) return ELIO_FREAD_ERR;
+				if (fread(&h->icon[j][i], sizeof(int), 1, fp) != 1) goto elio_fread_error;
 				h->icon[j][i]--;
 			}
 		}
@@ -1385,7 +1391,7 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
 				}
 				h->no[i] = h->nitems;
 				h->nitems += (h->nvrt - h->bi[i]) * h->ivs;
-//printf("%d: %d %d %d %d %d\n", i, h->nvrt, h->ivs, h->bi[i], h->no[i], h->nitems);
+				//printf("%d: %d %d %d %d %d\n", i, h->nvrt, h->ivs, h->bi[i], h->no[i], h->nitems);
 			}
 		}
 		else {
@@ -1423,10 +1429,18 @@ int ElioGetHeader(char *fname, ElcircHeader * h)
 	else if (h->v == 2) {
 		h->ssize = 8 + h->np * 4 + h->nitems * 4;
 	}
+
 	if (fclose(fp)) {
 		return ELIO_FCLOSE_ERR;
 	}
 	return ELIO_OK;
+
+	// Use goto to handle the many potential errors and
+	// avoid leaking resources. 4/10/14 jhrg
+	elio_fread_error:
+
+	fclose(fp);
+	return ELIO_FREAD_ERR;
 }
 
 /*!
@@ -1510,6 +1524,7 @@ int ElioGetNStepsInFile(char *fname, ElcircHeader * h)
 		return ELIO_OK;
 	}
 	if (fseeko(fp, 0L, SEEK_END)) {
+		fclose(fp); 		// 4/10/14 jhrg
 		return ELIO_FSEEK_ERR;
 	}
 	fsize = ftello(fp);
@@ -2510,7 +2525,11 @@ int ElioReadGrid(char *gname, ElioGrid * g)
 	}
 	for (i = 0; i < g->ne; i++) {
 		creturn = fgets(buf, 255, fp);
+		// NB %*d --> The '*' is the assignment suppression character. jhrg 4/10/14
+		// Playing around with the fortify rules - these two lines do the same thing
+		// but fortify seems to not see that... Staying with the original code. jhrg
 		sscanf(buf, "%*d %d %d %d %d %d", &g->etype[i], &g->icon[0][i], &g->icon[1][i], &g->icon[2][i], &g->icon[3][i]);
+		// sscanf(buf, "%*d %d %d %d %d %d", g->etype + i, g->icon[0] + i, g->icon[1] + i, g->icon[2] + i, g->icon[3] + i);
 		g->icon[0][i]--;
 		g->icon[1][i]--;
 		g->icon[2][i]--;
@@ -2521,6 +2540,9 @@ int ElioReadGrid(char *gname, ElioGrid * g)
 			g->icon[3][i]--;
 		}
 	}
+
+	fclose(fp); 	// Added 4/10/14 jhrg
+
 	return ELIO_OK;
 }
 
@@ -3052,8 +3074,14 @@ int ElioGetFileVersion(char *fname)
 		fprintf(stderr, "ElioGetFileVersion(): Unable to open file %s\n", fname);
 		return -1;
 	}
-	if (fread(magic, sizeof(char), 48, fp) != 48) return ELIO_FREAD_ERR;
+	if (fread(magic, sizeof(char), 48, fp) != 48) {
+		fclose(fp);		// 4/10/14 jhrg
+		return ELIO_FREAD_ERR;
+	}
 	magic[48] = 0;
+	fclose(fp);			// Moved from the end of the function - where it was unreachable
+						// 4/10/14 jhrg
+
 	/* DataFormat v3.0 */
 	if (strncmp(magic, "DataFormat v4.0", 15) == 0) {
 		return 4;
@@ -3070,7 +3098,6 @@ int ElioGetFileVersion(char *fname)
 	else {
 		return -1;
 	}
-	fclose(fp);
 }
 
 /*!

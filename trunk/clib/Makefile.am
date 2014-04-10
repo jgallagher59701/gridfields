@@ -12,7 +12,7 @@ if COMPILER_IS_GCC
 # jhrg 2/13/14
 # I got tired of the sign compare warnings, but they should be
 # addressed. jhrg 4/3/14
-AM_CXXFLAGS += -Wall -Wno-deprecated 
+AM_CXXFLAGS += -Wall -Wno-deprecated
 # -Wno-cast-align 
 # -Wno-deprecated 
 # -Wno-sign-compare
@@ -113,6 +113,20 @@ docs:
 	doxygen $(srcdir)/doxy.conf
 	(cd docs && tar -czf html.tar.gz html)
 
+###########################################################################
+
+# Fortify targets.
+
+.PHONY: fortify
+fortify:
+	sourceanalyzer -b @PACKAGE@ $(MAKE)
+	sourceanalyzer -b @PACKAGE@ -scan -f @PACKAGE@-@PACKAGE_VERSION@.fpr
+
+# Use this to clean the fortify project.
+.PHONY: fortifyclean
+fortifyclean:
+	sourceanalyzer -b @PACKAGE@ -clean
+
 # cccc computes metrics like Lines of code and McCabe. It'a available
 # on the web...
 .PHONY: cccc
@@ -176,8 +190,8 @@ collect-coverage-data:
 	(cd test-coverage; \
          cov_dat="coverage-data-`date +%m.%d.%y`"; \
          touch $$cov_dat; \
-         for f in $(ALLSRCS); do \
+         for f in $(libgridfields_la_SOURCES); do \
             echo "\n*** Coverage data for $$f ***\n" >> $$cov_dat; \
-            gcov -l -o ../ $$f >> $$cov_dat; \
+            gcov -a -o ../ $$f >> $$cov_dat; \
          done)
 

@@ -37,12 +37,14 @@ void split(const string &text, const string separators, vector<string> &words) {
   }
 }
 
+#define MSG_BUFFER_SIZE 1024
+
 void Fatal(const char *fmt, ...) {
     // vulnerable to buffer overruns!
-    char foo[1000];
+    char foo[MSG_BUFFER_SIZE];
     va_list ap;
     va_start(ap, fmt);
-    vsprintf(foo, fmt, ap);
+    vsnprintf(foo, MSG_BUFFER_SIZE, fmt, ap);
     va_end(ap);
     
     stringstream errmsg;
@@ -53,10 +55,10 @@ void Fatal(const char *fmt, ...) {
  
 void Warning(const char *fmt, ...) {
     // vulnerable to buffer overruns!
-    char foo[1000];
+    char foo[MSG_BUFFER_SIZE];
     va_list ap;
     va_start(ap, fmt);
-    vsprintf(foo, fmt, ap);
+    vsnprintf(foo, MSG_BUFFER_SIZE, fmt, ap);
     va_end(ap);
     
     stringstream errmsg;
