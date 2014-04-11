@@ -10,32 +10,37 @@
 
 namespace GF {
 
-class OneGrid : public Grid {
+class OneGrid: public Grid {
 
- public:
+public:
 
-  OneGrid(string name, int size) : Grid(name) {
-    setImplicit0Cells(size);
-    CellArray *onecells = new CellArray;
-    Node nodes[2];
-    for (int i=1; i<size; i++) {
-      nodes[0] = i-1;
-      nodes[1] = i;
-      onecells->addCellNodes(nodes, 2);
-    }
-    setKCells(onecells, 1);
-    this->ref();
-  };
+	OneGrid(string name, int size) :
+			Grid(name)
+	{
+		setImplicit0Cells(size);
+		CellArray *onecells = new CellArray;
+		Node nodes[2];
+		for (int i = 1; i < size; i++) {
+			nodes[0] = i - 1;
+			nodes[1] = i;
+			onecells->addCellNodes(nodes, 2);
+		}
+		setKCells(onecells, 1);
+		this->ref();
+	}
+	;
 
 };
 
-
-class ZeroGrid : public Grid {
-  public:
-    ZeroGrid(string name, unsigned int size) : Grid(name, 0) {
-      setImplicit0Cells(size);
-      this->ref();
-    };
+class ZeroGrid: public Grid {
+public:
+	ZeroGrid(string name, unsigned int size) :
+			Grid(name, 0)
+	{
+		setImplicit0Cells(size);
+		this->ref();
+	}
+	;
 };
 
 } // namespace GF

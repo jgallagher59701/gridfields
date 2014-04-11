@@ -7,23 +7,29 @@
 
 namespace GF {
 
-class SubgridOrdMap : public OrdMap {
+class SubgridOrdMap: public OrdMap {
 
- public: 
-  SubgridOrdMap(Grid *basegrid) : OrdMap() { 
-    Base = basegrid;
-  };
+public:
+	SubgridOrdMap(Grid *basegrid) :
+			OrdMap()
+	{
+		Base = basegrid;
+	}
+	;
 
-  virtual int getBaseSize(int d) {
-    return Base->ordmap->getBaseSize(d);
-  }
-  
-  virtual int getBaseOrd(Cell *c, int k) { 
-    return Base->ordmap->getBaseOrd(c, k);
-  };
- 
- private:
-  Grid *Base;
+	virtual int getBaseSize(int d)
+	{
+		return Base->ordmap->getBaseSize(d);
+	}
+
+	virtual int getBaseOrd(Cell *c, int k)
+	{
+		return Base->ordmap->getBaseOrd(c, k);
+	}
+	;
+
+private:
+	Grid *Base;
 };
 
 } // namespace GF

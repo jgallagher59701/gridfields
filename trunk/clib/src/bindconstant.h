@@ -7,19 +7,19 @@
 
 namespace GF {
 
-class BindConstantOp : public UnaryGridFieldOperator {
+class BindConstantOp: public UnaryGridFieldOperator {
 public:
 //  BindConstantOp(const string &attr, int val, GridFieldOperator *op);
-  BindConstantOp(Dim_t k, const string &attr, float val, GridFieldOperator *op);
- 
-  void Execute();
+	BindConstantOp(Dim_t k, const string &attr, float val, GridFieldOperator *op);
+
+	void Execute();
 //  static GridField *BindConstant(const string &attr, GridField *GF);
-  void setAttributeVal(const string &a, float v);
-  static GridField *BindConstant(Dim_t k, const string &attr, float val, GridField *GF);
+	void setAttributeVal(const string &a, float v);
+	static GridField *BindConstant(Dim_t k, const string &attr, float val, GridField *GF);
 private:
-  Dim_t _k;
-  string attr;
-  float val;
+	Dim_t _k;
+	string attr;
+	float val;
 };
 
 } // namespace GF

@@ -1,4 +1,3 @@
-
 #include "config_gridfields.h"
 
 #include "sift.h"
@@ -6,57 +5,60 @@
 
 namespace GF {
 
-SiftOp::SiftOp(Dim_t k, GridFieldOperator *prev) 
-  : UnaryGridFieldOperator(prev), _k(k)
+SiftOp::SiftOp(Dim_t k, GridFieldOperator *prev) :
+		UnaryGridFieldOperator(prev), _k(k)
 {
-  // sift does not create a new gridfield, so 
-  // do not delete anything on destruction
-  //this->cleanup = false;
-}
-    
-void SiftOp::Execute() {
-  this->PrepareForExecution();
-  Result = this->Sift(this->_k, this->GF);
+	// sift does not create a new gridfield, so
+	// do not delete anything on destruction
+	//this->cleanup = false;
 }
 
-string SiftOp::newName(string gfname) {
-
-  string gname = "sift(" + gfname + ")";
-  return gname;
+void SiftOp::Execute()
+{
+	this->PrepareForExecution();
+	Result = this->Sift(this->_k, this->GF);
 }
 
-GridField *SiftOp::Sift(Dim_t k, GridField *GF) {
+string SiftOp::newName(string gfname)
+{
 
-  Grid *G = new Grid(GF->GetGrid()->name);
-  AbstractCellArray *kcells = GF->GetGrid()->getKCells(k);
-  G->setKCells(kcells, k);
-  kcells->ref();
+	string gname = "sift(" + gfname + ")";
+	return gname;
+}
 
-  if (k!=0) {
+GridField *SiftOp::Sift(Dim_t k, GridField *GF)
+{
 
-    CellArray *newnodes = new CellArray();
+	Grid *G = new Grid(GF->GetGrid()->name);
+	AbstractCellArray *kcells = GF->GetGrid()->getKCells(k);
+	G->setKCells(kcells, k);
+	kcells->ref();
 
-    set<Node> uniquenodes;
+	if (k != 0) {
 
-    Cell *c;
-    for (size_t i=0; i<kcells->getsize(); i++) {
-      c = kcells->getCell(i);
-      const int n = c->getsize();
-      const Node *ns = c->getnodes();
-      for (int j=0; j<n; j++) {
-        uniquenodes.insert(ns[j]);
-      }
-    }
-    FOR(set<Node>, x, uniquenodes) {
-      Node c = *x;
-      newnodes->addCellNodes(&c, 1);
-    }
-    G->setKCells(newnodes, 0);
-  }
+		CellArray *newnodes = new CellArray();
 
-  GridField *Out = new GridField(G);
-  Out->RestrictAll(GF);
-  return Out;
+		set<Node> uniquenodes;
+
+		Cell *c;
+		for (size_t i = 0; i < kcells->getsize(); i++) {
+			c = kcells->getCell(i);
+			const int n = c->getsize();
+			const Node *ns = c->getnodes();
+			for (int j = 0; j < n; j++) {
+				uniquenodes.insert(ns[j]);
+			}
+		}
+		FOR(set<Node>, x, uniquenodes) {
+			Node c = *x;
+			newnodes->addCellNodes(&c, 1);
+		}
+		G->setKCells(newnodes, 0);
+	}
+
+	GridField *Out = new GridField(G);
+	Out->RestrictAll(GF);
+	return Out;
 }
 
 } // namespace GF

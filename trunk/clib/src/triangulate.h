@@ -15,7 +15,6 @@
 /************ HEADER FILE FOR TRIANGULATE.H ***************************/
 /**********************************************************************/
 
-
 #ifndef TRIANGULATE_H
 
 #define TRIANGULATE_H
@@ -35,61 +34,60 @@
 /** whatever your own Vector implementation might be.           **/
 /*****************************************************************/
 
-
 #include <vector>  // Include STL vector class.
-
-class Vector2d
-{
+class Vector2d {
 public:
-  Vector2d(double x,double y)
-  {
-    Set(x,y);
-  };
+	Vector2d(double x, double y)
+	{
+		Set(x, y);
+	}
+	;
 
-  double GetX(void) const { return mX; };
+	double GetX(void) const
+	{
+		return mX;
+	}
+	;
 
-  double GetY(void) const { return mY; };
+	double GetY(void) const
+	{
+		return mY;
+	}
+	;
 
-  void  Set(double x,double y)
-  {
-    mX = x;
-    mY = y;
-  };
+	void Set(double x, double y)
+	{
+		mX = x;
+		mY = y;
+	}
+	;
 private:
-  double mX;
-  double mY;
+	double mX;
+	double mY;
 };
 
 // Typedef an STL vector of vertices which are used to represent
 // a polygon/contour and a series of triangles.
-typedef std::vector< Vector2d > Vector2dVector;
+typedef std::vector<Vector2d> Vector2dVector;
 
-
-class Triangulate
-{
+class Triangulate {
 public:
 
-  // triangulate a contour/polygon, places results in STL vector
-  // as series of triangles.
-  static bool Process(const Vector2dVector &contour,
-                      Vector2dVector &result);
+	// triangulate a contour/polygon, places results in STL vector
+	// as series of triangles.
+	static bool Process(const Vector2dVector &contour, Vector2dVector &result);
 
-  // compute area of a contour/polygon
-  static double Area(const Vector2dVector &contour);
+	// compute area of a contour/polygon
+	static double Area(const Vector2dVector &contour);
 
-  // decide if point Px/Py is inside triangle defined by
-  // (Ax,Ay) (Bx,By) (Cx,Cy)
-  static bool InsideTriangle(double Ax, double Ay,
-                      double Bx, double By,
-                      double Cx, double Cy,
-                      double Px, double Py);
-
+	// decide if point Px/Py is inside triangle defined by
+	// (Ax,Ay) (Bx,By) (Cx,Cy)
+	static bool InsideTriangle(double Ax, double Ay, double Bx, double By, double Cx, double Cy, double Px, double Py);
 
 private:
-  static bool Snip(const Vector2dVector &contour,int u,int v,int w,int n,int *V);
+	static bool Snip(const Vector2dVector &contour, int u, int v, int w, int n, int *V);
 
 };
-
 
 #endif
 

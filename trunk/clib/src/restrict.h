@@ -6,18 +6,18 @@
 
 namespace GF {
 
-class RestrictOp : public UnaryGridFieldOperator {
+class RestrictOp: public UnaryGridFieldOperator {
 public:
-  RestrictOp(string expr, Dim_t k, GridFieldOperator *op);
-  
-  void Execute();
-  
-  static GridField *Restrict(string expr, Dim_t k, GridField *GF);
+	RestrictOp(string expr, Dim_t k, GridFieldOperator *op);
+
+	void Execute();
+
+	static GridField *Restrict(string expr, Dim_t k, GridField *GF);
 protected:
-  Dim_t k;
-  string expr;
+	Dim_t k;
+	string expr;
 private:
- 
+
 };
 
 } // namespace GF

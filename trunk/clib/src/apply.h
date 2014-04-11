@@ -15,21 +15,29 @@
 
 namespace GF {
 
-class ApplyOp : public UnaryGridFieldOperator {
- public:
+class ApplyOp: public UnaryGridFieldOperator {
+public:
 //  ApplyOp(GridFieldOperator *op, string tupleexpr, Scheme *outscheme);
-  ApplyOp(string tupleexpr, Dim_t k, GridFieldOperator *op);
-  void Execute();
-  static GridField *Apply(string tupleexpr, Dim_t k, GridField *Gg);
+	ApplyOp(string tupleexpr, Dim_t k, GridFieldOperator *op);
+	void Execute();
+	static GridField *Apply(string tupleexpr, Dim_t k, GridField *Gg);
 
- void SetExpression(const string &expr) { 
-    unparsedExpr = expr; Update(); 
- };
- void SetRank(Dim_t _k) { k=_k; Update();};
-  
- private:
-  Dim_t k;
-  string unparsedExpr;
+	void SetExpression(const string &expr)
+	{
+		unparsedExpr = expr;
+		Update();
+	}
+	;
+	void SetRank(Dim_t _k)
+	{
+		k = _k;
+		Update();
+	}
+	;
+
+private:
+	Dim_t k;
+	string unparsedExpr;
 
 };
 

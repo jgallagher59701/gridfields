@@ -1,5 +1,5 @@
 #ifndef _IMPLICIT0CELLS_H
-#define _IMPLICIT0CELLS_H 
+#define _IMPLICIT0CELLS_H
 
 #include <vector>
 #include <set>
@@ -16,76 +16,124 @@
 
 namespace GF {
 
-class Implicit0Cells : public AbstractCellArray {
- public:
-  
-  Implicit0Cells(int s) :  materializednodes(NULL),size(s) { this->ref(); }
-  ~Implicit0Cells() { 
-     this->cleanup.clear(); 
-     if (materializednodes != NULL) {
-       delete [] materializednodes;
-     }
-  };
-  idx getsize() { return this->size; };
+class Implicit0Cells: public AbstractCellArray {
+public:
 
-  Cell *getCell(idx i);
-  Cell getCellCopy(idx i);
-  Node *getCellNodes(idx i) { 
-    // Calling this method effectively destroys the benefits of the implicit array.
-    // CellArray should inherit from Implicit0Cells, or this method should be removed
-    if (materializednodes == NULL) {
-      materializednodes = new Node[this->size];
-      for (idx j=0; j<this->size; j++) {
-        materializednodes[j] = j;
-      }
-    }
-    return &materializednodes[i];
-  }
+	Implicit0Cells(int s) :
+			materializednodes(NULL), size(s)
+	{
+		this->ref();
+	}
+	~Implicit0Cells()
+	{
+		this->cleanup.clear();
+		if (materializednodes != NULL) {
+			delete[] materializednodes;
+		}
+	}
+	;
+	idx getsize()
+	{
+		return this->size;
+	}
+	;
 
-  virtual int whoami() { return 0; };
+	Cell *getCell(idx i);
+	Cell getCellCopy(idx i);
+	Node *getCellNodes(idx i)
+	{
+		// Calling this method effectively destroys the benefits of the implicit array.
+		// CellArray should inherit from Implicit0Cells, or this method should be removed
+		if (materializednodes == NULL) {
+			materializednodes = new Node[this->size];
+			for (idx j = 0; j < this->size; j++) {
+				materializednodes[j] = j;
+			}
+		}
+		return &materializednodes[i];
+	}
 
-  bool contains(const Cell &c) { return (size > c.getnodes()[0] && (signed)c.getnodes()[0] >= 0); }; 
-  idx getOrd(const Cell &c) { Node &n = c.getnodes()[0]; return n < this->size ? n : -1; }
-  idx getOrd(Node n) { return n < this->size ? n : -1; }
+	virtual int whoami()
+	{
+		return 0;
+	}
+	;
 
-  void getIncidentCells(const Cell &c, set<CellId> &out); 
-  void getIncidentCells(Node n, set<CellId> &out);
-  void getAdjacentCells(CellId n, vector<CellId> &out) {(void)n;(void)out; };
-  unsigned int getNodeCount() { return size; };
+	bool contains(const Cell &c)
+	{
+		return (size > c.getnodes()[0] && (signed) c.getnodes()[0] >= 0);
+	}
+	;
+	idx getOrd(const Cell &c)
+	{
+		Node &n = c.getnodes()[0];
+		return n < this->size ? n : -1;
+	}
+	idx getOrd(Node n)
+	{
+		return n < this->size ? n : -1;
+	}
 
-  void mapNodes(NormNodeMap &h); 
-  void mapNodes(UnaryNodeMap &h);
-  
-  void buildInvertedIndex() {};
-  void buildAdjacentIndex() {};
+	void getIncidentCells(const Cell &c, set<CellId> &out);
+	void getIncidentCells(Node n, set<CellId> &out);
+	void getAdjacentCells(CellId n, vector<CellId> &out)
+	{
+		(void) n;
+		(void) out;
+	}
+	;
+	unsigned int getNodeCount()
+	{
+		return size;
+	}
+	;
 
-  void print(size_t indent);
-  void print();
-  bool implicit() { return true; };
-  int bytes() { return 2*size*sizeof(int); };
-  
-  void unref();
-  void ref();
+	void mapNodes(NormNodeMap &h);
+	void mapNodes(UnaryNodeMap &h);
 
-  CellArray *asCellArray(); 
-  vector<Cell> *getCellVector();
-  void toNodeSet(set<Node> &outset);
+	void buildInvertedIndex()
+	{
+	}
+	;
+	void buildAdjacentIndex()
+	{
+	}
+	;
 
-  //CellArray *nodeFilter(vector<Node> nodes);
-  CellArray *Intersection(AbstractCellArray *othercells);
-  Implicit0Cells *Intersection(Implicit0Cells *othercells);
-  AbstractCellArray *Cross(AbstractCellArray *othercells, CrossNodeMap &h);
-  Implicit0Cells *Cross(Implicit0Cells *othercells, CrossNodeMap &h);
+	void print(size_t indent);
+	void print();
+	bool implicit()
+	{
+		return true;
+	}
+	;
+	int bytes()
+	{
+		return 2 * size * sizeof(int);
+	}
+	;
 
-  CrossNodeMap makeCrossNodeMap(AbstractCellArray *other);
-  CrossNodeMap makeCrossNodeMap(Implicit0Cells *other);
+	void unref();
+	void ref();
 
+	CellArray *asCellArray();
+	vector<Cell> *getCellVector();
+	void toNodeSet(set<Node> &outset);
 
- private:
-  vector<Cell> cleanup;
-  set<CellId> incidences;
-  Node *materializednodes;
-  unsigned int size;
+	//CellArray *nodeFilter(vector<Node> nodes);
+	CellArray *Intersection(AbstractCellArray *othercells);
+	Implicit0Cells *Intersection(Implicit0Cells *othercells);
+	AbstractCellArray *Cross(AbstractCellArray *othercells, CrossNodeMap &h);
+	Implicit0Cells *Cross(Implicit0Cells *othercells, CrossNodeMap &h);
+
+	CrossNodeMap makeCrossNodeMap(AbstractCellArray *other);
+	CrossNodeMap makeCrossNodeMap(Implicit0Cells *other);
+
+private:
+	vector<Cell> cleanup;
+	set<CellId> incidences;
+	Node *materializednodes;
+	unsigned int size;
 };
 
 } // namespace GF

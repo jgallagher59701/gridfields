@@ -25,12 +25,11 @@ namespace GF {
         insert_iterator<type > ii(to, to.begin()); \
         copy(from.begin(), from.end(), ii);
 
-
 struct nullstream: std::ostream {
-    nullstream() :
-        std::ios(0), std::ostream(0)
-    {
-    }
+	nullstream() :
+			std::ios(0), std::ostream(0)
+	{
+	}
 };
 
 // FIXME Use DBG(x) --> cerr << x or --> nothing instead.
@@ -42,9 +41,8 @@ void split(const std::string &text, const std::string separators, std::vector<st
 std::string remove_whitespace(const std::string &text);
 bool same(const std::string &r, const std::string &s);
 
-void Fatal(const char *fmt, ...); 
-void Warning(const char *fmt, ...); 
-
+void Fatal(const char *fmt, ...);
+void Warning(const char *fmt, ...);
 
 std::string tab(int indent);
 typedef size_t idx;
@@ -52,5 +50,4 @@ typedef size_t idx;
 } // namespace GF
 
 #endif /* _UTIL_H */
-    
 
