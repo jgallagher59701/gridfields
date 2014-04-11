@@ -1,4 +1,3 @@
-
 #include "config_gridfields.h"
 
 #include "apply.h"
@@ -13,41 +12,41 @@
 namespace GF {
 
 /*
-ApplyOp::ApplyOp(GridFieldOperator *op, string tupleexpr, Scheme *outscheme) 
-   : UnaryGridFieldOperator(op), unparsedExpr(tupleexpr), _sch(outscheme)
-{
-  this->SaveReservedWords();
-  this->cleanup = false;
-}
-*/
+ ApplyOp::ApplyOp(GridFieldOperator *op, string tupleexpr, Scheme *outscheme)
+ : UnaryGridFieldOperator(op), unparsedExpr(tupleexpr), _sch(outscheme)
+ {
+ this->SaveReservedWords();
+ this->cleanup = false;
+ }
+ */
 
-ApplyOp::ApplyOp(string tupleexpr, Dim_t k, GridFieldOperator *op) 
-   : UnaryGridFieldOperator(op), k(k), unparsedExpr(tupleexpr)
+ApplyOp::ApplyOp(string tupleexpr, Dim_t k, GridFieldOperator *op) :
+		UnaryGridFieldOperator(op), k(k), unparsedExpr(tupleexpr)
 {
-  //this->cleanup = false;
+	//this->cleanup = false;
 }
 
-void ApplyOp::Execute() {
-  
-  this->PrepareForExecution();
+void ApplyOp::Execute()
+{
+
+	this->PrepareForExecution();
 #if 0
-  // jhrg 10/5/11
-  float start = gettime();
+	// jhrg 10/5/11
+	float start = gettime();
 #endif
-  DEBUG << "ApplyOperator" << endl;
-  this->Result =  Apply(this->unparsedExpr, this->k,
-                        this->GF);
+	DEBUG << "ApplyOperator" << endl;
+	this->Result = Apply(this->unparsedExpr, this->k, this->GF);
 }
 
-GridField *ApplyOp::Apply(string expr, Dim_t k, GridField *Gg) {
-  GridField *Out = new GridField(Gg);
-  if (Gg->Card(k) == 0) return Out;
-  Out->Apply(expr, k); 
-  DEBUG << "Apply(" << k << ", " << expr << ")" << endl;
-  //Gg->ref();
-  return Out;
+GridField *ApplyOp::Apply(string expr, Dim_t k, GridField *Gg)
+{
+	GridField *Out = new GridField(Gg);
+	if (Gg->Card(k) == 0) return Out;
+	Out->Apply(expr, k);
+	DEBUG << "Apply(" << k << ", " << expr << ")" << endl;
+	//Gg->ref();
+	return Out;
 }
 
 } // namespace GF
-
 

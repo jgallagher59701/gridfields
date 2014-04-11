@@ -5,14 +5,24 @@
 
 namespace GF {
 
-class IdNodeMap : public UnaryNodeMap {
+class IdNodeMap: public UnaryNodeMap {
 
- public: 
-  IdNodeMap() : UnaryNodeMap() { };
-  virtual Node map(Node a) { return a };
-  Node inv(Node o) { return o; }
-  
- private:
+public:
+	IdNodeMap() :
+			UnaryNodeMap()
+	{
+	}
+	;
+	virtual Node map(Node a)
+	{
+	return a}
+;
+Node inv(Node o)
+{
+	return o;
+}
+
+private:
 };
 
 } // namespace GF

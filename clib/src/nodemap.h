@@ -7,10 +7,9 @@ namespace GF {
 
 class NodeMap {
 
- public:
- private:
+public:
+private:
 };
-
 
 } // namespace GF
 

@@ -1,4 +1,3 @@
-
 #include "config_gridfields.h"
 
 #include "unarynodemap.h"

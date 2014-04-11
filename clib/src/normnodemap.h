@@ -17,40 +17,47 @@
 
 namespace GF {
 
-class NormNodeMap : public UnaryNodeMap {
+class NormNodeMap: public UnaryNodeMap {
 
- public:
-  NormNodeMap(AbstractCellArray *zcs) : UnaryNodeMap() {
-    zerocells = zcs;
-    Cell *c;
-    int x;
-    // jhrg 2/13/14
+public:
+	NormNodeMap(AbstractCellArray *zcs) :
+			UnaryNodeMap()
+	{
+		zerocells = zcs;
+		Cell *c;
+		int x;
+		// jhrg 2/13/14
 #ifdef USE_HASH_MAP_RESIZE
-    nodemap.resize(zerocells->getsize());
+		nodemap.resize(zerocells->getsize());
 #else
-    nodemap.rehash(zerocells->getsize());
+		nodemap.rehash(zerocells->getsize());
 #endif
-    for (unsigned int i=0; i<zerocells->getsize(); i++) {
-      c = zerocells->getCell(i);
-      x = c->getnodes()[0];
-      nodemap[x] = i;
-    }
-  };
-  virtual Node map(Node x) {
-    return nodemap[x];
-  };
+		for (unsigned int i = 0; i < zerocells->getsize(); i++) {
+			c = zerocells->getCell(i);
+			x = c->getnodes()[0];
+			nodemap[x] = i;
+		}
+	}
+	;
+	virtual Node map(Node x)
+	{
+		return nodemap[x];
+	}
+	;
 
-  Node inv(Node o) {
-    Cell *c;
-    c = zerocells->getCell(o);
-    assert(c->getsize() == 1);
-    return c->getnodes()[0];
-  };
+	Node inv(Node o)
+	{
+		Cell *c;
+		c = zerocells->getCell(o);
+		assert(c->getsize() == 1);
+		return c->getnodes()[0];
+	}
+	;
 
- private:
-  HASH_MAP<int, int> nodemap;
-  //std::map<int, int> nodemap;
-  AbstractCellArray *zerocells;
+private:
+	HASH_MAP<int, int> nodemap;
+	//std::map<int, int> nodemap;
+	AbstractCellArray *zerocells;
 };
 
 } // namespace GF

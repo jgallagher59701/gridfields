@@ -7,14 +7,16 @@ namespace GF {
 
 class BinaryNodeMap {
 
- public:
+public:
 
-  virtual Node map(Node, Node)=0;
+	virtual Node map(Node, Node)=0;
 
-  //virtual ~BinaryNodeMap()=0; 
-  // This class should have a destructor. jhrg 4//8/14
-  virtual ~BinaryNodeMap() { }
- private:
+	//virtual ~BinaryNodeMap()=0;
+	// This class should have a destructor. jhrg 4//8/14
+	virtual ~BinaryNodeMap()
+	{
+	}
+private:
 };
 
 } // namespace GF
