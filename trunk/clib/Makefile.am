@@ -47,7 +47,7 @@ pkginclude_HEADERS = $(HDRS)
 
 # noinst_HEADERS = config.h
 
-# EXTRA_DIST = 
+EXTRA_DIST = gridfields.spec NEWS README INSTALL COPYING
 
 # At some point write a m4 macro that can be used to test for the
 # gridfields library; same for pkg config
