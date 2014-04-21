@@ -151,5 +151,7 @@ AC_FUNC_MMAP
 AC_FUNC_STRTOD
 AC_CHECK_FUNCS([floor gettimeofday pow putenv sqrt strtol])
 
-AC_CONFIG_FILES([Makefile tests/Makefile src/gridfields_hash_map.h])
+AC_CONFIG_FILES([Makefile src/gridfields_hash_map.h])
+AC_CONFIG_FILES([tests/Makefile tests/testarrayreader.cc \
+		 tests/testcross.cc tests/testbind.cc tests/testoutput.cc])
 AC_OUTPUT
