@@ -12,6 +12,8 @@
 
 using namespace GF;
 
+#define TEST_DATA "@top_srcdir@/tests/dat"
+
 Grid *makeGrid(int scale, string name) {
   CellArray *twocells;
   CellArray *onecells;
@@ -103,7 +105,7 @@ int main(int argc, char **argv) {
     Result = RefRestrictOp::Restrict("x>-4",0,Result);
     if (verbose) Result->print(10);
 
-    FileArrayReader *ar = new FileArrayReader("dat", 0);
+    FileArrayReader *ar = new FileArrayReader(TEST_DATA, 0);
     ar->setPatternAttribute("result");
     GridField *G = BindOp::Bind("io", FLOAT, ar, 0, Result);
  

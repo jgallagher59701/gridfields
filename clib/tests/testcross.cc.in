@@ -10,6 +10,8 @@
 
 using namespace GF;
 
+#define TEST_DATA "@top_srcdir@/tests/dat"
+
 Grid *makeGrid(int scale, char *name) {
   CellArray *twocells;
   CellArray *onecells;
@@ -110,7 +112,7 @@ int main(int argc, char **argv) {
   
     if (verbose) Result->print();
 
-    FileArrayReader *ar = new FileArrayReader("dat");    cerr << "here: "<< endl;
+    FileArrayReader *ar = new FileArrayReader(TEST_DATA);    cerr << "here: "<< endl;
     Array *arr = new Array("io", FLOAT, 3*3);
     ar->Read(Result, 0, arr);
  
