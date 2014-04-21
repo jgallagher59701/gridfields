@@ -16,9 +16,11 @@
 
 using namespace GF;
 
+#define TEST_DATA "@top_srcdir@/tests/data/1_flsu.61"
+
 int main(int argc, char **argv) {
 
-  string filename("data/1_flsu.61");
+  string filename(TEST_DATA);
   string name("salt");
   int offset = 0;
   Type type = FLOAT;

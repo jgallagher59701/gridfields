@@ -32,11 +32,11 @@ testelcirc testsubapply
 
 noinst_HEADERS = test.h	testarray.h testdataset.h transect.h
 
-EXTRA_DIST = data.nc dat data
+EXTRA_DIST = dat data
 
 # CLEANFILES = 
 
-# DISTCLEANFILES = 
+DISTCLEANFILES = temp.nc data.nc
 
 # Note that the gcov options -f and -b are useful but sometimes make looking
 # at the results of coverage analysis a little taxing. -b reports on all
