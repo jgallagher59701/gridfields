@@ -37,6 +37,8 @@ lib_LTLIBRARIES = libgridfields.la
 
 BUILT_SOURCES = src/gridfields_hash_map.h
 
+bin_SCRIPTS = gridfields-config
+
 libgridfields_la_SOURCES = $(SRCS)
 libgridfields_la_LDFLAGS = -version-info $(LIBGF_VERSION)
 libgridfields_la_CPPFLAGS = $(AM_CPPFLAGS)
