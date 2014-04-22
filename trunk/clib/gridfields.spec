@@ -50,5 +50,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root,-)
 %{_libdir}/libgridfields.so
 %{_includedir}/gridfields/
+%{_bindir}/gridfields-config
 
 %changelog
